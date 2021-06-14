@@ -11,10 +11,10 @@ app.use(express.urlencoded({extended:true}));
 
 var Twitter = require('twitter');
  var client = new Twitter({
-consumer_key: 'xxxxxxxx',
-consumer_secret: 'xxxxxxx',
-access_token_key: 'xxxxxxx',
-access_token_secret: 'xxxxxxxx'
+consumer_key: '',
+consumer_secret: '',
+access_token_key: '',
+access_token_secret: ''
  });
 
 
@@ -78,9 +78,8 @@ res.send ("Hi user "+ userID + ", you've checked out book number " + bookID);
 });
 
 app.get('/tweetsjson', (req,res) => {
-    var params = {
-        screen_name: 'nodejs'
-    };
+    var params = {screen_name: 'nodejs'};
+
     client.get('statuses/user_timeline', params, function(error, tweets, response){
             if (!error){
                 var json =[];
@@ -94,7 +93,7 @@ app.get('/tweetsjson', (req,res) => {
                     res.send(JSON.stringify(json));
             }
         });
-})
+});
 
 
 app.use ((req, res, next) => {
