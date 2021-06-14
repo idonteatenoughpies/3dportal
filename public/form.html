@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Form Test</title>
+  <script defer src='js/form.js'></script>
 </head>
 <body>
   <h1>Express Static Form</h1>
@@ -16,24 +17,6 @@
   <div id="result">
   </div>
 
-  <script>
-      //tie the submit button to the click
-      $('#submit').click(handleClick);
 
-      function handleClick() {
-          const nametosend = $('#name').val();
-          const questtosend = $('#quest').val();
-
-          const url = '/getform?name='+nametosend+"&quest="+questtosend;
-
-          $.ajax(
-              {url: url, 
-            success: (result) => {
-                $("#result").html(result);
-                }
-              });
-              return false; //prevent further bubbling of event
-      }
-  </script>
 </body>
 </html>
