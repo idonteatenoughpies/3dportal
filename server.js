@@ -9,6 +9,14 @@ const path = require('path');
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
+var Twitter = require('twitter');
+ var client = new Twitter({
+consumer_key: 'xxxxxxxx',
+consumer_secret: 'xxxxxxx',
+access_token_key: 'xxxxxxx',
+access_token_secret: 'xxxxxxxx'
+ });
+
 
 app.get('/', (req, res) => {
     res.send("Hello World! by express");
@@ -68,6 +76,26 @@ var userID = req.params.userid;
 var bookID = req.params.bookid;
 res.send ("Hi user "+ userID + ", you've checked out book number " + bookID);
 });
+
+app.get('/tweetsjson', (req,res) => {
+    var params = {
+        screen_name: 'nodejs'
+    };
+    client.get('statuses/user_timeline', params, function(error, tweets, response){
+            if (!error){
+                var json =[];
+                for (var i=0; i < tweets.length; i++) {
+                    json.push({
+                        name: tweets[i].user.name,
+                        text: tweets[i].text
+                    });
+                }
+                  
+                    res.send(JSON.stringify(json));
+            }
+        });
+})
+
 
 app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});

@@ -1,4 +1,4 @@
-$('#submit').click(handleClick);
+$("#submit").click(handleClick);
 
       function handleClick() {
           const nametosend = $('#name').val();

@@ -5,7 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
-    "knock-knock-jokes": "^1.7.0"
+    "knock-knock-jokes": "^1.7.0",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {},
   "scripts": {
