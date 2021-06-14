@@ -5,12 +5,35 @@
 </head>
 <body>
   <h1>Express Static Form</h1>
-  <form action="/postform" method="post">
+  <form>
     Name:<br>
-    <input type="text" name="name" value=""/><br>
+    <input type="text" id="name" value=""/><br>
     What is your Quest:<br>
-    <input type="text" name="quest" value=""/><br><br>
-    <input type="submit" value="Submit"/>
+    <input type="text" id="quest" value=""/><br><br>
+    <input type="button" value="Submit" id="submit"/>
   </form>
+
+  <div id="result">
+  </div>
+
+  <script>
+      //tie the submit button to the click
+      $('#submit').click(handleClick);
+
+      function handleClick() {
+          const nametosend = $('#name').val();
+          const questtosend = $('#quest').val();
+
+          const url = '/getform?name='+nametosend+"&quest="+questtosend;
+
+          $.ajax(
+              {url: url, 
+            success: (result) => {
+                $("#result").html(result);
+                }
+              });
+              return false; //prevent further bubbling of event
+      }
+  </script>
 </body>
 </html>
