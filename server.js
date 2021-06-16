@@ -18,6 +18,12 @@ app.get('/test', (req, res) => {
     res.send("This is route 2");
 });
 
+app.get('/joke', (req, res) =>{
+    res.writeHead(200, {'Content-Type':'text/html'});
+    const randomJoke = knockknock()
+    res.end(randomJoke);
+});
+
 app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});
 });
