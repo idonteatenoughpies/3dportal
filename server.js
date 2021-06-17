@@ -6,7 +6,8 @@ var knockknock = require ('knock-knock-jokes');
 
 const path = require('path');
 
-app.use(express.static('public'));
+app.set('port', (process.nextTick.PORT || 80))
+app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended:true}));
 
 
@@ -28,4 +29,5 @@ app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});
 });
 
-app.listen(80, () => console.log('Example app is listening on port 80.'));
+app.listen(app.get('port'), function () {console.log('Example app is listening on port:' + app.get('port'));
+})
