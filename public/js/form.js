@@ -1,5 +1,3 @@
-const { post } = require("request");
-
 $("#submit").click(handleClick);
 
       function handleClick() {
@@ -15,7 +13,7 @@ $("#submit").click(handleClick);
           $.ajax(
               {url: url,
                 data: data,
-               
+              
             success: (result) => {
                 $("#result").html(result);
                 }
