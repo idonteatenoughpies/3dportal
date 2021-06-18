@@ -51,11 +51,11 @@ app.post('/postform', (req,res) => {
     res.send('Hi ' + name + " I am sure you will " + quest);
     });
    
-
+/*
 app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});
 });
-
+*/
 
 app.use(express.static(path));
 app.use('/', router);
