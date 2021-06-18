@@ -18,13 +18,6 @@ router.get('/', (req, res) => {
 const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
-//const path = require('path');
-
-//app.set('port', (process.nextTick.PORT || 80))
-
-
-
-
 
 router.get('/joke', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});
@@ -37,7 +30,7 @@ router.get('/testing', function(req,res) {
 });
 
 router.get('/hello', (req, res) => {
-    res.sendFile('hello.html', {root : path.join(__dirname, '/public')});
+    res.sendFile(path + 'hello.html');
 });
 
 router.get('/getform', (req, res) => {
