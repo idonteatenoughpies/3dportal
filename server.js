@@ -21,9 +21,9 @@ app.get('/joke', (req, res) =>{
     res.end(randomJoke);
 });
 
-app.get('/testing', (req, res) => {
-    console.log('reached here');
-    res.send('The testing page works');
+app.get('/testing', (req, res) =>{
+    res.writeHead(200, {'Content-Type':'text/html'});  
+    res.send('testing works');
 });
 
 app.get('/getform', (req, res) => {
