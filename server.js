@@ -22,9 +22,9 @@ app.get('/joke', (req, res) =>{
 });
 
 app.get('/getform', (req, res) => {
-    const name = req.query.name;
-    const quest = req.query.quest;
-    res.send('Hi ' + name + " I am sure you will " + quest);
+    var name = req.query.name;
+    var quest = req.query.quest;
+    res.send("Hi " + name + " I am sure you will " + quest);
     });
     
 /*app.post('/postform', (req,res) => {
