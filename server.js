@@ -19,6 +19,11 @@ router.get('/hello', function(req,res){
     res.sendFile(path + 'hello.html');
   });
 
+router.get('/testing', function(req,res) {
+    res.send('testing works');
+});
+
+
 /*const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
@@ -29,9 +34,7 @@ router.get('/joke', (req, res) =>{
     res.end(randomJoke);
 });
 
-router.get('/testing', function(req,res) {
-    res.send('testing works');
-});
+
 
 router.get('/getform', (req, res) => {
     console.log('reached here');
