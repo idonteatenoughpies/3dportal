@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/star_wars_quotes";
+const db = require('./db');
 
 const path = __dirname + '/public/';
 const port = 80;
@@ -46,27 +45,6 @@ app.post('/postform', (req,res) => {
     const quest = req.body.quest;
     res.send('Hi ' + name + " I am sure you will " + quest);
     });
-
-var db;
-    MongoClient.connect(url, function(err, database){
-      if(err) throw err;
-      db = database;
-    });
-
-    app.get('/all', function(req, res) {
-        db.collection('quotes').find().toArray(function(err, result) {
-          if (err) throw err;
-          var output = "<h1>All the quotes</h1>";
-          for (var i = 0; i < result.length; i++) {
-            output += "<div>"
-            output += "<h3>" + result[i].name + "</h3>"
-            output += "<p>" + result[i].quote + "</p>"
-            output += "</div>"
-      }
-          res.send(output);
-        });
-      });
-      
 
 app.use(express.static(path));
 app.use('/', router);
