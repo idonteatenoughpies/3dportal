@@ -1,19 +1,30 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
+
+const path = __dirname + '/public/';
+const port = 80;
+
+
+router.use (function (req,res,next) {
+    console.log('/' + req.method);
+    next();
+});
+
+router.get('/', (req, res) => {
+    res.sendFile(path + 'index.html')
+});
 
 const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
-const path = require('path');
+//const path = require('path');
 
-app.set('port', (process.nextTick.PORT || 80))
-app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({extended:true}));
+//app.set('port', (process.nextTick.PORT || 80))
 
 
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root : path.join(__dirname, '/public')});
-});
+
+
 
 app.get('/joke', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});
@@ -21,7 +32,7 @@ app.get('/joke', (req, res) =>{
     res.end(randomJoke);
 });
 
-app.get('/testing', (req, res) =>{
+router.get('/testing', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});  
     res.end('testing works');
 });
@@ -49,5 +60,9 @@ app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});
 });
 
-app.listen(app.get('port'), function () {console.log('Example app is listening on port:' + app.get('port'));
+app.use(express.static(path));
+app.use('/', router);
+app.use(express.urlencoded({extended:true}));
+
+app.listen(port, function () {console.log('Example app is listening on port:' + port);
 })
