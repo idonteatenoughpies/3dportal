@@ -32,7 +32,7 @@ router.get('/joke', (req, res) =>{
     res.end(randomJoke);
 });
 
-router.get('/testing', (req, res) =>{
+router.get('/testing', function(req,res) {
     res.writeHead(200, {'Content-Type':'text/html'});  
     res.end('testing works');
 });
