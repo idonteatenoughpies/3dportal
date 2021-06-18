@@ -26,6 +26,10 @@ app.get('/testing', (req, res) =>{
     res.end('testing works');
 });
 
+app.get('/hello', (req, res) => {
+    res.sendFile('hello.html', {root : path.join(__dirname, '/public')});
+});
+
 app.get('/getform', (req, res) => {
     console.log('reached here');
     var name = req.query.name;
