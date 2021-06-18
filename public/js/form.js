@@ -8,7 +8,7 @@ $("#submit").click(handleClick);
           console.log('quest: '+ quest);
         
           const url = '/postform';
-          const data= [name, quest]
+          const data= {"name":name, "quest":quest};
 
           $.ajax(
               {url: url,
