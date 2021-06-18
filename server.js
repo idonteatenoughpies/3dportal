@@ -34,7 +34,7 @@ router.get('/joke', (req, res) =>{
 
 router.get('/testing', function(req,res) {
     res.writeHead(200, {'Content-Type':'text/html'});  
-    res.end('testing works');
+    res.send('testing works');
 });
 
 router.get('/hello', (req, res) => {
