@@ -26,7 +26,7 @@ var knockknock = require ('knock-knock-jokes');
 
 
 
-app.get('/joke', (req, res) =>{
+router.get('/joke', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});
     const randomJoke = knockknock()
     res.end(randomJoke);
@@ -37,11 +37,11 @@ router.get('/testing', (req, res) =>{
     res.end('testing works');
 });
 
-app.get('/hello', (req, res) => {
+router.get('/hello', (req, res) => {
     res.sendFile('hello.html', {root : path.join(__dirname, '/public')});
 });
 
-app.get('/getform', (req, res) => {
+router.get('/getform', (req, res) => {
     console.log('reached here');
     var name = req.query.name;
     var quest = req.query.quest;
