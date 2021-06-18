@@ -4,7 +4,8 @@ $("#submit").click(handleClick);
           var nametosend = $('#name').val();
           var questtosend = $('#quest').val();
 
-          var url = "/getform";
+          var url = "/testing";
+          //var url = "/getform";
           //var url = "/getform?"+"name="+nametosend+"&quest="+questtosend;
 
           $.ajax(
