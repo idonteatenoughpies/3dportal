@@ -5,8 +5,8 @@ const router = express.Router();
 const path = __dirname + '/public/';
 const port = 80;
 
-
-
+const http = require ('http');
+var knockknock = require ('knock-knock-jokes');
 
 router.use (function (req,res,next) {
     console.log('/' + req.method);
@@ -25,17 +25,11 @@ router.get('/testing', function(req,res) {
     res.send('testing works');
 });
 
-
-
-
-
 router.get('/joke', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});
     const randomJoke = knockknock()
     res.end(randomJoke);
 });
-
-
 
 router.get('/getform', (req, res) => {
     console.log('reached here');
@@ -50,12 +44,6 @@ app.post('/postform', (req,res) => {
     const quest = req.body.quest;
     res.send('Hi ' + name + " I am sure you will " + quest);
     });
-   
-/*
-app.use ((req, res, next) => {
-    res.sendFile('404.html', {root : path.join(__dirname, '/public')});
-});
-*/
 
 app.use(express.static(path));
 app.use('/', router);
