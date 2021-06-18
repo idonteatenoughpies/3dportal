@@ -23,7 +23,7 @@ app.get('/joke', (req, res) =>{
 
 app.get('/testing', (req, res) =>{
     res.writeHead(200, {'Content-Type':'text/html'});  
-    res.send('testing works');
+    res.end('testing works');
 });
 
 app.get('/getform', (req, res) => {
