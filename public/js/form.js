@@ -1,11 +1,11 @@
 $("#submit").click(handleClick);
 
       function handleClick() {
-          const nametosend = $('#name').val();
-          const questtosend = $('#quest').val();
+          var nametosend = $('#name').val();
+          var questtosend = $('#quest').val();
 
 
-          const url = "/getform?"+"name="+nametosend+"&quest="+questtosend;
+          var url = "/getform?"+"name="+nametosend+"&quest="+questtosend;
           
 
           $.ajax(
