@@ -5,7 +5,7 @@ $("#submit").click(handleClick);
           const questtosend = $('#quest').val();
 
 
-          const url = '/pgetform?name='+nametosend+"&quest="+questtosend;
+          const url = '/getform?name='+nametosend+"&quest="+questtosend;
           const data= {"name":name, "quest":quest};
 
           $.ajax(
