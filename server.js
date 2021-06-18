@@ -49,7 +49,7 @@ app.post('/postform', (req,res) => {
    */
 
 app.use ((req, res, next) => {
-    res.sendFile('404.html', {root : path.join(__dirname, '/public')});
+    res.sendFile(path + '404.html',);
 });
 
 
