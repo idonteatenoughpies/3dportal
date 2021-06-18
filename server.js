@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 app.get('/', (req, res) => {
-    res.send("Hello World! by express");
+    res.sendFile('index.html', {root : path.join(__dirname, '/public')});
 });
 
 app.get('/joke', (req, res) =>{
