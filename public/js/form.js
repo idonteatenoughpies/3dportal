@@ -4,9 +4,8 @@ $("#submit").click(handleClick);
           const name = $('#name').val();
           const quest = $('#quest').val();
 
-          console.log(name);
-          console.log('br');
-          console.log(quest);
+          console.log('name:' + name);
+          console.log('quest: '+ quest);
         
           const url = '/postform';
           const data= [name, quest]
