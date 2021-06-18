@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
     res.sendFile(path + 'index.html')
 });
 
+router.get('/hello', (req, res) => {
+    res.sendFile(path + 'hello.html');
+});
+
 const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
@@ -27,10 +31,6 @@ router.get('/joke', (req, res) =>{
 
 router.get('/testing', function(req,res) {
     res.send('testing works');
-});
-
-router.get('/hello', (req, res) => {
-    res.sendFile(path + 'hello.html');
 });
 
 router.get('/getform', (req, res) => {
