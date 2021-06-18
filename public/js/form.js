@@ -4,7 +4,7 @@ $("#submit").click(handleClick);
           const name = $('#name').val();
           const quest = $('#quest').val();
 
-          const url = '/postform?';
+          const url = '/postform';
           const data= [name, quest]
 
           $.ajax(
