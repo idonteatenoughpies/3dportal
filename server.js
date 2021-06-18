@@ -19,7 +19,7 @@ router.get('/hello', function(req,res){
     res.sendFile(path + 'hello.html');
   });
 
-const http = require ('http');
+/*const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
 
@@ -41,16 +41,17 @@ router.get('/getform', (req, res) => {
 });
 
     
-/*app.post('/postform', (req,res) => {
+app.post('/postform', (req,res) => {
     const name = req.body.name;
     const quest = req.body.quest;
     res.send('Hi ' + name + " I am sure you will " + quest);
     });
- */   
+   
 
 app.use ((req, res, next) => {
     res.sendFile('404.html', {root : path.join(__dirname, '/public')});
 });
+ */
 
 app.use(express.static(path));
 app.use('/', router);
