@@ -22,6 +22,7 @@ app.get('/joke', (req, res) =>{
 });
 
 app.get('/getform', (req, res) => {
+    console.log('reached here');
     var name = req.query.name;
     var quest = req.query.quest;
     res.send("Hi " + name + " I am sure you will " + quest);
