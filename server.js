@@ -21,17 +21,18 @@ app.get('/joke', (req, res) =>{
     res.end(randomJoke);
 });
 
+app.get('/testing', (req, res) => {
+    console.log('reached here');
+    res.send('The testing page works');
+});
+
 app.get('/getform', (req, res) => {
     console.log('reached here');
     var name = req.query.name;
     var quest = req.query.quest;
     res.send("Hi " + name + " I am sure you will " + quest);
-    });
+});
 
-    app.get('/testing', (req, res) => {
-        console.log('reached here');
-        res.send('The testing page works');
-        });
     
 /*app.post('/postform', (req,res) => {
     const name = req.body.name;
