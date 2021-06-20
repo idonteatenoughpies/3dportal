@@ -5,9 +5,15 @@ const router = express.Router();
 const path = __dirname + '/public/';
 const port = 80;
 
+app.set('view engine', 'ejs');
+
 router.use (function (req,res,next) {
     console.log('/' + req.method);
     next();
+});
+
+router.get('/', (req, res) => {
+    res.render(path + 'index')
 });
 
 router.get('/hello', function(req,res){
