@@ -9,13 +9,19 @@ const port = 80;
 const http = require ('http');
 var knockknock = require ('knock-knock-jokes');
 
+app.set('view engine', 'ejs');
+
 router.use (function (req,res,next) {
     console.log('/' + req.method);
     next();
 });
 
 router.get('/', (req, res) => {
-    res.sendFile(path + 'index.html')
+    res.render(path + 'index')
+});
+
+router.get('/about', (req, res) => {
+    res.render(path + 'about')
 });
 
 router.get('/hello', function(req,res){
