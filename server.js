@@ -11,7 +11,7 @@ router.use (function (req,res,next) {
 });
 
 router.get('/', function(req,res){
-    res.send('hello');
+    res.sendFile(path + 'index.ejs');
   });
 
 router.get('/hello', function(req,res){
