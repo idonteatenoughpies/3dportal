@@ -7,9 +7,11 @@
     "express": "^4.17.1",
     "knock-knock-jokes": "^1.7.0",
     "mongodb": "^3.6.9",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {},
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
