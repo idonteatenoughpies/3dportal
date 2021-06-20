@@ -14,7 +14,7 @@ router.get('/hello', function(req,res){
     res.sendFile(path + 'hello.html');
   });
 
-router.get('/testing', function(req,res) {
+  router.get('/testing', function(req,res) {
     res.send('testing works');
 });
 
