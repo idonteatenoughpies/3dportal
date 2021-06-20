@@ -13,7 +13,7 @@ router.use (function (req,res,next) {
 });
 
 router.get('/', (req, res) => {
-    res.render(path + 'index')
+    res.render('index')
 });
 
 router.get('/hello', function(req,res){
