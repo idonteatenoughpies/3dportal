@@ -16,7 +16,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
-app.use(express.static(path));
+////app.use(express.static(path));
 app.use(express.urlencoded({extended:true}));
 
 //Initialise the stream
@@ -47,6 +47,7 @@ const storage = new GridFsStorage({
   });
   const upload = multer({ storage });
  
+path = __dirname + '/public/';
 const port = 80;
 
 app.use (function (req,res,next) {
