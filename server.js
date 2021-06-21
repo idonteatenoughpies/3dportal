@@ -47,7 +47,6 @@ const storage = new GridFsStorage({
   });
   const upload = multer({ storage });
  
-path = __dirname + '/public/';
 const port = 80;
 
 app.use (function (req,res,next) {
