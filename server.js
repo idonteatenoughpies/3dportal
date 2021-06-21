@@ -90,8 +90,6 @@ app.get('/application', (req, res) => {
             });
             res.render('application', {files: files});
         }
-        // Files exist
-        return res.json(files);
         });
 });
 
