@@ -82,7 +82,7 @@ app.get('/application', (req, res) => {
      res.render('application', {files: false});
         } else {
             files.map(file => {
-                if(file.contentType === 'image/jpeg' || contentType === 'image png'){
+                if(file.contentType === 'image/jpeg' || file.contentType === 'image png'){
                     file.isImage = true;
                 } else {
                     file.isImage = false;
