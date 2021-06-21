@@ -11,8 +11,11 @@ const bodyParser = require ('body-parser');
 const { connect } = require('http2');
 
 const app = express();
-const conn = db();
 const port = 80;
+const mongoURL = db();
+
+//create mongo connection
+const conn = mongoose.createConnection(mongoURL);
 
 //Middleware
 app.use(bodyParser.json());
