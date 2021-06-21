@@ -11,6 +11,7 @@ const bodyParser = require ('body-parser');
 const { connect } = require('http2');
 
 const app = express();
+const conn = db();
 const port = 80;
 
 //Middleware
@@ -22,7 +23,7 @@ app.use(express.urlencoded({extended:true}));
 
 //Initialise the stream
 let gfs;
-db.conn.once('open', () => {
+conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
 })
