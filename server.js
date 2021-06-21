@@ -23,5 +23,8 @@ app.get('/registration', (req, res) => {
     res.render('registration');
 });
 
-app.listen(port, function () {console.log('Example app is listening on port:' + port);
-})
+app.get('/application', (req, res) => {
+    res.render('application');
+});
+
+app.listen(port,  () => console.log(`Example app is listening on port: ${port}`));
