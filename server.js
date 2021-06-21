@@ -156,7 +156,7 @@ gfs.remove({_id: req.params.id, root: 'uploads'}, (err, gridStore) => {
 if(err){
     return res.status(404).json({err:err});
 }
-res.redirect('/');
+res.redirect('/application');
 });
 });
 
