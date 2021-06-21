@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoURL = require('/db.js');
 const path = require('path');
 const crypto = require ('crypto');
 const mongoose = require ('mongoose');
@@ -15,6 +14,13 @@ const port = 80;
 
 
 //create mongo connection
+const MONGO_USERNAME = 'astruthers';
+const MONGO_PASSWORD = '3dportal';
+const MONGO_HOSTNAME = '127.0.0.1';
+const MONGO_PORT = '27017';
+const MONGO_DB = '3dportal';
+
+const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 const conn = mongoose.createConnection(mongoURL);
 
 //Middleware
