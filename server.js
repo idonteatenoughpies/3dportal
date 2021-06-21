@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended:true}));
 
 //Initialise the stream
 let gfs;
-conn.once('open', () => {
+db.conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
 })
