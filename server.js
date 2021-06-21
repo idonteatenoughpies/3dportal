@@ -27,4 +27,4 @@ app.get('/application', (req, res) => {
     res.render('application');
 });
 
-app.listen(port,  () => console.log(`Example app is listening on port: ${port}`));
+app.listen(port,  () => console.log(`App is listening on port: ${port}`));
