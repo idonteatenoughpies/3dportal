@@ -11,12 +11,13 @@ const bodyParser = require ('body-parser');
 const { connect } = require('http2');
 
 const app = express();
+const port = 80;
 
 //Middleware
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
-app.use(express.static(dirpath));
+//app.use(express.static(path));
 app.use(express.urlencoded({extended:true}));
 
 //Initialise the stream
@@ -47,14 +48,14 @@ const storage = new GridFsStorage({
   });
   const upload = multer({ storage });
  
-const dirpath = __dirname + '/public/';
-const port = 80;
+//const path = __dirname + '/public/';
 
+/*
 app.use (function (req,res,next) {
     console.log('/' + req.method);
     next();
 });
-
+*/
 
 app.get('/', (req, res) => {
     res.render('index');
