@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('./db');
+const mongoURL = require('/db.js');
 const path = require('path');
 const crypto = require ('crypto');
 const mongoose = require ('mongoose');
@@ -12,7 +12,7 @@ const { connect } = require('http2');
 
 const app = express();
 const port = 80;
-const mongoURL = db();
+
 
 //create mongo connection
 const conn = mongoose.createConnection(mongoURL);
