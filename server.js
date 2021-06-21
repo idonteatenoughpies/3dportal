@@ -101,7 +101,7 @@ return res.json(files);
 
 // GET /files/:filename
 // Displays all files in json
-app.get('/files/"filename', (req, res) => {
+app.get('/files/:filename', (req, res) => {
     gfs.files.findOne({filename: req.params.filename}, (err, file) => {
 // Check if files
 if(!file || file.length === 0) {
