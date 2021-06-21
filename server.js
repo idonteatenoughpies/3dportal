@@ -83,6 +83,8 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.redirect('/application') 
 });
 
+// GET /files/:
+// Displays all files in json
 app.get('/files', (req, res) => {
 gfs.files.find().toArray((err, files) =>{
 // Check if files
@@ -95,5 +97,22 @@ if(!files || files.length === 0) {
 return res.json(files);
 });
 });
+
+
+// GET /files/:filename
+// Displays all files in json
+app.get('/files/"filename', (req, res) => {
+    gfs.files.findOne({filename: req.params.filename}, (err, file) => {
+// Check if files
+if(!file || file.length === 0) {
+    return res.status(404).json({
+        err: 'No file exist'
+    });
+}
+// File exists
+return res.json(file);
+    });
+});
+    
 
 app.listen(port,  () => console.log(`App is listening on port: ${port}`));
