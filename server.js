@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const db = require('./db');
 
 const path = __dirname + '/public/';
 const port = 80;
@@ -10,7 +11,6 @@ app.use (function (req,res,next) {
 });
 
 app.set('view engine', 'ejs');
-//app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path));
 
 app.use(express.urlencoded({extended:true}));
