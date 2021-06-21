@@ -149,5 +149,15 @@ readstream.pipe(res);
     });
 });
     
+//route DELETE/files/:id
+// Delete file
+app.delete('/files/:id', (req,res) => {
+gfs.remove({_id: req.params.id, root: 'uploads'}, (err, gridStore) => {
+if(err){
+    return res.status(404).json({err:err});
+}
+res.redirect('/');
+});
+});
 
 app.listen(port,  () => console.log(`App is listening on port: ${port}`));
