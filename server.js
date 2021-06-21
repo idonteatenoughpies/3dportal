@@ -76,7 +76,23 @@ app.get('/registration', (req, res) => {
 });
 
 app.get('/application', (req, res) => {
-    res.render('application');
+    gfs.files.find().toArray((err, files) =>{
+        // Check if files
+        if(!files || files.length === 0) {
+     res.render('application', {files: false});
+        } else {
+            files.map(file => {
+                if(file.contentType === 'image/jpeg' || contentType === 'image png'){
+                    file.isImage = true;
+                } else {
+                    file.isImage = false;
+                }
+            });
+            res.render('application', {files: files});
+        }
+        // Files exist
+        return res.json(files);
+        });
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {

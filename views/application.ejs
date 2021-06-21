@@ -19,6 +19,20 @@
 </div>
 <input type="submit" value="Submit" class="btn btn-primary btn-block">
 </form>
+<hr>
+<% if(files){ %>
+<% files.forEach(function(file) {%>
+<div class="card card-body mb-3">
+    <% if(file.isImage) { %>
+    <img src="image/<%= file.filename %>"" alt="">
+    <% } else { %>
+<% file.filename %>
+        <% } %>
+</div>
+    <% }) %>
+<% } else { %>
+<p>No files to display</p>
+<% } %>
           </div>  
         </div>
     </div>
