@@ -30,7 +30,7 @@ const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME
 const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true });
 
 //Middleware
-app.use(favicon('/favicon.ico'));
+app.use(favicon(__dirname + '/favicon.ico'));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
