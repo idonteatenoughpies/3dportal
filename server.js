@@ -81,6 +81,10 @@ app.get('/registration', (req, res) => {
     res.render('registration');
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) =>{
         // Check if files
