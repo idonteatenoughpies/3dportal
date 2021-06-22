@@ -77,6 +77,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/favicon', (req, res) => {
+    res.send('/public/favicon.ico');
+});
+
 app.get('/registration', (req, res) => {
     res.render('registration');
 });
