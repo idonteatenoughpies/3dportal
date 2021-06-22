@@ -3,6 +3,7 @@ const session = require ('express-session');
 const path = require('path');
 const crypto = require ('crypto');
 const mongoose = require ('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 const multer = require ('multer');
 const {GridFsStorage} = require ('multer-gridfs-storage');
 const Grid = require ('gridfs-stream');
@@ -42,6 +43,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
   }));
+
+  var db;
+MongoClient.connect(mongoURL, function(err, database) {
+  if (err) throw err;
+  db = database;
+});
 
 
 //Initialise the stream
@@ -182,7 +189,7 @@ app.post('/processlogin', (req,res) => {
 const username = req.body.username;
 const password = req.body.password;
 
-conn.collection('users').findOne({"login.username":username}, (err, result) => {
+db.collection('users').findOne({"login.username":username}, (err, result) => {
     if (err) throw err;
     if (!result){res.redirect('/login'); return}
     if(result.login.password === password){ req.session.loggedin = true; res.redirect('/dashboard')}
@@ -197,7 +204,7 @@ app.get('/profile', (req,res) => {
 
     const username = req.query.username;
 
-    conn.collection('users').findOne({"login.username":username}, (err, result) => {
+    db.collection('users').findOne({"login.username":username}, (err, result) => {
         if (err) throw err;
        
         res.render('/pages/profile', {user: result})
@@ -214,7 +221,7 @@ app.get('/profile', (req,res) => {
             "email":req.body.email,
             "login":{"username":req.body.username, "password":req.body.password},
         }
-conn.collection('users').insertOne(datatostore, (err,result) => {
+db.collection('users').insertOne(datatostore, (err,result) => {
     if (err) throw err;
     console.log('saved to database')
     res.redirect('/')
@@ -227,7 +234,7 @@ conn.collection('users').insertOne(datatostore, (err,result) => {
       
         const username = req.query.username;
 
-        conn.collection('users').findOne({
+        db.collection('users').findOne({
           "login.username": username
         }, function(err, result) {
           if (err) throw err;
