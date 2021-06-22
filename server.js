@@ -166,4 +166,50 @@ res.redirect('/application');
 });
 });
 
+//route@login
+// check for username & password combination
+app.post('/processlogin', (req,res) => {
+const username = req.body.username;
+const password = req.body.password;
+
+db.collection('users').findOne({"login.username":username}, (err, result) => {
+    if (err) throw err;
+    if (!result){res.redirect('/login'); return}
+    if(result.login.password === password){ req.session.loggedin = true; res.redirect('/dashboard')}
+    else {res.redirect('/login')}
+});
+});
+
+//route@profile
+// check for logged in status
+app.get('/profile', (req,res) => {
+    if(!req.session.loggedin){res.redirect('/login'); return;}
+
+    const username = req.query.username;
+
+    db.collection('users').findOne({"login.username":username}, (err, result) => {
+        if (err) throw err;
+       
+        res.render('/pages/profile', {user: result})
+    
+    });
+    });
+
+    app.post('/adduser', (req,res) => {
+        if(!req.session.loggedin){res.redirect('/login');return;}
+
+        const datatostore = {
+            "name":{"title":req.body.title,"first":req.body.first,"last":req.body.last},
+            "location":{"number":req.body.number,"street1":req.body.street1,"street2":req.body.street2,"town":req.body.town,"county":req.body.county,"postcode":req.body.postcode},
+            "email":req.body.email,
+            "login":{"username":req.body.username, "password":req.body.password},
+        }
+db.collection('users').save(datatostore, (err,result) => {
+    if (err) throw err;
+    console.log('saved to database')
+    res.redirect('/')
+})
+    });
+
+
 app.listen(port,  () => console.log(`App is listening on port: ${port}`));

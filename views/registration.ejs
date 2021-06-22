@@ -11,12 +11,27 @@
 </header>
 
 <main>
- <p>This is the registration page</p>
+ <form action="/adduser" method="POST">
+<label>Name</label>
+<input type="text" placerholder="title" name="title">
+<input type="text" placerholder="first name" name="first">
+<input type="text" placerholder="last name" name="last">
+</br><label>Login</label>
+<input type="email" placerholder="me@example.com" name="email">
+<input type="text" placerholder="username" name="username">
+<input type="password" placerholder="password" name="password">
+</br><label>Address</label>
+<input type="text" placerholder="number" name="number">
+<input type="text" placerholder="street 1" name="street1">
+<input type="text" placerholder="street 2" name="street2">
+<input type="text" placerholder="town" name="town">
+<input type="text" placerholder="county" name="county">
+<input type="text" placerholder="postcode" name="postcode">
+</br><button type="submit">Submit</button>
+</form>
+
+
 </main>
 
-<footer>
-  <%- include('partials/footer') %>
-</footer>
 
-</body>
-</html>
+  <%- include('partials/footer') %>

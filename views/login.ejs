@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+</head>
+
+<body class="container">
+
+<header>
+<%- include('partials/header') %>
+</header>
+
+<main>
+ <form action="/processlogin" method="POST">
+
+</br><label>Login</label>
+<input type="text" placerholder="username" name="username">
+<input type="password" placerholder="password" name="password">
+</br><button type="submit">Submit</button>
+</form>
+
+
+</main>
+
+
+  <%- include('partials/footer') %>
