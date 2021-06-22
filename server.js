@@ -35,7 +35,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));
 app.use(express.urlencoded({extended:true}));
-app.use(favicon("/images/favicon/favicon.ico)"));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon', 'favicon.ico')));
 
 //Initialise the stream
 let gfs;
