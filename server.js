@@ -215,7 +215,7 @@ app.get('/profile', (req,res) => {
     });
 
     app.post('/adduser', (req,res) => {
-        if(!req.session.loggedin){res.redirect('/login');return;}
+        //if(!req.session.loggedin){res.redirect('/login');return;}
 
         const datatostore = {
             "name":{"title":req.body.title,"first":req.body.first,"last":req.body.last},
