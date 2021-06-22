@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('partials/head') %>
 </head>
 
 <body class="container">
 
-<header>
-<%- include('partials/header') %>
-</header>
+  <header>
+    <%- include('partials/header') %>
+  </header>
 
-<main>
- <form action="/adduser" method="POST">
-<label>Name</label>
-<input type="text" placeholder="title" name="title">
-<input type="text" placeholder="first name" name="first">
-<input type="text" placeholder="last name" name="last">
-</br><label>Login</label>
-<input type="email" placeholder="me@example.com" name="email">
-<input type="text" placeholder="username" name="username">
-<input type="password" placeholder="password" name="password">
-</br><label>Address</label>
-<input type="text" placeholder="number" name="number">
-<input type="text" placeholder="street 1" name="street1">
-<input type="text" placeholder="street 2" name="street2">
-<input type="text" placeholder="town" name="town">
-<input type="text" placeholder="county" name="county">
-<input type="text" placeholder="postcode" name="postcode">
-</br><button type="submit">Submit</button>
-</form>
+  <main>
+    <form action="/adduser" method="POST">
+      <label>Name</label>
+      <input type="text" placeholder="title" name="title">
+      <input type="text" placeholder="first name" name="first">
+      <input type="text" placeholder="last name" name="last">
+      </br><label>Login</label>
+      <input type="email" placeholder="me@example.com" name="email">
+      <input type="text" placeholder="username" name="username">
+      <input type="password" placeholder="password" name="password">
+      </br><label>Address</label>
+      <input type="text" placeholder="number" name="number">
+      <input type="text" placeholder="street 1" name="street1">
+      <input type="text" placeholder="street 2" name="street2">
+      <input type="text" placeholder="town" name="town">
+      <input type="text" placeholder="county" name="county">
+      <input type="text" placeholder="postcode" name="postcode">
+      </br><button type="submit">Submit</button>
+    </form>
 
 
-</main>
+  </main>
 
 
   <%- include('partials/footer') %>
