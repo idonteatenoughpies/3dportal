@@ -182,7 +182,7 @@ app.post('/processlogin', (req,res) => {
 const username = req.body.username;
 const password = req.body.password;
 
-db.collection('users').findOne({"login.username":username}, (err, result) => {
+conn.collection('users').findOne({"login.username":username}, (err, result) => {
     if (err) throw err;
     if (!result){res.redirect('/login'); return}
     if(result.login.password === password){ req.session.loggedin = true; res.redirect('/dashboard')}
@@ -197,7 +197,7 @@ app.get('/profile', (req,res) => {
 
     const username = req.query.username;
 
-    db.collection('users').findOne({"login.username":username}, (err, result) => {
+    conn.collection('users').findOne({"login.username":username}, (err, result) => {
         if (err) throw err;
        
         res.render('/pages/profile', {user: result})
@@ -214,7 +214,7 @@ app.get('/profile', (req,res) => {
             "email":req.body.email,
             "login":{"username":req.body.username, "password":req.body.password},
         }
-db.collection('users').save(datatostore, (err,result) => {
+conn.collection('users').save(datatostore, (err,result) => {
     if (err) throw err;
     console.log('saved to database')
     res.redirect('/')
