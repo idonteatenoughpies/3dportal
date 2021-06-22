@@ -12,6 +12,11 @@ const { connect } = require('http2');
 const app = express();
 const port = 80;
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 
 //create mongo connection
 const MONGO_USERNAME = 'astruthers';
