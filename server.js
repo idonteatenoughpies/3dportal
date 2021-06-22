@@ -221,9 +221,9 @@ app.get('/profile', (req,res) => {
             "name":{"title":req.body.title,"first":req.body.first,"last":req.body.last},
             "location":{"number":req.body.number,"street1":req.body.street1,"street2":req.body.street2,"town":req.body.town,"county":req.body.county,"postcode":req.body.postcode},
             "email":req.body.email,
-            "login":{"username":req.body.username, "password":req.body.password},
+            "login":{"username":req.body.username, "password":req.body.password}
         }
-db.collection('users').insertOne(datatostore, (err,result) => {
+    db.collection('users').insertOne(datatostore, (err,result) => {
     if (err) throw err;
     console.log('saved to database')
     res.redirect('/')
