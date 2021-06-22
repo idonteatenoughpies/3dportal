@@ -26,7 +26,7 @@ const MONGO_PORT = '27017';
 const MONGO_DB = '3dportal';
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-const conn = mongoose.createConnection(mongoURL);
+const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true });
 
 //Middleware
 app.use(bodyParser.json());
