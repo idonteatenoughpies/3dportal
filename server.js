@@ -214,12 +214,36 @@ app.get('/profile', (req,res) => {
             "email":req.body.email,
             "login":{"username":req.body.username, "password":req.body.password},
         }
-conn.collection('users').save(datatostore, (err,result) => {
+conn.collection('users').insertOne(datatostore, (err,result) => {
     if (err) throw err;
     console.log('saved to database')
     res.redirect('/')
 })
     });
+
+    app.get('/dashboard', function(req, res) {
+        //if the user is not logged in redirect them to the login page
+        if(!req.session.loggedin){res.redirect('/login');return;}
+      
+        const username = req.query.username;
+
+        conn.collection('users').findOne({
+          "login.username": username
+        }, function(err, result) {
+          if (err) throw err;
+
+          res.render('dashboard', {
+            user: result
+          })
+        });
+      
+      });
+
+      app.get('/logout', function(req, res) {
+        req.session.loggedin = false;
+        req.session.destroy();
+        res.redirect('/');
+      });
 
 
 app.listen(port,  () => console.log(`App is listening on port: ${port}`));
