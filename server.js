@@ -8,6 +8,7 @@ const Grid = require ('gridfs-stream');
 const methodOverride = require ('method-override');
 const bodyParser = require ('body-parser');
 const { connect } = require('http2');
+const favicon = require ('serve-favicon');
 
 const app = express();
 const port = 80;
@@ -34,6 +35,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));
 app.use(express.urlencoded({extended:true}));
+app.use(favicon("/images/favicon)"));
 
 //Initialise the stream
 let gfs;
@@ -62,8 +64,6 @@ const storage = new GridFsStorage({
     }
   });
   const upload = multer({ storage });
- 
-//const path = __dirname + '/public/';
 
 /*
 app.use (function (req,res,next) {
