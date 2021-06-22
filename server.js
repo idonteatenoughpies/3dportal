@@ -188,6 +188,7 @@ res.redirect('/application');
 app.post('/processlogin', (req,res) => {
 const username = req.body.username;
 const password = req.body.password;
+console.log(db);
 
 db.collection('users').findOne({"login.username":username}, (err, result) => {
     if (err) throw err;
