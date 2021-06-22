@@ -32,7 +32,7 @@ const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true });
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
-//app.use(express.static(path));
+app.use(express.static(__dirname+'/public'));
 app.use(express.urlencoded({extended:true}));
 
 //Initialise the stream
