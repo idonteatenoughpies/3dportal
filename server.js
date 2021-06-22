@@ -96,6 +96,7 @@ app.get('/registration', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
+    console.log(db);
 });
 
 app.get('/application', (req, res) => {
