@@ -233,19 +233,43 @@ app.post('/processlogin', async (req, res) => {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET);
-      //req.session.loggedin = true;
-      res.json({ status: 'ok', data: token });
-       
+        const token = jwt.sign({ id: user._id, username: user.username, first: user.first }, JWT_SECRET);
+        //req.session.loggedin = true;
+        res.json({ status: 'ok', data: token });
+
     }
 
     res.json({ status: 'error', error: 'Invalid username/password' });
 });
 
-app.post('/change-password', (req, res) => {
-const { token } = req.body;
-const user = jwt.verify(token, JWT_SECRET)
-res.json ({status: 'ok'});
+app.post('/change-password', async (req, res) => {
+    const { token, newpassword:plainTextPassword } = req.body;
+
+    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid password' })
+    }
+    if (plainTextPassword.length < 8) {
+        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+    }
+    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+        return res.json({ status: 'error', error: "Please try a more secure password." })
+    }
+
+
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const _id = user.id;
+        const password = await bcrypt.hash(plainTextPassword,10);
+        await User.updateOne(
+            { _id }, {
+                $set: { password: password }
+        }
+        )
+        res.json({status: 'ok'})
+
+    } catch (error) {
+        res.json({ status: 'error', error: 'Authenication failure' })
+    }
 });
 
 
