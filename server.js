@@ -236,6 +236,7 @@ app.post('/processlogin', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     User.findOne({ username }, function(err, result) {
+        console.log(JSON.stringify(result))
         if (err) throw err;//if there is an error, throw the error
         //if there is no result, redirect the user back to the login system as that username must not exist
         if(!result){res.send('no result');return}//{res.redirect('/login');return}
