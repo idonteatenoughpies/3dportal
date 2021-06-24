@@ -107,6 +107,16 @@ app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
 
+app.get('/dashboard', (req,res) => {
+    const { token } = req.body;
+    try {
+        jwt.verify(token, JWT_SECRET)
+        res.render('dashboard');
+    } catch (error) {
+        res.json({ status: 'error', error: 'Authenication failure' })
+    }
+});
+
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
@@ -223,7 +233,7 @@ app.post('/register', async (req, res) => {
     res.json({ status: 'ok' })
 });
 
-//route@login
+
 // check for username & password combination
 app.post('/processlogin', async (req, res) => {
     const { username, password } = req.body;
