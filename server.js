@@ -10,11 +10,13 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
-const user = require ('./model/user');
+const User = require('./model/user');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 80;
+const JWT_SECRET = 'dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y';
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -30,8 +32,8 @@ const MONGO_PORT = '27017';
 const MONGO_DB = '3dportal';
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
-mongoose.connect(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
+const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Middleware
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -48,9 +50,9 @@ app.use(session({
 
 
 let db;
-MongoClient.connect(mongoURL, (err, database) =>{
+MongoClient.connect(mongoURL, (err, database) => {
     if (err) throw err;
-    db = database.db; 
+    db = database.db;
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
@@ -188,51 +190,54 @@ app.delete('/files/:id', (req, res) => {
     });
 });
 
- app.post('/register', async (req, res) => {
-const {username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode} = req.body
+app.post('/register', async (req, res) => {
+    const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
 
-if (!username || typeof username !== 'string'){
-    return res.json ({status: 'error', error: 'Invalid username'})
-}
-if (!plainTextPassword || typeof plainTextPassword !== 'string'){
-    return res.json ({status: 'error', error: 'Invalid password'})
-}
-if (plainTextPassword.length < 8){
-    return res.json ({status: 'error', error: 'Password must be at least 8 characters long'})
-}
-if (plainTextPassword === 'password' || plainTextPassword === '12345678'){
-    return res.json ({status: 'error', error: "Please try a more secure password."})
-}
+    if (!username || typeof username !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid username' })
+    }
+    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid password' })
+    }
+    if (plainTextPassword.length < 8) {
+        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+    }
+    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+        return res.json({ status: 'error', error: "Please try a more secure password." })
+    }
 
-const password = await bcrypt.hash(plainTextPassword, 10)
+    const password = await bcrypt.hash(plainTextPassword, 10)
 
-try {
-await user.create({
-        username, password, first, last, number, street1, street2, town, county, postcode
-    })
-} catch (error){
-    if (error.code === 11000){
-    return res.json({status: 'error', error:'username is already in use'})
-}
-throw error}
-res.json({ status: 'ok'})
- });
+    try {
+        await User.create({
+            username, password, first, last, number, street1, street2, town, county, postcode
+        })
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.json({ status: 'error', error: 'username is already in use' })
+        }
+        throw error
+    }
+    res.json({ status: 'ok' })
+});
 
 //route@login
 // check for username & password combination
 app.post('/processlogin', async (req, res) => {
- /*   const username = req.body.username;
-    const password = req.body.password;
+    const { username, password } = req.body;
 
+    const user = await User.findOne({ username }).lean(); //lean strips much of the mongoose detail out of the response
 
-    db.collection('users').findOne({ "login.username": username }, (err, result) => {
-        if (err) throw err;
-        if (!result) { res.redirect('/login'); return }
-        if (result.login.password === password) { req.session.loggedin = true; res.redirect('/dashboard') }
-        else { res.redirect('/login') }
-    });
-    */
-   res.json({status: 'ok', data: 'a token'});
+    if (!user) {
+        return res.json({ status: 'error', error: 'Invalid username/password' });
+    }
+
+    if (await bcrypt.compare(password, user.password)) {
+        const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET);
+        res.json({ status: 'ok', data: token });
+    }
+
+    res.json({ status: 'error', error: 'Invalid username/password' });
 });
 
 //route@profile
