@@ -233,7 +233,7 @@ app.post('/register', async (req, res) => {
 // check for username & password combination
 app.post('/processlogin', async (req, res) => {
     const { username, password } = req.body;
-    User.findOne({ username }, function(err, result) {
+    const user = User.findOne({ username }, function(err, result) {
         if (err) throw err;//if there is an error, throw the error
         //if there is no result, redirect the user back to the login system as that username must not exist
         if(!result){res.redirect('/login');return}
