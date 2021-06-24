@@ -104,7 +104,7 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 app.get('/change-password', (req, res) => {
-    res.render('login');
+    res.render('change-password');
 });
 
 app.get('/application', (req, res) => {
