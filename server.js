@@ -106,7 +106,7 @@ app.get('/login', (req, res) => {
 app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
-
+/*
 app.get('/dashboard', checkToken, (req,res) => {
         jwt.verify(req.token, JWT_SECRET, (err, authorizedData) => {
             if(err){
@@ -139,7 +139,7 @@ const checkToken = (req, res, next) => {
         res.sendStatus(403)
     }
 }
-
+*/
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
@@ -267,7 +267,8 @@ app.post('/processlogin', async (req, res) => {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ id: user._id, username: user.username}, JWT_SECRET);
+        const token = jwt.sign({ id: user._id, username: user.username}, JWT_SECRET, (err,token));
+        if (err) {console.log(err)}
         res.json({ status: 'ok', data: token });
     } else {
     res.json({ status: 'error', error: 'Invalid username/password' });
