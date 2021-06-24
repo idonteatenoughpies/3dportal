@@ -231,7 +231,7 @@ app.post('/register', async (req, res) => {
 
 
 // check for username & password combination
-app.post('/processlogin',  (req, res) => {
+app.post('/processlogin', (req, res) => {
     const { username, password } = req.body;
     User.findOne({ username }, function(err, result) {
         if (err) throw err;//if there is an error, throw the error
