@@ -185,6 +185,26 @@ app.delete('/files/:id', (req, res) => {
     });
 });
 
+app.post('/adduser', (req, res) => {
+    // if(!req.session.loggedin){res.redirect('/login');return;}
+ 
+     const datatostore = {
+         "name": { "title": req.body.title, "first": req.body.first, "last": req.body.last },
+         "location": { "number": req.body.number, "street1": req.body.street1, "street2": req.body.street2, "town": req.body.town, "county": req.body.county, "postcode": req.body.postcode },
+         "email": req.body.email,
+         "login": { "username": req.body.username, "password": req.body.password }
+     }
+     db.users.insertOne(datatostore, (err, result) => {
+         if (err) throw err;
+         console.log('saved to database')
+         res.redirect('/')
+     })
+ });
+
+ app.post('/register', (req, res) => {
+console.log(req.body)
+ });
+
 //route@login
 // check for username & password combination
 app.post('/processlogin', (req, res) => {
@@ -213,22 +233,6 @@ app.get('/profile', (req, res) => {
         res.render('/pages/profile', { user: result })
 
     });
-});
-
-app.post('/adduser', (req, res) => {
-   // if(!req.session.loggedin){res.redirect('/login');return;}
-
-    const datatostore = {
-        "name": { "title": req.body.title, "first": req.body.first, "last": req.body.last },
-        "location": { "number": req.body.number, "street1": req.body.street1, "street2": req.body.street2, "town": req.body.town, "county": req.body.county, "postcode": req.body.postcode },
-        "email": req.body.email,
-        "login": { "username": req.body.username, "password": req.body.password }
-    }
-    db.users.insertOne(datatostore, (err, result) => {
-        if (err) throw err;
-        console.log('saved to database')
-        res.redirect('/')
-    })
 });
 
 app.get('/dashboard', function (req, res) {
