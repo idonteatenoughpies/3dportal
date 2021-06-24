@@ -232,13 +232,15 @@ app.post('/register', async (req, res) => {
 
 // check for username & password combination
 app.post('/processlogin', (req, res) => {
-    const { username, password } = req.body;
+    console.log(JSON.stringify(req.body))
+    var username = req.body.username;
+    var password = req.body.password;
     User.findOne({ username }, function(err, result) {
         if (err) throw err;//if there is an error, throw the error
         //if there is no result, redirect the user back to the login system as that username must not exist
-        if(!result){res.send('no result')}//{res.redirect('/login');return}
+        if(!result){res.send('no result');return}//{res.redirect('/login');return}
         //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the index
-        if( bcrypt.compare(password, result.login.password)){res.send("password check passed")}//{ req.session.loggedin = true; res.redirect('/dashboard') }
+        if( bcrypt.compare(password, result.login.password)){res.send("password check passed");return}//{ req.session.loggedin = true; res.redirect('/dashboard') }
         //otherwise send them back to login
         //else{res.redirect('/login')}
       });
