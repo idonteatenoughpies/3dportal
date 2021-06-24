@@ -267,7 +267,7 @@ app.post('/processlogin', async (req, res) => {
     }
 
     if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ id: user._id, username: user.username}, JWT_SECRET, (err,token));
+        const token = jwt.sign({ id: user._id, username: user.username}, JWT_SECRET);
         if (err) {console.log(err)}
         res.json({ status: 'ok', data: token });
     } else {
