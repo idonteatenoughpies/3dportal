@@ -29,7 +29,7 @@ const MONGO_PORT = '27017';
 const MONGO_DB = '3dportal';
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
+const conn = mongoose.connect(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
 
 //Middleware
 app.use(favicon(__dirname + '/public/favicon.ico'));
