@@ -241,7 +241,7 @@ app.post('/processlogin', async (req, res) => {
     }
 });
 
-app.post('/changepassword', async (req, res) => {
+app.post('/change-password', async (req, res) => {
     const { token, newpassword:plainTextPassword } = req.body;
 
     if (!plainTextPassword || typeof plainTextPassword !== 'string') {
