@@ -47,9 +47,7 @@ app.use(session({
 const db;
 MongoClient.connect(mongoURL, (err, database) =>{
     if (err) throw err;
-    //const db = database.db; //this is your problem! the const needs to be created outside so its global to the server
     db = database.db; 
-    //so we need to add the app.listen code once we know the database is ok.
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
@@ -256,6 +254,3 @@ app.get('/logout', function (req, res) {
     req.session.destroy();
     res.redirect('/');
 });
-
-
-//app.listen(port, () => console.log(`App is listening on port: ${port}`)); //this is another problem. Your code at the minute can listen before the DB is initiated.
