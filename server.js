@@ -107,15 +107,23 @@ app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
 
-app.get('/dashboard', (req,res) => {
-    const { token } = req.body;
-    try {
-        jwt.verify(token, JWT_SECRET)
-        res.render('dashboard');
-    } catch (error) {
-        res.json({ status: 'error', error: 'Authenication failure' })
-    }
-});
+app.get('/dashboard', checkToken, (req,res) => {
+        jwt.verify(req.token, JWT_SECRET, (err, authorizedData) => {
+            if(err){
+                //If error send Forbidden (403)
+                console.log('ERROR: Could not connect to the protected route');
+                res.sendStatus(403);
+            } else {
+                //If token is successfully verified, we can send the autorized data 
+                res.json({
+                    message: 'Successful log in',
+                    authorizedData
+                });
+                res.render('dashboard');
+            }
+        })
+    });
+
 
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
