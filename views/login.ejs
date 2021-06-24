@@ -13,7 +13,7 @@
 
   <main>
     <p>Please enter your details to login.</p>
-    <form id="login">
+    <form action="/processlogin" method= "POST">
       
       </br><label>Login</label>
       <input type="text" placeholder="username" id="username">
@@ -21,27 +21,6 @@
       </br><input type="submit">Submit</button>
     </form>
 
-    <script>
-      const form = document.getElementById('login')
-      form.addEventListener('submit', login)
-
-      async function login(event) {
-        event.preventDefault()
-
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
-        
-        const result = await fetch('/processlogin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username, password
-          })
-        })
-      }
-    </script>
 
   </main>
 
