@@ -29,7 +29,7 @@ const MONGO_PORT = '27017';
 const MONGO_DB = '3dportal';
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true });
+const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
 
 //Middleware
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -44,7 +44,7 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-var db;
+let db;
 MongoClient.connect(mongoURL, (err, database) =>{
     if (err) throw err;
     db = database.db; 
@@ -107,7 +107,7 @@ app.get('/application', (req, res) => {
             res.render('application', { files: false });
         } else {
             files.map(file => {
-                if (file.contentType === 'image/jpeg' || file.contentType === 'image png') {
+                if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
                     file.isImage = true;
                 } else {
                     file.isImage = false;
@@ -216,7 +216,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/adduser', (req, res) => {
-    if(!req.session.loggedin){res.redirect('/login');return;}
+   // if(!req.session.loggedin){res.redirect('/login');return;}
 
     const datatostore = {
         "name": { "title": req.body.title, "first": req.body.first, "last": req.body.last },
