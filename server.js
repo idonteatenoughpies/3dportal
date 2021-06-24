@@ -236,9 +236,9 @@ app.post('/processlogin', (req, res) => {
     User.findOne({ username }, function(err, result) {
         if (err) throw err;//if there is an error, throw the error
         //if there is no result, redirect the user back to the login system as that username must not exist
-        if(!result){res.redirect('/login');return}
+        if(!result){console.log('no result')}//{res.redirect('/login');return}
         //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the index
-        if( bcrypt.compare(password, result.login.password)){ req.session.loggedin = true; res.redirect('/dashboard') }
+        if( bcrypt.compare(password, result.login.password)){console.log("password check passed")}//{ req.session.loggedin = true; res.redirect('/dashboard') }
         //otherwise send them back to login
         else{res.redirect('/login')}
       });
