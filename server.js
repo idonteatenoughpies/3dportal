@@ -238,7 +238,7 @@ app.post('/processlogin', (req, res) => {
         //if there is no result, redirect the user back to the login system as that username must not exist
         if(!result){res.redirect('/login');return}
         //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the index
-        if( bcrypt.compare(password, result.password)){ req.session.loggedin = true; res.redirect('/dashboard') }
+        if( bcrypt.compare(password, result.login.password)){ req.session.loggedin = true; res.redirect('/dashboard') }
         //otherwise send them back to login
         else{res.redirect('/login')}
       });
@@ -275,22 +275,6 @@ app.post('/change-password', async (req, res) => {
     } catch (error) {
         res.json({ status: 'error', error: 'Authenication failure' })
     }
-});
-
-
-//route@profile
-// check for logged in status
-app.get('/profile', (req, res) => {
-    if (!req.session.loggedin) { res.redirect('/login'); return; }
-
-    const username = req.query.username;
-
-    db.collection('users').findOne({ "login.username": username }, (err, result) => {
-        if (err) throw err;
-
-        res.render('/pages/profile', { user: result })
-
-    });
 });
 
 app.get('/logout', function (req, res) {
