@@ -191,26 +191,31 @@ app.delete('/files/:id', (req, res) => {
 
  app.post('/register', async (req, res) => {
 const {username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode} = req.body
+
+if (!username || typeof username !== 'string'){
+    return res.json ({status: 'error', error: 'Invalid username'})
+}
+if (!plainTextPassword || typeof plainTextPassword !== 'string'){
+    return res.json ({status: 'error', error: 'Invalid password'})
+}
+if (plainTextPassword.length < 8){
+    return res.json ({status: 'error', error: 'Password must be at least 8 characters long'})
+}
+if (plainTextPassword === 'password' || plainTextPassword === '12345678'){
+    return res.json ({status: 'error', error: "Please try a more secure password that isn't password or 12345678" })
+}
+
 const password = await bcrypt.hash(plainTextPassword, 10)
 
 try {
-   const response = await user.create({
-        username,
-        password,
-        first,
-        last,
-        number,
-        street1,
-        street2,
-        town,
-        county,
-        postcode
+await user.create({
+        username, password, first, last, number, street1, street2, town, county, postcode
     })
-    console.log ('User created successfully: ',response)
-} catch {
-    console.log(error)
-    return res.json({status: 'error'})
+} catch (error){
+    if (error.code === 11000){
+    return res.json({status: 'error', error:'username is already in use'})
 }
+throw error}
 res.json({ status: 'ok'})
  });
 

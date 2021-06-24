@@ -30,6 +30,8 @@
       </br><input type="submit">Submit</button>
     </form>
 
+    <h2 id="success"></h2>
+
     <script>
       const form = document.getElementById('reg-form')
       form.addEventListener('submit',registerUser)
@@ -56,6 +58,13 @@
           body: JSON.stringify({first, last, email, username, password, number, street1, street2, town, county, postcode
           })
         }).then((res) => res.json())
+
+        if (result.status === 'ok'){
+          //everything went ok 
+          document.getElementById("success").innerHTML = "Congratulations. You Have now registered."
+        } else {
+          alter(result.error)
+        }
 console.log(result)      
 }
     </script>
