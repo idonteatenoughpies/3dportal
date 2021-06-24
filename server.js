@@ -47,7 +47,7 @@ app.use(session({
 }));
 
 let db;
-MongoClient.connect(mongoURL { useNewUrlParser: true , useUnifiedTopology: true}, (err, database) =>{
+MongoClient.connect(mongoURL, (err, database) =>{
     if (err) throw err;
     db = database.db; 
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
