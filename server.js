@@ -224,7 +224,7 @@ app.post('/adduser', (req, res) => {
         "email": req.body.email,
         "login": { "username": req.body.username, "password": req.body.password }
     }
-    db.collection('users').insertOne(datatostore, (err, result) => {
+    db.users.insertOne(datatostore, (err, result) => {
         if (err) throw err;
         console.log('saved to database')
         res.redirect('/')
@@ -237,7 +237,7 @@ app.get('/dashboard', function (req, res) {
 
     const username = req.query.username;
 
-    db.collection('users').findOne({
+    db.users.findOne({
         "login.username": username
     }, function (err, result) {
         if (err) throw err;
