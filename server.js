@@ -203,6 +203,7 @@ app.post('/adduser', (req, res) => {
 
  app.post('/register', (req, res) => {
 console.log(req.body)
+res.json({ status: 'ok'})
  });
 
 //route@login
