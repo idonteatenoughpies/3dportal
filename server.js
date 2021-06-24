@@ -11,6 +11,7 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
+const user = require ('./model/user');
 
 const app = express();
 const port = 80;
