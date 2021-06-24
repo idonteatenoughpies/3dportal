@@ -234,9 +234,9 @@ app.post('/processlogin', async (req, res) => {
 
     if (await bcrypt.compare(password, user.password)) {
       //  const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET);
-      //  res.json({ status: 'ok', data: token });
-       req.session.loggedin = true;
-       res.redirect('/dashboard') 
+      req.session.loggedin = true;
+      res.json({ status: 'ok', data: token });
+       
     }
 
     res.json({ status: 'error', error: 'Invalid username/password' });

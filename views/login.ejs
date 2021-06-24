@@ -44,9 +44,7 @@
         if (result.status === 'ok') {
           //everything went ok 
           console.log('Got the token: ', result.data)
-        } else {
-          document.getElementById("success").innerHTML = "REGISTRATION FAILED: " + result.error;
-         
+          res.redirect('/dashboard') 
         }
         console.log(result)
       }
