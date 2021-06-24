@@ -13,7 +13,6 @@ const favicon = require('serve-favicon');
 const User = require('./model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const session = require('express-session');
 
 const app = express();
 const port = 80;
