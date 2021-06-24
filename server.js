@@ -8,7 +8,6 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
-const bodyParser = require('body-parser');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const user = require ('./model/user');
@@ -36,7 +35,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true , useUnifiedTopology: true});
 
 //Middleware
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -202,7 +201,7 @@ if (plainTextPassword.length < 8){
     return res.json ({status: 'error', error: 'Password must be at least 8 characters long'})
 }
 if (plainTextPassword === 'password' || plainTextPassword === '12345678'){
-    return res.json ({status: 'error', error: "Please try a more secure password that isn't password or 12345678" })
+    return res.json ({status: 'error', error: "Please try a more secure password."})
 }
 
 const password = await bcrypt.hash(plainTextPassword, 10)
