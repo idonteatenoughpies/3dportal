@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const user = require ('./model/user');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 80;
@@ -45,6 +46,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
 
 let db;
 MongoClient.connect(mongoURL, (err, database) =>{
@@ -187,24 +189,28 @@ app.delete('/files/:id', (req, res) => {
     });
 });
 
-app.post('/adduser', (req, res) => {
-    // if(!req.session.loggedin){res.redirect('/login');return;}
- 
-     const datatostore = {
-         "name": { "title": req.body.title, "first": req.body.first, "last": req.body.last },
-         "location": { "number": req.body.number, "street1": req.body.street1, "street2": req.body.street2, "town": req.body.town, "county": req.body.county, "postcode": req.body.postcode },
-         "email": req.body.email,
-         "login": { "username": req.body.username, "password": req.body.password }
-     }
-     db.users.insertOne(datatostore, (err, result) => {
-         if (err) throw err;
-         console.log('saved to database')
-         res.redirect('/')
-     })
- });
-
  app.post('/register', (req, res) => {
-console.log(req.body)
+const {username, password: plainTestPassword, first, last, number, street1, street2, town, county, postcode} = req.body
+const password = await bcrypt.hash(plainTestPassword, 10)
+
+try {
+   const response = await user.create({
+        username,
+        password,
+        first,
+        last,
+        number,
+        street1,
+        street2,
+        town,
+        county,
+        postcode
+    })
+    console.log ('User created successfully: ',response)
+} catch {
+    console.log(error)
+    return res.json({status: 'error'})
+}
 res.json({ status: 'ok'})
  });
 
