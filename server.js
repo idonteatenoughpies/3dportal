@@ -220,8 +220,8 @@ res.json({ status: 'ok'})
 
 //route@login
 // check for username & password combination
-app.post('/processlogin', (req, res) => {
-    const username = req.body.username;
+app.post('/processlogin', async (req, res) => {
+ /*   const username = req.body.username;
     const password = req.body.password;
 
 
@@ -231,6 +231,8 @@ app.post('/processlogin', (req, res) => {
         if (result.login.password === password) { req.session.loggedin = true; res.redirect('/dashboard') }
         else { res.redirect('/login') }
     });
+    */
+   res.json({status: 'ok', data: 'a token'});
 });
 
 //route@profile

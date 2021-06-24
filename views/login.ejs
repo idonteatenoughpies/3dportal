@@ -12,13 +12,45 @@
   </header>
 
   <main>
-    <form action="/processlogin" method="POST">
-
+    <p>Please enter your details to login.</p>
+    <form id="login">
+      
       </br><label>Login</label>
-      <input type="text" placerholder="username" name="username">
-      <input type="password" placerholder="password" name="password">
-      </br><button type="submit">Submit</button>
+      <input type="text" placeholder="username" id="username">
+      <input type="password" placeholder="password" id="password">
+      </br><input type="submit">Submit</button>
     </form>
+
+    <script>
+      const form = document.getElementById('login')
+      form.addEventListener('submit', login)
+
+      async function login(event) {
+        event.preventDefault()
+
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        
+        const result = await fetch('/processlogin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username, password
+          })
+        }).then((res) => res.json())
+
+        if (result.status === 'ok') {
+          //everything went ok 
+          console.log('Got the token: ', result.data)
+        } else {
+          document.getElementById("success").innerHTML = "REGISTRATION FAILED: " + result.error;
+         
+        }
+        console.log(result)
+      }
+    </script>
 
   </main>
 
