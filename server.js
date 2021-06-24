@@ -240,7 +240,7 @@ app.post('/processlogin', (req, res) => {
         //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the index
         if( bcrypt.compare(password, result.login.password)){console.log("password check passed")}//{ req.session.loggedin = true; res.redirect('/dashboard') }
         //otherwise send them back to login
-        else{res.redirect('/login')}
+        //else{res.redirect('/login')}
       });
     });
     
