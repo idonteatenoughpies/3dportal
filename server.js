@@ -189,9 +189,9 @@ app.delete('/files/:id', (req, res) => {
     });
 });
 
- app.post('/register', (req, res) => {
-const {username, password: plainTestPassword, first, last, number, street1, street2, town, county, postcode} = req.body
-const password = await bcrypt.hash(plainTestPassword, 10)
+ app.post('/register', async (req, res) => {
+const {username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode} = req.body
+const password = await bcrypt.hash(plainTextPassword, 10)
 
 try {
    const response = await user.create({
