@@ -244,19 +244,6 @@ app.post('/processlogin',  (req, res) => {
       });
     });
     
-    /*.lean(); //lean strips much of the mongoose detail out of the response
-
-    if (!user) {
-        return res.json({ status: 'error', error: 'Invalid username/password' });
-    }
-
-    if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ id: user._id, username: user.username}, JWT_SECRET);
-        res.json({ status: 'ok', data: token });
-    } else {
-    res.json({ status: 'error', error: 'Invalid username/password' });
-    }
-});*/
 
 app.post('/change-password', async (req, res) => {
     if(!req.session.loggedin){res.redirect('/login');return;}
