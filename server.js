@@ -293,24 +293,6 @@ app.get('/profile', (req, res) => {
     });
 });
 
-app.get('/dashboard', function (req, res) {
-    //if the user is not logged in redirect them to the login page
-    if (!req.session.loggedin) { res.redirect('/login'); return; }
-
-    const username = req.query.username;
-
-    db.users.findOne({
-        "login.username": username
-    }, function (err, result) {
-        if (err) throw err;
-
-        res.render('dashboard', {
-            user: result
-        })
-    });
-
-});
-
 app.get('/logout', function (req, res) {
     req.session.loggedin = false;
     req.session.destroy();
