@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const user = require ('./model/user');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const port = 80;
