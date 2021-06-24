@@ -39,13 +39,7 @@
           body: JSON.stringify({
             username, password
           })
-        }).then((res) => res.json())
-
-        if (result.status === 'ok') {
-          //everything went ok 
-        res.redirect('/dashboard') 
-        }
-        console.log(result)
+        })
       }
     </script>
 
