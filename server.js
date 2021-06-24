@@ -102,7 +102,9 @@ app.get('/registration', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-
+});
+app.get('/change-password', (req, res) => {
+    res.render('login');
 });
 
 app.get('/application', (req, res) => {
@@ -239,7 +241,7 @@ app.post('/processlogin', async (req, res) => {
     }
 });
 
-app.post('/change-password', async (req, res) => {
+app.post('/changepassword', async (req, res) => {
     const { token, newpassword:plainTextPassword } = req.body;
 
     if (!plainTextPassword || typeof plainTextPassword !== 'string') {
