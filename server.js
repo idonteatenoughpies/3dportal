@@ -44,7 +44,7 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-const db;
+var db;
 MongoClient.connect(mongoURL, (err, database) =>{
     if (err) throw err;
     db = database.db; 
