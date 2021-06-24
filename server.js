@@ -242,6 +242,13 @@ app.post('/processlogin', async (req, res) => {
     res.json({ status: 'error', error: 'Invalid username/password' });
 });
 
+app.post('/change-password', (req, res) => {
+const { token } = req.body;
+const user = jwt.verify(token, JWT_SECRET)
+res.json ({status: 'ok'});
+});
+
+
 //route@profile
 // check for logged in status
 app.get('/profile', (req, res) => {
