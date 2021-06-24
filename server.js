@@ -13,10 +13,12 @@ const favicon = require('serve-favicon');
 const User = require('./model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const session = require('express-session');
 
 const app = express();
 const port = 80;
 const JWT_SECRET = 'dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y';
+app.use(session({ secret: 'dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y' }));
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -106,40 +108,12 @@ app.get('/login', (req, res) => {
 app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
-/*
-app.get('/dashboard', checkToken, (req,res) => {
-        jwt.verify(req.token, JWT_SECRET, (err, authorizedData) => {
-            if(err){
-                //If error send Forbidden (403)
-                console.log('ERROR: Could not connect to the protected route');
-                res.sendStatus(403);
-            } else {
-                //If token is successfully verified, we can send the autorized data 
-                res.json({
-                    message: 'Successful log in',
-                    authorizedData
-                });
+
+app.get('/dashboard',(req,res) => {
+    if(!req.session.loggedin){res.redirect('/login');return;}
                 res.render('dashboard');
-            }
-        })
-    });
+            });
 
-    //Check to make sure header is not undefined, if so, return Forbidden (403)
-const checkToken = (req, res, next) => {
-    const header = req.headers['authorization'];
-
-    if(typeof header !== 'undefined') {
-        const bearer = header.split(' ');
-        const token = bearer[1];
-
-        req.token = token;
-        next();
-    } else {
-        //If header is undefined return Forbidden (403)
-        res.sendStatus(403)
-    }
-}
-*/
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
@@ -260,7 +234,18 @@ app.post('/register', async (req, res) => {
 // check for username & password combination
 app.post('/processlogin', async (req, res) => {
     const { username, password } = req.body;
-    const user = await User.findOne({ username }).lean(); //lean strips much of the mongoose detail out of the response
+    User.findOne({ username }, function(err, result) {
+        if (err) throw err;//if there is an error, throw the error
+        //if there is no result, redirect the user back to the login system as that username must not exist
+        if(!result){res.redirect('/login');return}
+        //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the index
+        if(await bcrypt.compare(password, user.password)){ req.session.loggedin = true; res.redirect('/dashboard') }
+        //otherwise send them back to login
+        else{res.redirect('/login')}
+      });
+    });
+    
+    /*.lean(); //lean strips much of the mongoose detail out of the response
 
     if (!user) {
         return res.json({ status: 'error', error: 'Invalid username/password' });
@@ -272,10 +257,12 @@ app.post('/processlogin', async (req, res) => {
     } else {
     res.json({ status: 'error', error: 'Invalid username/password' });
     }
-});
+});*/
 
 app.post('/change-password', async (req, res) => {
-    const { token, newpassword:plainTextPassword } = req.body;
+    if(!req.session.loggedin){res.redirect('/login');return;}
+
+    const {newpassword:plainTextPassword } = req.body;
 
     if (!plainTextPassword || typeof plainTextPassword !== 'string') {
         return res.json({ status: 'error', error: 'Invalid password' })
