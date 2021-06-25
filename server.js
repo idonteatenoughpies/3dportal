@@ -117,6 +117,7 @@ app.get('/dashboard', (req, res) => {
         if (err) throw err;
         res.render('dashboard', {user:result});
     });
+});
 
     app.get('/application', (req, res) => {
         gfs.files.find().toArray((err, files) => {
