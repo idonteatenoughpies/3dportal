@@ -106,6 +106,8 @@ app.get('/login', (req, res) => {
         res.render('dashboard', {user:result});
     res.render('login');
 });
+});
+
 app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
