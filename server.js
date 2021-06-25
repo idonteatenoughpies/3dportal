@@ -106,6 +106,7 @@ app.get('/registration', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
+    console.log(session.loggedin);
 });
 
 app.get('/change-password', (req, res) => {
