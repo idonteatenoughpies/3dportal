@@ -91,8 +91,19 @@ app.use (function (req,res,next) {
 });
 */
 
+function userIdentity(){
+    const username = req.session.user;
+    User.findOne({ username }, function (err, result) {
+        if (err) throw err;
+        return {user:result}
+    });
+}
+
+
+
 app.get('/', (req, res) => {
-    res.render('index');
+    result = userIdentity();
+    res.render('index', {user:result});
 });
 
 app.get('/registration', (req, res) => {
