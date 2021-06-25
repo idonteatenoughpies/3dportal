@@ -46,12 +46,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
-app.use ((req,res,next) => {
-    res.loggedin = req.session.loggedin;
-    console.log(req.session.loggedin);
-    next();
-});
-
 
 let db;
 MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
