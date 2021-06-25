@@ -239,13 +239,9 @@ app.get('/dashboard', (req, res) => {
         var username = req.body.username;
         var password = req.body.password;
         User.findOne({ username }, function (err, result) {
-            if (err) throw err;//if there is an error, throw the error
-            //if there is no result, redirect the user back to the login system as that username must not exist
-            if (!result) { res.send('no result'); return }//{res.redirect('/login');return}
-            //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the indexs
-            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
-            //otherwise send them back to login
-            //else{res.redirect('/login')}
+            if (err) throw err;
+            if (!result) { res.send('no result'); return }
+            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true; res.redirect('/dashboard') }
         });
     });
 
