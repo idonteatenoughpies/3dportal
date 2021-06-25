@@ -46,6 +46,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+app.use ((req,res,next) => {
+    res.loggedin = req.session.loggedin;
+    next();
+});
 
 
 let db;
