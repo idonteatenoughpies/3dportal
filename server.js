@@ -108,6 +108,7 @@ app.get('/change-password', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     if (!req.session.loggedin) { res.redirect('/login'); return; }
+    console.log(session.loggedin);
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
