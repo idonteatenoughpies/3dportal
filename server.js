@@ -235,7 +235,6 @@ app.get('/dashboard', (req, res) => {
 
     // check for username & password combination
     app.post('/processlogin', (req, res) => {
-        console.log(JSON.stringify(req.body))
         var username = req.body.username;
         var password = req.body.password;
         User.findOne({ username }, function (err, result) {
@@ -263,7 +262,7 @@ app.get('/dashboard', (req, res) => {
 
 
         try {
-            const user = jwt.verify(token, JWT_SECRET)
+            const user = req.session.user
             const _id = user.id;
             const password = await bcrypt.hash(plainTextPassword, 10);
             await User.updateOne(
