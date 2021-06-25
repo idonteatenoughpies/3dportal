@@ -92,11 +92,12 @@ app.use (function (req,res,next) {
 */
 
 function userIdentity(){
-    const username = req.session.user;
+    if (req.session.user) {const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
         return {user:result}
     });
+}
 }
 
 
