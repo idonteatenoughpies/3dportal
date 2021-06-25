@@ -92,7 +92,8 @@ app.use (function (req,res,next) {
 
 
 app.get('/', (req, res) => {
-    res.render('index');
+    if (req.session.loggedin) { const user = req.session.user;}  
+    res.render('index', {user:user});
 });
 
 app.get('/registration', (req, res) => {
