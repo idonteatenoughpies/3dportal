@@ -241,7 +241,7 @@ app.get('/dashboard', (req, res) => {
         User.findOne({ username }, function (err, result) {
             if (err) throw err;
             if (!result) { res.send('no result'); return }
-            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true; res.redirect('/dashboard') }
+            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
         });
     });
 
