@@ -91,20 +91,9 @@ app.use (function (req,res,next) {
 });
 */
 
-function userIdentity(){
-    if (req.session.user) {const username = req.session.user;
-    User.findOne({ username }, function (err, result) {
-        if (err) throw err;
-        return {user:result}
-    });
-}
-}
-
-
 
 app.get('/', (req, res) => {
-    result = userIdentity();
-    res.render('index', {user:result});
+    res.render('index', {user});
 });
 
 app.get('/registration', (req, res) => {
@@ -112,12 +101,7 @@ app.get('/registration', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    const username = req.session.user;
-    User.findOne({ username }, function (err, result) {
-        if (err) throw err;
-        res.render('dashboard', {user:result});
     res.render('login');
-});
 });
 
 app.get('/change-password', (req, res) => {
