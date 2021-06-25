@@ -108,180 +108,184 @@ app.get('/change-password', (req, res) => {
     res.render('change-password');
 });
 
-app.get('/dashboard',(req,res) => {
-    if(!req.session.loggedin){res.redirect('/login');return;}
-    console.log(req.session);
-                res.render('dashboard');
-            });
-
-app.get('/application', (req, res) => {
-    gfs.files.find().toArray((err, files) => {
-        // Check if files
-        if (!files || files.length === 0) {
-            res.render('application', { files: false });
-        } else {
-            files.map(file => {
-                if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
-                    file.isImage = true;
-                } else {
-                    file.isImage = false;
-                }
-            });
-            res.render('application', { files: files });
-        }
+app.get('/dashboard', (req, res) => {
+    if (!req.session.loggedin) { res.redirect('/login'); return; }
+    const username = req.session.user;
+    db.collection('users').findOne({
+        "username": username
+    }, function (err, result) {
+        if (err) throw err;
+        res.render('dashboard', {user:result});
     });
-});
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    res.redirect('/application')
-});
-
-// GET /files/:
-// Displays all files in json
-app.get('/files', (req, res) => {
-    gfs.files.find().toArray((err, files) => {
-        // Check if files
-        if (!files || files.length === 0) {
-            return res.status(404).json({
-                err: 'No files exist'
-            });
-        }
-        // Files exist
-        return res.json(files);
+    app.get('/application', (req, res) => {
+        gfs.files.find().toArray((err, files) => {
+            // Check if files
+            if (!files || files.length === 0) {
+                res.render('application', { files: false });
+            } else {
+                files.map(file => {
+                    if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+                        file.isImage = true;
+                    } else {
+                        file.isImage = false;
+                    }
+                });
+                res.render('application', { files: files });
+            }
+        });
     });
-});
 
-
-// GET /files/:filename
-// Displays single file object
-app.get('/files/:filename', (req, res) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        // Check if files
-        if (!file || file.length === 0) {
-            return res.status(404).json({
-                err: 'No file exist'
-            });
-        }
-        // File exists
-        return res.json(file);
+    app.post('/upload', upload.single('file'), (req, res) => {
+        res.redirect('/application')
     });
-});
 
-// GET /image/:filename
-// Displays image
-app.get('/image/:filename', (req, res) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-        // Check if files
-        if (!file || file.length === 0) {
-            return res.status(404).json({
-                err: 'No file exist'
-            });
-        }
-        // Check if image
-        if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
-            // Read output to browser
-            const readstream = gfs.createReadStream(file.filename);
-            readstream.pipe(res);
-        } else {
-            res.status(404).json({ err: 'Not an Image' })
-        }
+    // GET /files/:
+    // Displays all files in json
+    app.get('/files', (req, res) => {
+        gfs.files.find().toArray((err, files) => {
+            // Check if files
+            if (!files || files.length === 0) {
+                return res.status(404).json({
+                    err: 'No files exist'
+                });
+            }
+            // Files exist
+            return res.json(files);
+        });
     });
-});
 
-//route DELETE/files/:id
-// Delete file
-app.delete('/files/:id', (req, res) => {
-    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-        if (err) {
-            return res.status(404).json({ err: err });
-        }
-        res.redirect('/application');
+
+    // GET /files/:filename
+    // Displays single file object
+    app.get('/files/:filename', (req, res) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+            // Check if files
+            if (!file || file.length === 0) {
+                return res.status(404).json({
+                    err: 'No file exist'
+                });
+            }
+            // File exists
+            return res.json(file);
+        });
     });
-});
 
-app.post('/register', async (req, res) => {
-    const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
-
-    if (!username || typeof username !== 'string') {
-        return res.json({ status: 'error', error: 'Invalid username' })
-    }
-    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
-        return res.json({ status: 'error', error: 'Invalid password' })
-    }
-    if (plainTextPassword.length < 8) {
-        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
-    }
-    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
-        return res.json({ status: 'error', error: "Please try a more secure password." })
-    }
-
-    const password = await bcrypt.hash(plainTextPassword, 10)
-
-    try {
-        await User.create({
-            username, password, first, last, number, street1, street2, town, county, postcode
-        })
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.json({ status: 'error', error: 'username is already in use' })
-        }
-        throw error
-    }
-    res.json({ status: 'ok' })
-});
-
-
-// check for username & password combination
-app.post('/processlogin', (req, res) => {
-    console.log(JSON.stringify(req.body))
-    var username = req.body.username;
-    var password = req.body.password;
-    User.findOne({ username }, function(err, result) {
-        if (err) throw err;//if there is an error, throw the error
-        //if there is no result, redirect the user back to the login system as that username must not exist
-        if(!result){res.send('no result');return}//{res.redirect('/login');return}
-        //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the indexs
-       if( bcrypt.compare(password, result.password)){ req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
-        //otherwise send them back to login
-        //else{res.redirect('/login')}
-      });
+    // GET /image/:filename
+    // Displays image
+    app.get('/image/:filename', (req, res) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+            // Check if files
+            if (!file || file.length === 0) {
+                return res.status(404).json({
+                    err: 'No file exist'
+                });
+            }
+            // Check if image
+            if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+                // Read output to browser
+                const readstream = gfs.createReadStream(file.filename);
+                readstream.pipe(res);
+            } else {
+                res.status(404).json({ err: 'Not an Image' })
+            }
+        });
     });
-    
 
-app.post('/change-password', async (req, res) => {
-    if(!req.session.loggedin){res.redirect('/login');return;}
+    //route DELETE/files/:id
+    // Delete file
+    app.delete('/files/:id', (req, res) => {
+        gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+            if (err) {
+                return res.status(404).json({ err: err });
+            }
+            res.redirect('/application');
+        });
+    });
 
-    const {newpassword:plainTextPassword } = req.body;
+    app.post('/register', async (req, res) => {
+        const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
 
-    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
-        return res.json({ status: 'error', error: 'Invalid password' })
-    }
-    if (plainTextPassword.length < 8) {
-        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
-    }
-    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
-        return res.json({ status: 'error', error: "Please try a more secure password." })
-    }
+        if (!username || typeof username !== 'string') {
+            return res.json({ status: 'error', error: 'Invalid username' })
+        }
+        if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+            return res.json({ status: 'error', error: 'Invalid password' })
+        }
+        if (plainTextPassword.length < 8) {
+            return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+        }
+        if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+            return res.json({ status: 'error', error: "Please try a more secure password." })
+        }
+
+        const password = await bcrypt.hash(plainTextPassword, 10)
+
+        try {
+            await User.create({
+                username, password, first, last, number, street1, street2, town, county, postcode
+            })
+        } catch (error) {
+            if (error.code === 11000) {
+                return res.json({ status: 'error', error: 'username is already in use' })
+            }
+            throw error
+        }
+        res.json({ status: 'ok' })
+    });
 
 
-    try {
-        const user = jwt.verify(token, JWT_SECRET)
-        const _id = user.id;
-        const password = await bcrypt.hash(plainTextPassword,10);
-        await User.updateOne(
-            { _id }, {
+    // check for username & password combination
+    app.post('/processlogin', (req, res) => {
+        console.log(JSON.stringify(req.body))
+        var username = req.body.username;
+        var password = req.body.password;
+        User.findOne({ username }, function (err, result) {
+            if (err) throw err;//if there is an error, throw the error
+            //if there is no result, redirect the user back to the login system as that username must not exist
+            if (!result) { res.send('no result'); return }//{res.redirect('/login');return}
+            //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the indexs
+            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
+            //otherwise send them back to login
+            //else{res.redirect('/login')}
+        });
+    });
+
+
+    app.post('/change-password', async (req, res) => {
+        if (!req.session.loggedin) { res.redirect('/login'); return; }
+
+        const { newpassword: plainTextPassword } = req.body;
+
+        if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+            return res.json({ status: 'error', error: 'Invalid password' })
+        }
+        if (plainTextPassword.length < 8) {
+            return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+        }
+        if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+            return res.json({ status: 'error', error: "Please try a more secure password." })
+        }
+
+
+        try {
+            const user = jwt.verify(token, JWT_SECRET)
+            const _id = user.id;
+            const password = await bcrypt.hash(plainTextPassword, 10);
+            await User.updateOne(
+                { _id }, {
                 $set: { password: password }
+            }
+            )
+            res.json({ status: 'ok' })
+
+        } catch (error) {
+            res.json({ status: 'error', error: 'Authenication failure' })
         }
-        )
-        res.json({status: 'ok'})
+    });
 
-    } catch (error) {
-        res.json({ status: 'error', error: 'Authenication failure' })
-    }
-});
-
-app.get('/logout', function (req, res) {
-    req.session.loggedin = false;
-    req.session.destroy();
-    res.redirect('/');
-});
+    app.get('/logout', function (req, res) {
+        req.session.loggedin = false;
+        req.session.destroy();
+        res.redirect('/');
+    });
