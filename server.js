@@ -99,14 +99,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/registration', (req, res) => {
-    res.render('registration');
+    if (req.session.loggedin) { const user = req.session.user; 
+        res.render('registration', {user:user})}
+        else {res.render('registration', {user:undefined})};
 });
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    if (req.session.loggedin) { const user = req.session.user; 
+        res.render('login', {user:user})}
+        else {res.render('login', {user:undefined})};
 });
 
 app.get('/change-password', (req, res) => {
+    if (!req.session.loggedin) { res.redirect('/login'); return; }
     res.render('change-password');
 });
 
