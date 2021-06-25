@@ -110,7 +110,7 @@ app.get('/change-password', (req, res) => {
 
 app.get('/dashboard',(req,res) => {
     if(!req.session.loggedin){res.redirect('/login');return;}
-                res.render('dashboard');
+                res.render('dashboard', {loggedin: loggedin});
             });
 
 app.get('/application', (req, res) => {
