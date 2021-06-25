@@ -111,9 +111,7 @@ app.get('/change-password', (req, res) => {
 app.get('/dashboard', (req, res) => {
     if (!req.session.loggedin) { res.redirect('/login'); return; }
     const username = req.session.user;
-    db.collection('users').findOne({
-        "username": username
-    }, function (err, result) {
+    User.findOne({ username }, function (err, result) {
         if (err) throw err;
         res.render('dashboard', {user:result});
     });
