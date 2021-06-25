@@ -12,12 +12,10 @@ const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+require ('dotenv').config();
 
 const app = express();
 const port = 80;
-const JWT_SECRET = 'dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y';
-app.use(session({ secret: 'dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y' }));
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -44,7 +42,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
 }));
