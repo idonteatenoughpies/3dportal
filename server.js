@@ -111,7 +111,7 @@ app.get('/dashboard', (req, res) => {
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        res.render('dashboard', {user:result, loggedin:loggedin});
+        res.render('dashboard', {user:result, loggedin:true});
     });
 });
 
