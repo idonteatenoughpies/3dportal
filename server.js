@@ -110,6 +110,7 @@ app.get('/change-password', (req, res) => {
 
 app.get('/dashboard',(req,res) => {
     if(!req.session.loggedin){res.redirect('/login');return;}
+    console.log(session);
                 res.render('dashboard');
             });
 
@@ -240,7 +241,7 @@ app.post('/processlogin', (req, res) => {
         //if there is no result, redirect the user back to the login system as that username must not exist
         if(!result){res.send('no result');return}//{res.redirect('/login');return}
         //if there is a result then check the password, if the password is correct set session loggedin to true and send the user to the indexs
-       if( bcrypt.compare(password, result.password)){ req.session.loggedin = true; res.redirect('/dashboard',  {user: result}) }
+       if( bcrypt.compare(password, result.password)){ req.session.loggedin = true; res.redirect('/dashboard') }
         //otherwise send them back to login
         //else{res.redirect('/login')}
       });
