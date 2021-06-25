@@ -281,6 +281,7 @@ app.get('/dashboard', (req, res) => {
     });
 
     app.get('/logout', function (req, res) {
+        console.log("reached log out route");
         req.session.loggedin = false;
         req.session.destroy();
         res.redirect('/');
