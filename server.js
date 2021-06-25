@@ -48,6 +48,7 @@ app.use(session({
 }));
 app.use ((req,res,next) => {
     res.loggedin = req.session.loggedin;
+    console.log(loggedin);
     next();
 });
 
@@ -106,7 +107,6 @@ app.get('/registration', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
-    console.log(req.session.loggedin);
 });
 
 app.get('/change-password', (req, res) => {
