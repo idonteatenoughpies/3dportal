@@ -94,7 +94,7 @@ app.use (function (req,res,next) {
 app.get('/', (req, res) => {
     if (req.session.loggedin) { const user = req.session.user; 
     res.render('index', {user:user})}
-    else {res.render('index', {user:""})};
+    else {res.render('index', {user:undefined})};
     
 });
 
