@@ -100,6 +100,10 @@ app.get('/registration', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+    const username = req.session.user;
+    User.findOne({ username }, function (err, result) {
+        if (err) throw err;
+        res.render('dashboard', {user:result});
     res.render('login');
 });
 app.get('/change-password', (req, res) => {
