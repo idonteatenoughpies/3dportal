@@ -17,7 +17,7 @@ const fs = require ('fs');
 require('dotenv').config();
 
 const app = express();
-const port = 80;
+const port = 3000;
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
