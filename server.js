@@ -58,8 +58,8 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
 
 // Listen both http & https ports
 const httpsServer = https.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/fullchain.pem'),
 }, app);
 
 httpsServer.listen(443, () => {
