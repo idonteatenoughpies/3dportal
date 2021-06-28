@@ -47,9 +47,9 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: {
+          body: JSON.stringify({
             username
-          }
+          })
         }).then((res) => res.json())
 
         if (result.status !== 'ok') {
