@@ -135,7 +135,7 @@ app.get('/admindashboard', (req, res) => {
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        if (result.role === "admin"){res.redirect({ user: result }, '/admindashboard'); return; }
+        if (result.role === "admin"){res.redirect('/admindashboard', { user: result });}
         else {res.render('dashboard', { user: result });}
     });
 });
