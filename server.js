@@ -56,7 +56,7 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
-// Listen both http & https ports
+/*
 const httpsServer = https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/fullchain.pem'),
@@ -64,7 +64,7 @@ const httpsServer = https.createServer({
 
 httpsServer.listen(443, () => {
     console.log('HTTPS Server running on port 443');
-});
+}); */
 
 //Initialise the stream
 let gfs;
