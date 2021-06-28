@@ -248,7 +248,7 @@ app.post('/register', async (req, res) => {
 
 
 // check for username & password combination
-app.post('/processlogin',  (req, res) => {
+app.post('/processlogin', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     console.log(password);
@@ -256,9 +256,11 @@ app.post('/processlogin',  (req, res) => {
         console.log(result.password);
         if (err) throw err;
         if (!result) { res.send('no result'); return }
-        try {
-            if ( bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard') }
-        } catch (error) { res.json({ status: 'error', error: 'Authenication failure' }) }
+        bcrypt.compare(password, result.password).then((result) => {
+            if (result) {
+                req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard')
+            } else { res.json({ status: 'error', error: 'Authenication failure' }) }
+        });
     });
 });
 
