@@ -256,8 +256,8 @@ app.post('/processlogin', (req, res) => {
         console.log(result.password);
         if (err) throw err;
         if (!result) { res.send('no result'); return }
-        bcrypt.compare(password, result.password).then((result) => {
-            if (result) {
+        bcrypt.compare(password, result.password).then((passwordresult) => {
+            if (passwordresult) {
                 req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard')
             } else { res.json({ status: 'error', error: 'Authenication failure' }) }
         });
