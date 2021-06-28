@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     street2: {type: String},
     town: {type: String, required: true},
     county: {type: String, required: true},
-    postcode: {type: String, required: true}
+    postcode: {type: String, required: true},
+    role: {type:String}
 },
 {collection: 'users'}
 )
