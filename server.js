@@ -57,7 +57,7 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
         key: fs.readFileSync('server.key'),
         cert: fs.readFileSync('server.cert')
       }, app)
-      app.listen(port, () => console.log(`App is listening on port: ${port}`));
+      .listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
 
