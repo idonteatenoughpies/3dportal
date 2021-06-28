@@ -130,6 +130,16 @@ app.get('/dashboard', (req, res) => {
     });
 });
 
+app.get('/admindashboard', (req, res) => {
+    if (!req.session.loggedin) { res.redirect('/login'); return; }
+    const username = req.session.user;
+    User.findOne({ username }, function (err, result) {
+        if (err) throw err;
+        if (result.role === "admin"){res.redirect('/admindashboard', { user: result }); return; }
+        else {res.render('dashboard', { user: result });}
+    });
+});
+
 app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files

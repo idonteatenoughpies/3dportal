@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('partials/header') %>
+  </header>
+
+  <main>
+    <h1>Hi <%= user.first%>
+    </h1>
+    <p>this is the admin dashboard page</p>
+    <a href="/change-password"> Change password </a>
+
+<% console.log(user)%>
+
+  </main>
+
+
+  <%- include('partials/footer') %>
