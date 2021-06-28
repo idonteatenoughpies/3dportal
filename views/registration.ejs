@@ -56,6 +56,10 @@
           //everything went ok 
           document.getElementById("uniqUser").innerHTML = "This username is not available.";
         }
+        if (result.status === 'ok') {
+          //everything went ok 
+          document.getElementById("uniqUser").innerHTML = "";
+        }
       }
 
 
