@@ -41,7 +41,7 @@
           body: JSON.stringify({
            username, password
           })
-        }).then((res) => res.json())
+        })
 
         if (result.status === 'error') {
           document.getElementById("error").innerHTML = "Username/password did not match.";        
