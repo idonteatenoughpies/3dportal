@@ -53,7 +53,11 @@ let db;
 MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
     if (err) throw err;
     db = database.db;
-      app.listen(port, () => console.log(`App is listening on port: ${port}`));
+    https.createServer({
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.cert')
+      }, app)
+      .listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
 
