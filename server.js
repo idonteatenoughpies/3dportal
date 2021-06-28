@@ -266,11 +266,11 @@ app.post('/processlogin', (req, res) => {
     var password = req.body.password;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        if (!result) { return res.json({status: 'error'}); return }
+        if (!result) { return res.json({status: 'error'}) }
         bcrypt.compare(password, result.password).then((passwordresult) => {
             if (passwordresult) {
                 req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard')
-            } else { return res.json({ status: 'error'}); return }
+            } else { return res.json({ status: 'error'}) }
         });
     });
 });
