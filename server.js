@@ -245,7 +245,9 @@ app.get('/dashboard', (req, res) => {
     app.post('/processlogin', (req, res) => {
         var username = req.body.username;
         var password = req.body.password;
+        console.log(password);
         User.findOne({ username }, function (err, result) {
+            console.log(result.password);
             if (err) throw err;
             if (!result) { res.send('no result'); return }
             if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
