@@ -250,7 +250,7 @@ app.get('/dashboard', (req, res) => {
             console.log(result.password);
             if (err) throw err;
             if (!result) { res.send('no result'); return }
-            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username; res.redirect('/dashboard') }
+            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard') }
         });
     });
 
