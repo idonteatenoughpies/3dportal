@@ -12,7 +12,7 @@ const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
 const bcrypt = require('bcryptjs');
-require ('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 const port = 80;
@@ -92,22 +92,28 @@ app.use (function (req,res,next) {
 
 
 app.get('/', (req, res) => {
-    if (req.session.loggedin) { const user = req.session.user; 
-    res.render('index', {user:user})}
-    else {res.render('index', {user:undefined})};
-    
+    if (req.session.loggedin) {
+        const user = req.session.user;
+        res.render('index', { user: user })
+    }
+    else { res.render('index', { user: undefined }) };
+
 });
 
 app.get('/registration', (req, res) => {
-    if (req.session.loggedin) { const user = req.session.user; 
-        res.render('registration', {user:user})}
-        else {res.render('registration', {user:undefined})};
+    if (req.session.loggedin) {
+        const user = req.session.user;
+        res.render('registration', { user: user })
+    }
+    else { res.render('registration', { user: undefined }) };
 });
 
 app.get('/login', (req, res) => {
-    if (req.session.loggedin) { const user = req.session.user; 
-        res.render('login', {user:user})}
-        else {res.render('login', {user:undefined})};
+    if (req.session.loggedin) {
+        const user = req.session.user;
+        res.render('login', { user: user })
+    }
+    else { res.render('login', { user: undefined }) };
 });
 
 app.get('/change-password', (req, res) => {
@@ -120,177 +126,179 @@ app.get('/dashboard', (req, res) => {
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        res.render('dashboard', {user:result});
+        res.render('dashboard', { user: result });
     });
 });
 
-    app.get('/application', (req, res) => {
-        gfs.files.find().toArray((err, files) => {
-            // Check if files
-            if (!files || files.length === 0) {
-                res.render('application', { files: false });
-            } else {
-                files.map(file => {
-                    if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
-                        file.isImage = true;
-                    } else {
-                        file.isImage = false;
-                    }
-                });
-                res.render('application', { files: files });
-            }
-        });
-    });
-
-    app.post('/upload', upload.single('file'), (req, res) => {
-        res.redirect('/application')
-    });
-
-    // GET /files/:
-    // Displays all files in json
-    app.get('/files', (req, res) => {
-        gfs.files.find().toArray((err, files) => {
-            // Check if files
-            if (!files || files.length === 0) {
-                return res.status(404).json({
-                    err: 'No files exist'
-                });
-            }
-            // Files exist
-            return res.json(files);
-        });
-    });
-
-
-    // GET /files/:filename
-    // Displays single file object
-    app.get('/files/:filename', (req, res) => {
-        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-            // Check if files
-            if (!file || file.length === 0) {
-                return res.status(404).json({
-                    err: 'No file exist'
-                });
-            }
-            // File exists
-            return res.json(file);
-        });
-    });
-
-    // GET /image/:filename
-    // Displays image
-    app.get('/image/:filename', (req, res) => {
-        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-            // Check if files
-            if (!file || file.length === 0) {
-                return res.status(404).json({
-                    err: 'No file exist'
-                });
-            }
-            // Check if image
-            if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
-                // Read output to browser
-                const readstream = gfs.createReadStream(file.filename);
-                readstream.pipe(res);
-            } else {
-                res.status(404).json({ err: 'Not an Image' })
-            }
-        });
-    });
-
-    //route DELETE/files/:id
-    // Delete file
-    app.delete('/files/:id', (req, res) => {
-        gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-            if (err) {
-                return res.status(404).json({ err: err });
-            }
-            res.redirect('/application');
-        });
-    });
-
-    app.post('/register', async (req, res) => {
-        const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
-
-        if (!username || typeof username !== 'string') {
-            return res.json({ status: 'error', error: 'Invalid username' })
+app.get('/application', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+        // Check if files
+        if (!files || files.length === 0) {
+            res.render('application', { files: false });
+        } else {
+            files.map(file => {
+                if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+                    file.isImage = true;
+                } else {
+                    file.isImage = false;
+                }
+            });
+            res.render('application', { files: files });
         }
-        if (!plainTextPassword || typeof plainTextPassword !== 'string') {
-            return res.json({ status: 'error', error: 'Invalid password' })
-        }
-        if (plainTextPassword.length < 8) {
-            return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
-        }
-        if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
-            return res.json({ status: 'error', error: "Please try a more secure password." })
-        }
+    });
+});
 
-        const password = await bcrypt.hash(plainTextPassword, 10)
+app.post('/upload', upload.single('file'), (req, res) => {
+    res.redirect('/application')
+});
 
+// GET /files/:
+// Displays all files in json
+app.get('/files', (req, res) => {
+    gfs.files.find().toArray((err, files) => {
+        // Check if files
+        if (!files || files.length === 0) {
+            return res.status(404).json({
+                err: 'No files exist'
+            });
+        }
+        // Files exist
+        return res.json(files);
+    });
+});
+
+
+// GET /files/:filename
+// Displays single file object
+app.get('/files/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if files
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exist'
+            });
+        }
+        // File exists
+        return res.json(file);
+    });
+});
+
+// GET /image/:filename
+// Displays image
+app.get('/image/:filename', (req, res) => {
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+        // Check if files
+        if (!file || file.length === 0) {
+            return res.status(404).json({
+                err: 'No file exist'
+            });
+        }
+        // Check if image
+        if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+        } else {
+            res.status(404).json({ err: 'Not an Image' })
+        }
+    });
+});
+
+//route DELETE/files/:id
+// Delete file
+app.delete('/files/:id', (req, res) => {
+    gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+        if (err) {
+            return res.status(404).json({ err: err });
+        }
+        res.redirect('/application');
+    });
+});
+
+app.post('/register', async (req, res) => {
+    const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
+
+    if (!username || typeof username !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid username' })
+    }
+    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid password' })
+    }
+    if (plainTextPassword.length < 8) {
+        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+    }
+    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+        return res.json({ status: 'error', error: "Please try a more secure password." })
+    }
+
+    const password = await bcrypt.hash(plainTextPassword, 10)
+
+    try {
+        await User.create({
+            username, password, first, last, number, street1, street2, town, county, postcode
+        })
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.json({ status: 'error', error: 'username is already in use' })
+        }
+        throw error
+    }
+    res.json({ status: 'ok' })
+});
+
+
+// check for username & password combination
+app.post('/processlogin', async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    console.log(password);
+    User.findOne({ username }, function (err, result) {
+        console.log(result.password);
+        if (err) throw err;
+        if (!result) { res.send('no result'); return }
         try {
-            await User.create({
-                username, password, first, last, number, street1, street2, town, county, postcode
-            })
-        } catch (error) {
-            if (error.code === 11000) {
-                return res.json({ status: 'error', error: 'username is already in use' })
-            }
-            throw error
+            if (await bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard') }
+        } catch (error) { res.json({ status: 'error', error: 'Authenication failure' }) }
+    });
+});
+
+
+app.post('/change-password', async (req, res) => {
+    if (!req.session.loggedin) { res.redirect('/login'); return; }
+
+    const { newpassword: plainTextPassword } = req.body;
+
+    if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+        return res.json({ status: 'error', error: 'Invalid password' })
+    }
+    if (plainTextPassword.length < 8) {
+        return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
+    }
+    if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
+        return res.json({ status: 'error', error: "Please try a more secure password." })
+    }
+
+
+    try {
+        const user = req.session.user
+        const _id = user.id;
+        const password = await bcrypt.hash(plainTextPassword, 10);
+        await User.updateOne(
+            { _id }, {
+            $set: { password: password }
         }
+        )
         res.json({ status: 'ok' })
-    });
 
+    } catch (error) {
+        res.json({ status: 'error', error: 'Authenication failure' })
+    }
+});
 
-    // check for username & password combination
-    app.post('/processlogin', (req, res) => {
-        var username = req.body.username;
-        var password = req.body.password;
-        console.log(password);
-        User.findOne({ username }, function (err, result) {
-            console.log(result.password);
-            if (err) throw err;
-            if (!result) { res.send('no result'); return }
-            if (bcrypt.compare(password, result.password)) { req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard') }
-        });
-    });
-
-
-    app.post('/change-password', async (req, res) => {
-        if (!req.session.loggedin) { res.redirect('/login'); return; }
-
-        const { newpassword: plainTextPassword } = req.body;
-
-        if (!plainTextPassword || typeof plainTextPassword !== 'string') {
-            return res.json({ status: 'error', error: 'Invalid password' })
-        }
-        if (plainTextPassword.length < 8) {
-            return res.json({ status: 'error', error: 'Password must be at least 8 characters long' })
-        }
-        if (plainTextPassword === 'password' || plainTextPassword === '12345678') {
-            return res.json({ status: 'error', error: "Please try a more secure password." })
-        }
-
-
-        try {
-            const user = req.session.user
-            const _id = user.id;
-            const password = await bcrypt.hash(plainTextPassword, 10);
-            await User.updateOne(
-                { _id }, {
-                $set: { password: password }
-            }
-            )
-            res.json({ status: 'ok' })
-
-        } catch (error) {
-            res.json({ status: 'error', error: 'Authenication failure' })
-        }
-    });
-
-    app.get('/logout', function (req, res) {
-        console.log("reached log out route");
-        req.session.loggedin = false;
-        req.session.user= undefined;
-        req.session.destroy();
-        res.redirect('/');
-    });
+app.get('/logout', function (req, res) {
+    console.log("reached log out route");
+    req.session.loggedin = false;
+    req.session.user = undefined;
+    req.session.destroy();
+    res.redirect('/');
+});
