@@ -46,6 +46,9 @@
         if (result.status === 'error') {
           document.getElementById("error").innerHTML = "Username/password did not match.";        
         }
+        if (result.status === 'ok') {
+          window.location = result.redirect;        
+        }
       }
     
     </script>
