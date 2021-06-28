@@ -153,6 +153,9 @@ app.get('/admindashboard', (req, res) => {
 
 app.get('/application', (req, res) => {
     if (!req.session.loggedin) { res.redirect('/login'); return; }
+    const username = req.session.user;
+    User.findOne({ username }, function (err, result) {
+        if (err) throw err;
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
