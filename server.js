@@ -215,6 +215,19 @@ app.delete('/files/:id', (req, res) => {
     });
 });
 
+app.post('/checkUser', async (req, res) => {
+    const {username} = req.body
+
+    if (!username) {
+        return res.json({ status: 'ok'})
+    }
+        User.findOne({ username }, function (err, result) {
+            if (err) throw err;
+            if (!result) { return res.json({ status: 'ok'})
+        } else { res.json({ status: 'error' }) }
+    });
+});
+
 app.post('/register', async (req, res) => {
     const { username, password: plainTextPassword, first, last, number, street1, street2, town, county, postcode } = req.body
 

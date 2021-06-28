@@ -19,7 +19,8 @@
       <input type="text" placeholder="last name" id="last" required>
       </br><label>Login</label>
       <input type="email" placeholder="me@example.com" id="email" required>
-      <input type="text" placeholder="username" id="username" required>
+      <input type="text" placeholder="username" id="username" onkeyup="checkUser()" required>
+      <p id="uniqUser"></p>
       <input type="password" placeholder="password" id="password" required><p>Passwords must be a minimum of 8 characters long</p>
       <input type="password" placeholder="confirm password" id="confirmPassword" required>
       </br><label>Address</label>
@@ -37,6 +38,26 @@
     <script>
       const form = document.getElementById('reg-form')
       form.addEventListener('submit', registerUser)
+      
+
+      function checkUser(){
+        const username = document.getElementById('username').value
+        const result = await fetch('/checkUser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: {
+            username
+          }
+        }).then((res) => res.json())
+
+        if (result.status !== 'ok') {
+          //everything went ok 
+          document.getElementById("uniqUser").innerHTML = "This username is not available.";
+        }
+      }
+
 
       async function registerUser(event) {
         event.preventDefault()
