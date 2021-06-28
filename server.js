@@ -269,6 +269,7 @@ app.post('/processlogin', (req, res) => {
         if (!result) { return res.json({status: 'error'}) }
         bcrypt.compare(password, result.password).then((passwordresult) => {
             if (passwordresult) {
+                res.json ({status: "ok"})
                 req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard')
             } else { return res.json({ status: 'error'}) }
         });
