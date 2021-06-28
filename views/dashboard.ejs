@@ -16,7 +16,10 @@
     </h1>
     <p>this is the dashboard page</p>
     <a href="/change-password"> Change password </a>
-
+    <% if (user.role == "admin") { %>
+      <a href="/admindashboard">admin dashboard </a>
+      <% }%>
+      <p><%= user.role%></p>
 <% console.log(user)%>
 
   </main>
