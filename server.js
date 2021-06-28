@@ -172,6 +172,7 @@ app.get('/application', (req, res) => {
         }
     });
 });
+});
 
 app.post('/upload', upload.single('file'), (req, res) => {
     res.redirect('/application')
