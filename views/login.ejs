@@ -27,13 +27,13 @@
    const form = document.getElementById('login-form')
       form.addEventListener('submit', loginUser)
       
-      async function loginUser(event) {
+       function loginUser(event) {
         event.preventDefault()
 
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
 
-        const result = await fetch('/processlogin', {
+        const result =  fetch('/processlogin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
