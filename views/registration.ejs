@@ -40,7 +40,7 @@
       form.addEventListener('submit', registerUser)
       
 
-      function checkUser(){
+      async function checkUser(){
         const username = document.getElementById('username').value
         const result = await fetch('/checkUser', {
           method: 'POST',
@@ -96,7 +96,6 @@
           document.getElementById("success").innerHTML = "REGISTRATION FAILED: " + result.error;
          
         }
-        console.log(result)
       }
     }
     </script>
