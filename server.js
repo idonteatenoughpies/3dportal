@@ -12,6 +12,8 @@ const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
 const bcrypt = require('bcryptjs');
+const https = require('https');
+const fs = require ('fs');
 require('dotenv').config();
 
 const app = express();
@@ -51,7 +53,11 @@ let db;
 MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
     if (err) throw err;
     db = database.db;
-    app.listen(port, () => console.log(`App is listening on port: ${port}`));
+    https.createServer({
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.cert')
+      }, app)
+      .listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
 
@@ -141,6 +147,7 @@ app.get('/admindashboard', (req, res) => {
 });
 
 app.get('/application', (req, res) => {
+    if (!req.session.loggedin) { res.redirect('/login'); return; }
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
