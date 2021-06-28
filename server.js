@@ -264,15 +264,13 @@ app.post('/register', async (req, res) => {
 app.post('/processlogin', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    console.log(password);
     User.findOne({ username }, function (err, result) {
-        console.log(result.password);
         if (err) throw err;
-        if (!result) { res.send('no result'); return }
+        if (!result) { return res.json({status: 'error'}); return }
         bcrypt.compare(password, result.password).then((passwordresult) => {
             if (passwordresult) {
                 req.session.loggedin = true, req.session.user = result.username, res.redirect('/dashboard')
-            } else { res.json({ status: 'error', error: 'Authenication failure' }) }
+            } else { return res.json({ status: 'error'}); return }
         });
     });
 });

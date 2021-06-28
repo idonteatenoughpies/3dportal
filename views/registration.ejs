@@ -65,7 +65,6 @@
 
       async function passwordLength() {
         const password = document.getElementById('password').value
-        console.log(password.length);
         if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Passwords must be a minimum of 8 characters long.";}
         else{document.getElementById("passwordLength").innerHTML ="";}
       }

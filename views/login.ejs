@@ -13,13 +13,44 @@
 
   <main>
     <p>Please enter your details to login.</p>
-    <form action="/processlogin" method= "POST">
+    <form id="login-form">
       
       </br><label>Login</label>
-      <input type="text" placeholder="username" name="username">
-      <input type="password" placeholder="password" name="password">
+      <input type="text" placeholder="username" id="username">
+      <input type="password" placeholder="password" id="password">
       </br><input type="submit">Submit</button>
     </form>
+
+    <p id="error"></p>
+
+    <script>
+   const form = document.getElementById('login-form')
+      form.addEventListener('submit', loginUser)
+      
+      async function loginUser(event) {
+        event.preventDefault()
+
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+
+        const result = await fetch('/processlogin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+           username, password
+          })
+        }).then((res) => res.json())
+
+        if (result.status === 'error') {
+          document.getElementById("error").innerHTML = "Username/password did not match.";
+         
+        }
+      }
+    
+    </script>
+    
 
   </main>
 
