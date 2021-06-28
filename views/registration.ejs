@@ -55,7 +55,7 @@
         const confirmpassword = document.getElementById('confirmPassword').value
 
         if (password !== confirmpassword) {
-          document.getElementById("success").innerHTML = "passwords do not match.";
+          document.getElementById("success").innerHTML = "passwords do not match."; return;
         } else {
 
         const result = await fetch('/register', {
