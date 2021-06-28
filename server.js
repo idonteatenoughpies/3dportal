@@ -156,7 +156,7 @@ app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
-            res.render('application', { files: false });
+            res.render('application', { files: false, user: result });
         } else {
             files.map(file => {
                 if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
