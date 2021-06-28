@@ -168,7 +168,7 @@ app.get('/application', (req, res) => {
                     file.isImage = false;
                 }
             });
-            res.render('application', { files: files });
+            res.render('application', { files: files, user: result  });
         }
     });
 });
