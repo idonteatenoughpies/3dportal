@@ -21,7 +21,8 @@
       <input type="email" placeholder="me@example.com" id="email" required>
       <input type="text" placeholder="username" id="username" onkeyup="checkUser()" required>
       <p id="uniqUser"></p>
-      <input type="password" placeholder="password" id="password" required><p>Passwords must be a minimum of 8 characters long</p>
+      <input type="password" placeholder="password" id="password" required>
+      <p id="passwordLength" onkeyup="passwordLength()"></p>
       <input type="password" placeholder="confirm password" id="confirmPassword" required>
       </br><label>Address</label>
       <input type="text" placeholder="number" id="number" required>
@@ -62,6 +63,11 @@
         }
       }
 
+      async function passwordLength() {
+        const password = document.getElementById('password').value
+        if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Passwords must be a minimum of 8 characters long.";}
+        else{document.getElementById("passwordLength").innerHTML ="";}
+      }
 
       async function registerUser(event) {
         event.preventDefault()
