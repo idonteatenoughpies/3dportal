@@ -17,7 +17,7 @@ const fs = require ('fs');
 require('dotenv').config();
 
 const app = express();
-const port = 80;
+const port = 443;
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -57,7 +57,8 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
         key: fs.readFileSync('server.key'),
         cert: fs.readFileSync('server.cert')
       }, app)
-      .listen(port, () => console.log(`App is listening on port: ${port}`));
+      .
+    listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
 
