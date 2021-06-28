@@ -17,7 +17,7 @@ const fs = require ('fs');
 require('dotenv').config();
 
 const app = express();
-const port = 443;
+const port = 80;
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
@@ -53,14 +53,18 @@ let db;
 MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
     if (err) throw err;
     db = database.db;
-    const httpsServer= https.createServer({
-        key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
-      }, app);
-      
-    httpsServer.listen(port, () => console.log(`App is listening on port: ${port}`));
+    app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
+// Listen both http & https ports
+const httpsServer = https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/my_api_url/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/my_api_url/fullchain.pem'),
+}, app);
+
+httpsServer.listen(443, () => {
+    console.log('HTTPS Server running on port 443');
+});
 
 //Initialise the stream
 let gfs;
