@@ -56,16 +56,6 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
 
-/*
-const httpsServer = https.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/portal3d.co.uk/fullchain.pem'),
-}, app);
-
-httpsServer.listen(443, () => {
-    console.log('HTTPS Server running on port 443');
-}); */
-
 //Initialise the stream
 let gfs;
 conn.once('open', () => {
@@ -172,6 +162,10 @@ app.get('/application', (req, res) => {
         }
     });
 });
+});
+
+app.get('/3dmodel', (req,res) => {
+res.render('3dmodel');
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
