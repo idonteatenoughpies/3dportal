@@ -29,10 +29,6 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.minDistance = 100;
 	this.maxDistance = Infinity;
 
-	// How far you can zoom in and out ( OrthographicCamera only )
-	this.minZoom = 0;
-	this.maxZoom = Infinity;
-
 	// How far you can orbit vertically, upper and lower limits.
 	// Range is 0 to Math.PI radians.
 	this.minPolarAngle = 0; // radians
@@ -63,7 +59,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	// Set to true to automatically rotate around the target
 	// If auto-rotate is enabled, you must call controls.update() in your animation loop
-	this.autoRotate = false;
+	this.autoRotate = true;
 	this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
 
 	// Set to false to disable use of the keys
