@@ -1,6 +1,7 @@
 /**
  * @author mrdoob / http://mrdoob.com/
  */
+// https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/OBJLoader.js
 
  THREE.OBJLoader = ( function () {
 
