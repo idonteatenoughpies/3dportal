@@ -3,7 +3,7 @@
 	/**
  * Loads a Wavefront .mtl file specifying materials
  */
-
+// https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/MTLLoader.js
 	class MTLLoader extends THREE.Loader {
 
 		constructor( manager ) {
