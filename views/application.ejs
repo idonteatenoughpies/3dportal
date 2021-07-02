@@ -14,7 +14,51 @@
                     <h1 class="text-center display-4 my-4">New Planning Application</h1>
                     <form action="" method="POST">
                         <label for='title'>Title of Application</label>
-                        <input type="text" name="title" id="title"/>
+                        <input type="text" name="title" id="title" required/>
+                        <label for='description'>Description of Application</label>
+                        <input type="textarea" name="description" id="description" required/>
+                        <label for='applicantName'>Name of Applicant</label>
+                        <input type="text" name="applicantName" id="applicantName" required/>
+                        <label for='applicantAddress'>Address of applicant</label>
+                        <input type="text" name="applicantAddress" id="applicantAddress" required/>
+                        <label for='applicantPostcode'>Postcode of applicant</label>
+                        <input type="text" name="applicantPostcode" id="applicantPostcode" required/>
+                        <label for='applicantPhone'>Telephone of applicant</label>
+                        <input type="text" name="applicantPhone" id="applicantPhone" required/>
+                        <label for='agentName'>Name of Agent</label>
+                        <input type="text" name="agentName" id="agentName"/>
+                        <label for='agentAddress'>Address for agent</label>
+                        <input type="text" name="agentAddress" id="agentAddress"/>
+                        <label for='agentPostcode'>Postcode for agent</label>
+                        <input type="text" name="agentPostcode" id="agentPostcode"/>
+                        <label for='agentPhone'>Telephone for agent</label>
+                        <input type="text" name="agentPhone" id="agentPhone"/>
+                        <label for='propertyOwner'>Name of application site owner(s)</label>
+                        <input type="text" name="propertyOwner" id="propertyOwner"/ required>
+                        <label for='applicationStreet1'>Application address line 1</label>
+                        <input type="text" name="applicationStreet1" id="applicationStreet1" required/>
+                        <label for='applicationStreet2'>Application address line 2</label>
+                        <input type="text" name="applicationStreet2" id="applicationStreet2"/>
+                        <label for='applicationTown'>Application town</label>
+                        <input type="text" name="applicationTown" id="applicationTown" required/>
+                        <label for='applicationCounty'>Application county</label>
+                        <input type="text" name="applicationCounty" id="applicationCounty" required/>
+                        <label for='applicationPostcode'>Application Postcode</label>
+                        <input type="text" name="applicationPostcode" id="applicationPostcode" required/>
+                        <label for='modelRequired'>Is a 3d model required for this application?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="modelRequired" id="modelRequired1" value="no" checked>
+                            <label class="form-check-label" for="modelRequired1">
+                              No model required
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="modelRequired" id="modelRequired2" value="yes">
+                            <label class="form-check-label" for="modelRequired2">
+                              Model required
+                            </label>
+                          </div>
+
                     </form>
     <!-- planningID: { type: ObjectID, required: true, unique: true },
     dateCreated: { type: Date, default: Date.now, required: true },
@@ -34,6 +78,7 @@
         name: { type: String }, 
         address: { type: String }, 
         phone: { type: String } 
+        postcode: 
     },
     propertyOwner: { type: String },
     applicationAddress: {
@@ -46,8 +91,6 @@
     modelRequired: { type: Boolean, required: true },
     model: { type: String },
     caseOfficer: { type: String },
-    communityCouncil: { type: String },
-    ward: { type: String },
     EIARequired: { type: Boolean },
     EIA: { type: String },-->
                     

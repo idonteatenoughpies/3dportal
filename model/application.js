@@ -15,11 +15,18 @@ const applicationSchema = new mongoose.Schema({
     status: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    applicant: { type: String, required: true },
-    agent: { 
-        name: { type: String }, 
-        address: { type: String }, 
-        phone: { type: String } 
+    applicant: {
+        name: { type: String },
+        address: { type: String },
+        postcode: { type: String },
+        phone: { type: String }, 
+        required: true
+    },
+    agent: {
+        name: { type: String },
+        address: { type: String },
+        postcode: { type: String },
+        phone: { type: String }
     },
     propertyOwner: { type: String },
     applicationAddress: {
