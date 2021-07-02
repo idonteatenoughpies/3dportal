@@ -56,7 +56,7 @@ mtlLoader.load('village_house_obj.mtl', function (materials) {
     var objLoader = new THREE.OBJLoader();
     objLoader.setMaterials(materials);
     objLoader.setPath('3dmodel');
-    objLoader.load('/3dmodel/village_house._obj.obj', function (object) {
+    objLoader.load('/village_house._obj.obj', function (object) {
 
         scene.add(object);
         object.position.y -= 60;
