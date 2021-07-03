@@ -408,7 +408,7 @@ app.post('/newApplication', async (req, res) => {
             })
         } catch (error) {
 
-            return res.json({ status: 'error', error: 'username is already in use' })
+            return res.json({ status: 'error', error: 'unknown error' })
         }
 
         res.json({ status: 'ok' })
