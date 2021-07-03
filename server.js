@@ -337,6 +337,14 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+app.get('/newApplication', (req, res) => {
+    if (req.session.loggedin) {
+        const user = req.session.user;
+        res.render('index', { user: user })
+    }
+    else { res.render('newApplication', { user: undefined }) };
+
+});
 
 app.post('/newApplication', async (req, res) => {
     const { title, 

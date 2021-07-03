@@ -47,7 +47,7 @@ $("#submit").click(handleClick);
   
           if (result.status === 'ok') {
             //everything went ok 
-            document.getElementById("success").innerHTML = "Congratulations. You Have now registered. Login <a href ='/login'>here</a>";
+            document.getElementById("success").innerHTML = "Congratulations. You have successfully submitted an application";
           } else {
             document.getElementById("success").innerHTML = "REGISTRATION FAILED: " + result.error;
            
