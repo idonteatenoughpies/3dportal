@@ -1,6 +1,6 @@
 $("#submit").click(handleClick);
 
-      function handleClick() {
+      async function handleClick() {
           var title = $('#title').val();
           var description = $('#description').val();
           var applicantName = $('#applicantName').val();
