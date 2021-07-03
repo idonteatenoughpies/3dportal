@@ -337,7 +337,7 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-/*
+
 app.post('/newApplication', async (req, res) => {
     const { title, 
         description, 
@@ -393,4 +393,3 @@ app.post('/newApplication', async (req, res) => {
 
     res.json({ status: 'ok' })
 }); 
-*/
