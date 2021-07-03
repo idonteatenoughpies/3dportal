@@ -370,8 +370,8 @@ app.post('/newApplication', async (req, res) => {
     //const dateCreated = "2021-07-03"
     const planningID = "2021/1"
     const dateCreated = Date.now();
-    /*const currentYear = new Date().getFullYear();
-    const currentCount = ApplicationModel.countDocuments({ dateCreated = currentYear }, function (err, result) {
+    const currentYear = new Date().getFullYear();
+    /*const currentCount = ApplicationModel.countDocuments({ dateCreated = currentYear }, function (err, result) {
         if (err) throw err;
         if (result === 0) { currentCount = 1 };
     });
