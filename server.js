@@ -347,7 +347,7 @@ app.get('/newApplication', (req, res) => {
 
 });
 
-
+/*
 app.post('/newApplication', async (req, res) => {
     const { title,
         description,
@@ -410,4 +410,4 @@ app.post('/newApplication', async (req, res) => {
 
         res.json({ status: 'ok' })
     });
-    
+    */
