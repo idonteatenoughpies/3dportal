@@ -14,7 +14,7 @@ const User = require('./model/user');
 const ApplicationModel = require('./model/applicationmodel');
 const bcrypt = require('bcryptjs');
 const https = require('https');
-const fs = require ('fs');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -137,8 +137,8 @@ app.get('/admindashboard', (req, res) => {
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        if (result.role === "admin"){res.render('admindashboard', { user: result }); return;}
-        else {res.render('dashboard', { user: result });}
+        if (result.role === "admin") { res.render('admindashboard', { user: result }); return; }
+        else { res.render('dashboard', { user: result }); }
     });
 });
 
@@ -147,26 +147,26 @@ app.get('/applicationuploads', (req, res) => {
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-    gfs.files.find().toArray((err, files) => {
-        // Check if files
-        if (!files || files.length === 0) {
-            res.render('applicationuploads', { files: false, user: result });
-        } else {
-            files.map(file => {
-                if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
-                    file.isImage = true;
-                } else {
-                    file.isImage = false;
-                }
-            });
-            res.render('applicationuploads', { files: files, user: result  });
-        }
+        gfs.files.find().toArray((err, files) => {
+            // Check if files
+            if (!files || files.length === 0) {
+                res.render('applicationuploads', { files: false, user: result });
+            } else {
+                files.map(file => {
+                    if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
+                        file.isImage = true;
+                    } else {
+                        file.isImage = false;
+                    }
+                });
+                res.render('applicationuploads', { files: files, user: result });
+            }
+        });
     });
 });
-});
 
-app.get('/3dmodel', (req,res) => {
-res.render('3dmodel');
+app.get('/3dmodel', (req, res) => {
+    res.render('3dmodel');
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
@@ -237,14 +237,15 @@ app.delete('/files/:id', (req, res) => {
 });
 
 app.post('/checkUser', async (req, res) => {
-    const {username} = req.body
+    const { username } = req.body
 
     if (!username) {
-        return res.json({ status: 'ok'})
+        return res.json({ status: 'ok' })
     }
-        User.findOne({ username }, function (err, result) {
-            if (err) throw err;
-            if (!result) { return res.json({ status: 'ok'})
+    User.findOne({ username }, function (err, result) {
+        if (err) throw err;
+        if (!result) {
+            return res.json({ status: 'ok' })
         } else { res.json({ status: 'error' }) }
     });
 });
@@ -287,11 +288,11 @@ app.post('/processlogin', (req, res) => {
     var password = req.body.password;
     User.findOne({ username }, function (err, result) {
         if (err) throw err;
-        if (!result) { return res.json({status: 'error'}) }
+        if (!result) { return res.json({ status: 'error' }) }
         bcrypt.compare(password, result.password).then((passwordresult) => {
             if (passwordresult) {
-                req.session.loggedin = true, req.session.user = result.username, res.json({status:"ok", redirect:'/dashboard'})
-            } else { return res.json({ status: 'error'}) }
+                req.session.loggedin = true, req.session.user = result.username, res.json({ status: "ok", redirect: '/dashboard' })
+            } else { return res.json({ status: 'error' }) }
         });
     });
 });
@@ -347,16 +348,16 @@ app.get('/newApplication', (req, res) => {
 });
 
 app.post('/newApplication', async (req, res) => {
-    const { title, 
-        description, 
-        applicantName, 
-        applicantAddress, 
-        applicantPostcode, 
-        applicantPhone, 
-        agentName, 
-        agentAddress, 
-        agentPostcode, 
-        agentPhone, 
+    const { title,
+        description,
+        applicantName,
+        applicantAddress,
+        applicantPostcode,
+        applicantPhone,
+        agentName,
+        agentAddress,
+        agentPostcode,
+        agentPhone,
         propertyOwner,
         applicationStreet1,
         applicationStreet2,
@@ -364,40 +365,46 @@ app.post('/newApplication', async (req, res) => {
         applicationCounty,
         applicationPostcode,
         modelRequired } = req.body
+    const status = 'submitted';
+    const dateCreated = Date.now();
+    const currentYear = new Date().getFullYear();
+    const currentCount = ApplicationModel.countDocuments({ dateCreated = currentYear }, function (err, result) {
+        if (err) throw err;
+        if (result === 0) { currentCount = 1 };
+    const planningID = currentYear.concat("/", currentCount);
+        try {
+            await ApplicationModel.create({
+                planningID: planningID,
+                dateCreated: dateCreated,
+                status: status,
+                title: title,
+                description: description,
+                applicant: {
+                    name: applicantName,
+                    address: applicantAddress,
+                    postcode: applicantPostcode,
+                    phone: applicantPhone
+                },
+                agent: {
+                    name: agentName,
+                    address: agentAddress,
+                    postcode: agentPostcode,
+                    phone: agentPhone
+                },
+                propertyOwner: propertyOwner,
+                applicationAddress: {
+                    street1: applicationStreet1,
+                    street2: applicationStreet2,
+                    town: applicationTown,
+                    county: applicationCounty,
+                    postcode: applicationPostcode,
+                },
+                modelRequired: modelRequired,
+            })
+        } catch (error) {
 
-    try {
-        await ApplicationModel.create({
-            planningID: { type: ObjectID, required: true, unique: true },
-    dateCreated: Date.now(),
-    status: "submitted",
-    title: title,
-    description: description,
-    applicant: {
-        name: applicantName,
-        address: applicantAddress,
-        postcode: applicantPostcode,
-        phone: applicantPhone
-    },
-    agent: {
-        name: agentName,
-        address: agentAddress,
-        postcode: agentPostcode,
-        phone: agentPhone
-    },
-    propertyOwner: propertyOwner,
-    applicationAddress: {
-        street1: applicationStreet1,
-        street2: applicationStreet2,
-        town: applicationTown,
-        county: applicationCounty,
-        postcode: applicationPostcode,
-    },
-    modelRequired: modelRequired,
-        })
-    } catch (error) {
-        
             return res.json({ status: 'error', error: 'username is already in use' })
         }
 
-    res.json({ status: 'ok' })
-}); 
+        res.json({ status: 'ok' })
+    });
