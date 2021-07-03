@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
 
 const applicationSchema = new mongoose.Schema({
-    planningID: { type: ObjectID, required: true, unique: true },
+    planningID: { type: String, required: true, unique: true },
     dateCreated: { type: Date, required: true },
     dateValidated: { type: Date },
     dateDecided: { type: Date },
