@@ -406,7 +406,7 @@ app.post('/newApplication', async (req, res) => {
                     county: applicationCounty,
                     postcode: applicationPostcode,
                 },
-                modelRequired: modelRequired,
+                modelRequired: modelRequired
             })
         } catch (error) {
          
