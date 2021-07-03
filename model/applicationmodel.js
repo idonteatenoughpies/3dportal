@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require ('mongoose');
 
 const applicationSchema = new mongoose.Schema({
     planningID: { type: ObjectID, required: true, unique: true },
@@ -41,7 +41,7 @@ const applicationSchema = new mongoose.Schema({
     communityCouncil: { type: String },
     ward: { type: String },
     EIARequired: { type: Boolean },
-    EIA: { type: String },
+    EIA: { type: String }
 
 },
     { collection: 'applications' }
