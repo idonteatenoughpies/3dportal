@@ -51,7 +51,7 @@ const form = document.getElementById('app-form')
             //everything went ok 
             document.getElementById("success").innerHTML = "Congratulations. You have successfully submitted an application";
           } else {
-            document.getElementById("success").innerHTML = "New Application Failled: " + result.error;
+            document.getElementById("success").innerHTML = "New Application Failed: " + result.error;
            
           }
         }

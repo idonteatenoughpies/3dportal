@@ -407,8 +407,8 @@ app.post('/newApplication', async (req, res) => {
                 modelRequired: modelRequired,
             })
         } catch (error) {
-
-            return res.json({ status: 'error', error: 'unknown error' })
+throw error;
+       //     return res.json({ status: 'error', error: 'unknown error' })
         }
 
         res.json({ status: 'ok' })
