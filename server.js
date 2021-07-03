@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
-const Application = require('./model/applicationmodel');
+const ApplicationModel = require('./model/applicationmodel');
 const bcrypt = require('bcryptjs');
 const https = require('https');
 const fs = require ('fs');
@@ -366,7 +366,7 @@ app.post('/newApplication', async (req, res) => {
         modelRequired } = req.body
 
     try {
-        await Application.create({
+        await ApplicationModel.create({
             planningID: { type: ObjectID, required: true, unique: true },
     dateCreated: Date.now(),
     status: "submitted",
