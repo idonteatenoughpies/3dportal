@@ -11,6 +11,7 @@ const methodOverride = require('method-override');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
+const Application = require('./model/application');
 const bcrypt = require('bcryptjs');
 const https = require('https');
 const fs = require ('fs');
@@ -141,7 +142,7 @@ app.get('/admindashboard', (req, res) => {
     });
 });
 
-app.get('/application', (req, res) => {
+app.get('/applicationuploads', (req, res) => {
     if (!req.session.loggedin) { res.redirect('/login'); return; }
     const username = req.session.user;
     User.findOne({ username }, function (err, result) {
@@ -149,7 +150,7 @@ app.get('/application', (req, res) => {
     gfs.files.find().toArray((err, files) => {
         // Check if files
         if (!files || files.length === 0) {
-            res.render('application', { files: false, user: result });
+            res.render('applicationuploads', { files: false, user: result });
         } else {
             files.map(file => {
                 if (file.contentType === 'image/jpeg' || file.contentType === 'img/png') {
@@ -158,7 +159,7 @@ app.get('/application', (req, res) => {
                     file.isImage = false;
                 }
             });
-            res.render('application', { files: files, user: result  });
+            res.render('applicationuploads', { files: files, user: result  });
         }
     });
 });
@@ -169,7 +170,7 @@ res.render('3dmodel');
 });
 
 app.post('/upload', upload.single('file'), (req, res) => {
-    res.redirect('/application')
+    res.redirect('/applicationuploads')
 });
 
 // GET /files/:
@@ -231,7 +232,7 @@ app.delete('/files/:id', (req, res) => {
         if (err) {
             return res.status(404).json({ err: err });
         }
-        res.redirect('/application');
+        res.redirect('/applicationuploads');
     });
 });
 
@@ -334,4 +335,60 @@ app.get('/logout', function (req, res) {
     req.session.user = undefined;
     req.session.destroy();
     res.redirect('/');
+});
+
+app.post('/newApplication', async (req, res) => {
+    const { title, 
+        description, 
+        applicantName, 
+        applicantAddress, 
+        applicantPostcode, 
+        applicantPhone, 
+        agentName, 
+        agentAddress, 
+        agentPostcode, 
+        agentPhone, 
+        propertyOwner,
+        applicationStreet1,
+        applicationStreet2,
+        applicationTown,
+        applicationCounty,
+        applicationPostcode,
+        modelRequired } = req.body
+
+    try {
+        await Application.create({
+            planningID: { type: ObjectID, required: true, unique: true },
+    dateCreated: Date.now(),
+    status: "submitted",
+    title: title,
+    description: description,
+    applicant: {
+        name: applicantName,
+        address: applicantAddress,
+        postcode: applicantPostcode,
+        phone: applicantPhone
+    },
+    agent: {
+        name: agentName,
+        address: agentAddress,
+        postcode: agentPostcode,
+        phone: agentPhone
+    },
+    propertyOwner: propertyOwner,
+    applicationAddress: {
+        street1: applicationStreet1,
+        street2: applicationStreet2,
+        town: applicationTown,
+        county: applicationCounty,
+        postcode: applicationPostcode,
+    },
+    modelRequired: modelRequired,
+        })
+    } catch (error) {
+        
+            return res.json({ status: 'error', error: 'username is already in use' })
+        }
+
+    res.json({ status: 'ok' })
 });
