@@ -19,7 +19,7 @@ const form = document.getElementById('app-form')
           var applicationTown = $('#applicationTown').val();
           var applicationCounty = $('#applicationCounty').val();
           var applicationPostcode = $('#applicationPostcode').val();
-          var modelRequired = $('input[name="modelRequired"]:checked').val();
+          var modelRequired = $('input[name="#modelRequired"]:checked').val();
 
           const result = await fetch('/newApplication', {
             method: 'POST',
