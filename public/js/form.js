@@ -1,6 +1,8 @@
-$("#submit").click(handleClick);
+const form = document.getElementById('app-form')
+      form.addEventListener('submit', newApp)
 
-      async function handleClick() {
+      async function newApp(event) {
+        event.preventDefault()
           var title = $('#title').val();
           var description = $('#description').val();
           var applicantName = $('#applicantName').val();
