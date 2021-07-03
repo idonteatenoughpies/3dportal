@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const { connect } = require('http2');
 const favicon = require('serve-favicon');
 const User = require('./model/user');
-const Application = require('./model/application');
+//const Application = require('./model/application');
 const bcrypt = require('bcryptjs');
 const https = require('https');
 const fs = require ('fs');
@@ -337,7 +337,7 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-
+/*
 app.post('/newApplication', async (req, res) => {
     const { title, 
         description, 
@@ -393,3 +393,4 @@ app.post('/newApplication', async (req, res) => {
 
     res.json({ status: 'ok' })
 }); 
+*/
