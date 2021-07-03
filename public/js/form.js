@@ -19,7 +19,7 @@ $("#submit").click(handleClick);
           var applicationPostcode = $('#applicationPostcode').val();
           var modelRequired = $('#modelRequired').val();
 
-          const result = await fetch('/newApplication', {
+          const result =  fetch('/newApplication', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
