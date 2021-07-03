@@ -52,3 +52,4 @@ $("#submit").click(handleClick);
             document.getElementById("success").innerHTML = "REGISTRATION FAILED: " + result.error;
            
           }
+        }
