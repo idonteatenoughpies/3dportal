@@ -367,9 +367,9 @@ app.post('/newApplication', async (req, res) => {
         applicationPostcode,
         modelRequired } = req.body
     const status = 'submitted';
-    const dateCreated = "2021-07-03"
-    const planningID = "2021/4"
-    //const dateCreated = Date.now();
+    //const dateCreated = "2021-07-03"
+    //const planningID = "2021/4"
+    const dateCreated = Date.now();
     const yearCreated = new Date().getFullYear();
     /*try {
 
@@ -384,7 +384,8 @@ app.post('/newApplication', async (req, res) => {
     }
 */
 //const currentCount=0;
-    //const planningID = yearCreated.concat("/", (currentCount + 1));
+    const planningID = yearCreated.concat("/", (currentCount + 1));
+    return res.json({'planningID':planningID});
     try {
         await ApplicationModel.create({
             planningID: planningID,
