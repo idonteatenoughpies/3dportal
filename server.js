@@ -415,7 +415,7 @@ app.post('/newApplication', async (req, res) => {
     catch {
         return res.json({ status: 'error', error: error })
     }
-*/
+
 //const currentCount=0;
    // const planningID = yearCreated.concat("/", (currentCount + 1));
     return res.send(yearCreated);
