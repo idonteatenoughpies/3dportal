@@ -369,7 +369,7 @@ app.post('/newApplication', async (req, res) => {
     const status = 'submitted';
     //const dateCreated = "2021-07-03"
     //const planningID = "2021/4"
-    const dateCreated = Date.now();
+    const dateCreated = new Date();
     //const yearCreated = dateCreated.getFullYear();
     /*try {
 
