@@ -385,7 +385,7 @@ app.post('/newApplication', async (req, res) => {
 */
 //const currentCount=0;
    // const planningID = yearCreated.concat("/", (currentCount + 1));
-    return res.send(yearCreated);
+    return res.send(dateCreated);
     return res.json({'planningID':planningID});
     try {
         await ApplicationModel.create({
