@@ -373,7 +373,22 @@ app.post('/newApplication', async (req, res) => {
 
     const currentYear = new Date().getFullYear();
     try {
-        await ApplicationModel.count({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err, result) {
+
+        ApplicationModel.aggregate(
+            [
+                { "$match": {
+                    "dateCreated": { 
+                        "$gte": new Date(currentYear+"-01-01"), "$lt": new Date(currentYear+"-31-12")
+                    }
+                }},
+                { "$group": {
+                    "_id": { 
+                        "year":  { "$year": "$date" }
+                    },
+                    "count": { "$sum": 1 }
+                }}
+            ],
+            function(err,result) {
             if (err) throw err;
             const currentCount = result;
         });
