@@ -374,7 +374,7 @@ app.post('/newApplication', async (req, res) => {
     try {
 
         let currentCount
-ApplicationModel.count({yearCreated:yearCreated}, function(err,count) {
+await ApplicationModel.count({yearCreated:yearCreated}, function(err,count) {
             if (err) return res.json({ status: 'error', error: error })
              currentCount = count;
         });
