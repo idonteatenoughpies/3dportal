@@ -44,14 +44,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.json());
-app.use(methodOverride('_method'));
+//app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
+/*
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
 }));
+*/
 
 app.use('/', indexRouter);
 app.use('/admindashboard', adminDashboardRouter);
