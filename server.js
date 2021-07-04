@@ -34,8 +34,8 @@ const MONGO_PORT = process.env.MONGO_PORT;
 const MONGO_DB = process.env.MONGO_DB;
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-const conn = mongoose.createConnection(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
+const conn = mongoose.connection;
 
 //Middleware
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -50,19 +50,24 @@ app.use(session({
     saveUninitialized: false,
 }));
 
+/*
 let db;
+
 MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
     if (err) throw err;
     db = database.db;
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
+*/
 
 //Initialise the stream
+
 let gfs;
 conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
 })
+
 
 //Create storage engine
 const storage = new GridFsStorage({
