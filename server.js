@@ -372,12 +372,11 @@ app.post('/newApplication', async (req, res) => {
     const dateCreated = Date.now();
     
     const currentYear = new Date().getFullYear();
-   
+   console.log(currentYear);
     const currentCount = db.applications.find({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err) {
        if (err) throw err;
     });
     const planningID = currentYear.concat("/", (currentCount+1));
- //const planningID = currentYear;
         try {
              await ApplicationModel.create({
                 planningID: planningID,
