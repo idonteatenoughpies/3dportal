@@ -371,7 +371,7 @@ app.post('/newApplication', async (req, res) => {
     //const planningID = "2021/3"
     const dateCreated = Date.now();
     const yearCreated = new Date().getFullYear();
-    try {
+    /*try {
 
         let currentCount
         await ApplicationModel.countDocuments({}, function (err, count) {
@@ -382,7 +382,8 @@ app.post('/newApplication', async (req, res) => {
     catch {
         return res.json({ status: 'error', error: error })
     }
-
+*/
+const currentCount=0;
     const planningID = currentYear.concat("/", (currentCount + 1));
     try {
         await ApplicationModel.create({
