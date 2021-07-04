@@ -50,7 +50,7 @@ const form = document.getElementById('app-form')
   
           if (result.status === 'ok') {
             //everything went ok 
-            document.getElementById("success").innerHTML = "Congratulations. You have successfully submitted an application";
+            document.getElementById("success").innerHTML = "A new application has been successfully created <a href='/applicationuploads'>Click here to go to document uploads</a>";
           } else {
             document.getElementById("success").innerHTML = "New Application Failed: " + result.error;
            
