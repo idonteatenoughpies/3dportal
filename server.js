@@ -370,44 +370,48 @@ app.post('/newApplication', async (req, res) => {
     //const dateCreated = "2021-07-03"
     //const planningID = "2021/3"
     const dateCreated = Date.now();
-    
-    const currentYear = new Date().getFullYear();
-    const currentCount = ApplicationModel.find({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }).count;
-    const planningID = currentYear.concat("/", (currentCount+1));
-        try {
-             await ApplicationModel.create({
-                planningID: planningID,
-                dateCreated: dateCreated,
-                status: status,
-                title: title,
-                description: description,
-                applicant: {
-                    name: applicantName,
-                    address: applicantAddress,
-                    postcode: applicantPostcode,
-                    phone: applicantPhone
-                },
-                agent: {
-                    name: agentName,
-                    address: agentAddress,
-                    postcode: agentPostcode,
-                    phone: agentPhone
-                },
-                propertyOwner: propertyOwner,
-                applicationAddress: {
-                    street1: applicationStreet1,
-                    street2: applicationStreet2,
-                    town: applicationTown,
-                    county: applicationCounty,
-                    postcode: applicationPostcode,
-                },
-                modelRequired: modelRequired
-            })
-        } catch (error) {
-         
-            return res.json({ status: 'error', error: error })
-        }
 
-        res.json({ status: 'ok' })
+    const currentYear = new Date().getFullYear();
+    await ApplicationModel.count({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err, result) {
+        if (err) throw err;
+        const currentCount = result;
     });
-    
+
+    const planningID = currentYear.concat("/", (currentCount + 1));
+    try {
+        await ApplicationModel.create({
+            planningID: planningID,
+            dateCreated: dateCreated,
+            status: status,
+            title: title,
+            description: description,
+            applicant: {
+                name: applicantName,
+                address: applicantAddress,
+                postcode: applicantPostcode,
+                phone: applicantPhone
+            },
+            agent: {
+                name: agentName,
+                address: agentAddress,
+                postcode: agentPostcode,
+                phone: agentPhone
+            },
+            propertyOwner: propertyOwner,
+            applicationAddress: {
+                street1: applicationStreet1,
+                street2: applicationStreet2,
+                town: applicationTown,
+                county: applicationCounty,
+                postcode: applicationPostcode,
+            },
+            modelRequired: modelRequired
+        })
+    } catch (error) {
+
+        return res.json({ status: 'error', error: error })
+    }
+
+    res.json({ status: 'ok' })
+});
+
