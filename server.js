@@ -370,27 +370,13 @@ app.post('/newApplication', async (req, res) => {
     //const dateCreated = "2021-07-03"
     //const planningID = "2021/3"
     const dateCreated = Date.now();
-
-    const currentYear = new Date().getFullYear();
+    const yearCreated = new Date().getFullYear();
     try {
 
-        ApplicationModel.aggregate(
-            [
-                { "$match": {
-                    "dateCreated": { 
-                        "$gte": new Date(currentYear+"-01-01"), "$lt": new Date(currentYear+"-31-12")
-                    }
-                }},
-                { "$group": {
-                    "_id": { 
-                        "year":  { "$year": "$date" }
-                    },
-                    "count": { "$sum": 1 }
-                }}
-            ],
-            function(err,result) {
+        let currentCount
+ApplicationModel.count({yearCreated:yearCreated}, function(err,count) {
             if (err) throw err;
-            const currentCount = result;
+             currentCount = count;
         });
     }
     catch {
@@ -402,6 +388,7 @@ app.post('/newApplication', async (req, res) => {
         await ApplicationModel.create({
             planningID: planningID,
             dateCreated: dateCreated,
+            yearCreated: yearCreated,
             status: status,
             title: title,
             description: description,
