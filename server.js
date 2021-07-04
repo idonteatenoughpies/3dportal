@@ -372,10 +372,15 @@ app.post('/newApplication', async (req, res) => {
     const dateCreated = Date.now();
 
     const currentYear = new Date().getFullYear();
-    await ApplicationModel.count({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err, result) {
-        if (err) throw err;
-        const currentCount = result;
-    });
+    try {
+        await ApplicationModel.count({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err, result) {
+            if (err) throw err;
+            const currentCount = result;
+        });
+    }
+    catch {
+        return res.json({ status: 'error', error: error })
+    }
 
     const planningID = currentYear.concat("/", (currentCount + 1));
     try {
