@@ -349,7 +349,6 @@ app.get('/newApplication', (req, res) => {
 
 
 app.post('/newApplication', async (req, res) => {
-return res.send("hello");
     const { title,
         description,
         applicantName,
@@ -372,6 +371,7 @@ return res.send("hello");
     //const planningID = "2021/4"
     const dateCreated = Date.now();
     const yearCreated = new Date().getFullYear();
+    return res.send("hello");
     /*try {
 
         let currentCount
