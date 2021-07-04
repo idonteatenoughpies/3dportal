@@ -373,7 +373,7 @@ app.post('/newApplication', async (req, res) => {
     
     const currentYear = new Date().getFullYear();
    
-    const currentCount = ApplicationModel.find({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err) {
+    const currentCount = db.applications.find({ "$expr": { "$eq": [{ "$year": "$dateCreated" }, currentYear] } }, function (err) {
        if (err) throw err;
     });
     const planningID = currentYear.concat("/", (currentCount+1));
