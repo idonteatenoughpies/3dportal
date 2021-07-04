@@ -17,14 +17,16 @@ const https = require('https');
 const fs = require('fs');
 require('dotenv').config();
 
+const indexRouter = require('./routes/index');
+const adminDashboardRouter = require('./routes/admindashboard');
+const changePasswordRouter = require('./routes/change-password');
+const dashboardRouter = require('./routes/dashboard');
+const loginRouter = require('./routes/login');
+const logoutRouter = require('./routes/logout');
+const registerRouter = require('./routes/register');
+
 const app = express();
 const port = 3000;
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-
 
 //create mongo connection
 const MONGO_USERNAME = process.env.MONGO_USERNAME;
@@ -34,21 +36,46 @@ const MONGO_PORT = process.env.MONGO_PORT;
 const MONGO_DB = process.env.MONGO_DB;
 
 const mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
-mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
 const conn = mongoose.connection;
 
 //Middleware
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.json());
 app.use(methodOverride('_method'));
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
 }));
+
+app.use('/', indexRouter);
+app.use('/admindashboard', adminDashboardRouter);
+app.use('/change-password', changePasswordRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
+app.use('/register', registerRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+  });
+
+// error handler
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
+  });
 
 /*
 let db;
@@ -58,9 +85,10 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true 
     db = database.db;
     app.listen(port, () => console.log(`App is listening on port: ${port}`));
 });
-*/
+
 
 //Initialise the stream
+
 
 let gfs;
 conn.once('open', () => {
@@ -89,13 +117,13 @@ const storage = new GridFsStorage({
     }
 });
 const upload = multer({ storage });
-
+*/
 /*
 app.use (function (req,res,next) {
     console.log('/' + req.method);
     next();
 });
-*/
+
 
 
 app.get('/', (req, res) => {
@@ -430,3 +458,4 @@ app.post('/newApplication', async (req, res) => {
     res.json({ status: 'ok' })
 });
 
+*/
