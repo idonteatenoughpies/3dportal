@@ -370,7 +370,7 @@ app.post('/newApplication', async (req, res) => {
     //const dateCreated = "2021-07-03"
     //const planningID = "2021/4"
     const dateCreated = Date.now();
-    const yearCreated = dateCreated.getFullYear();
+    //const yearCreated = dateCreated.getFullYear();
     /*try {
 
         let currentCount
