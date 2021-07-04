@@ -349,6 +349,7 @@ app.get('/newApplication', (req, res) => {
 
 
 app.post('/newApplication', async (req, res) => {
+return res.send("hello");
     const { title,
         description,
         applicantName,
