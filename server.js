@@ -367,9 +367,9 @@ app.post('/newApplication', async (req, res) => {
         applicationPostcode,
         modelRequired } = req.body
     const status = 'submitted';
-    const dateCreated = "2021-07-03"
-    const planningID = "2021/2"
-    //const dateCreated = Date.now();
+    //const dateCreated = "2021-07-03"
+    const planningID = "2021/3"
+    const dateCreated = Date.now();
     
    // const currentYear = new Date().getFullYear();
    
