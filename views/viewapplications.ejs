@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+  <script defer src="/js/viewapplications.js"></script>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('partials/header') %>
+  </header>
+
+  <main>
+    <h1>All Planning Applications</h1>
+<table class="table table-inverse">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Date Created</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% for(var i=0; i < apps.length; i++) { %>
+    <tr>
+      <td><%= apps[i].title %></td>
+      <td><%= apps[i].description %></td>
+      <td><%= apps[i].dateCreated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); %></td>
+      <td>
+        <button class="view" id="view_<%= apps[i]._id %>" > View </button>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+
+  </main>
+
+
+  <%- include('partials/footer') %>

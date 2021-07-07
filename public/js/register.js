@@ -1,49 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <%- include('partials/head') %>
-</head>
-
-<body class="container">
-
-  <header>
-    <%- include('partials/header') %>
-  </header>
-
-  <main>
-    <p>Please complete the form below to register for the Portal3d service.</p>
-    <form id="reg-form">
-      <label>Name</label>
-      <input type="text" placeholder="first name" id="first" required>
-      <input type="text" placeholder="last name" id="last" required>
-      </br><label>Login</label>
-      <input type="email" placeholder="me@example.com" id="email" required>
-      <input type="text" placeholder="username" id="username" onkeyup="checkUser()" required>
-      <p id="uniqUser"></p>
-      <input type="password" placeholder="password" id="password" onkeyup="passwordLength()" required>
-      <p id="passwordLength"></p>
-      <input type="password" placeholder="confirm password" id="confirmPassword" required>
-      </br><label>Address</label>
-      <input type="text" placeholder="number" id="number" required>
-      <input type="text" placeholder="street 1" id="street1" required>
-      <input type="text" placeholder="street 2" id="street2">
-      <input type="text" placeholder="town" id="town" required>
-      <input type="text" placeholder="county" id="county" required>
-      <input type="text" placeholder="postcode" id="postcode" required>
-      </br><input type="submit">Submit</button>
-    </form>
-
-    <h2 id="success"></h2>
-
-    <script>
       const form = document.getElementById('reg-form')
       form.addEventListener('submit', registerUser)
       
 
       async function checkUser(){
         const username = document.getElementById('username').value
-        const result = await fetch('/checkUser', {
+        const result = await fetch('/register/checkUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -89,7 +51,7 @@
           document.getElementById("success").innerHTML = "passwords do not match."; return;
         } else {
 
-        const result = await fetch('/register', {
+        const result = await fetch('/register/processregister', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -101,16 +63,10 @@
 
         if (result.status === 'ok') {
           //everything went ok 
-          document.getElementById("success").innerHTML = "New application registered successfully";
+          document.getElementById("success").innerHTML = "New Account Created. <a href='/login'>Click here to login</a>";
         } else {
-          document.getElementById("success").innerHTML = "Failed to create new application: " + result.error;
+          document.getElementById("success").innerHTML = "Failed to create new account: " + result.error;
          
         }
       }
     }
-    </script>
-
-  </main>
-
-
-  <%- include('partials/footer') %>

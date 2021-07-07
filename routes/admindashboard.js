@@ -1,9 +1,11 @@
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var router = express.Router();
+const session = require('express-session');
+const isAdmin = require('./authMiddleware').isAdmin;
 
 // define the home page route
-router.get('/', function (req, res) {
-    res.send('admin dashboard')
-  })
+router.get('/', isAdmin, (req, res) => {
+  res.render('admindashboard', {user:req.user}); 
+ });
 
   module.exports = router

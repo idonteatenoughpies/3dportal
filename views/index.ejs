@@ -10,12 +10,14 @@
 
     <main>
       <div>
-        <h1> This is great</h1>
+       <h1>Welcome</h1> 
+       <% if(typeof user === 'undefined'){ %> <p>not logged in</p><% } %>
+       <% if(typeof user !== 'undefined'){ %><p>  logged in</p><% } %>
         <p> welcome to templating with ejs</p>
-        <p><a href="form.html">Click here to go to the form</a></p>
-        <p><a href="/registration">Click here to go to registration</a></p>
-        <p><a href="/newApplication">Click here to create a new application</a></p>
         <p><a href="/login">Click here to login</a></p>
+        <p><a href="/register">Click here to go to registration</a></p>
+        <p><a href="/Application">Click here to create a new application</a></p>
+        <p><a href="/viewapplications">Click here to view all applications</a></p>
         <p><a href="/3dmodel">Click here to view a 3d model</a></p>
 
       </div>

@@ -22,7 +22,7 @@ const form = document.getElementById('app-form')
           var modelRequired = $('input[name="modelRequired"]:checked').val();
           
 
-          const result = await fetch('/newApplication', {
+          const result = await fetch('/application/newApplication', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

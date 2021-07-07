@@ -2,7 +2,8 @@ const mongoose = require ('mongoose');
 
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
+    salt: {type: String, required: true},
+    hash: {type: String, required: true},
     first: {type: String, required: true},
     last: {type: String, required: true},
     street1: {type: String, required: true},
@@ -10,7 +11,7 @@ const userSchema = new mongoose.Schema({
     town: {type: String, required: true},
     county: {type: String, required: true},
     postcode: {type: String, required: true},
-    role: {type:String}
+    admin: {type:Boolean}
 },
 {collection: 'users'}
 )
