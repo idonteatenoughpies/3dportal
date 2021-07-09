@@ -42,7 +42,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/3dportal'
+    mongoUrl: mongoURL
   }),
   cookie: {maxAge: 1000 * 60 ^ 60 * 24}
 }));
