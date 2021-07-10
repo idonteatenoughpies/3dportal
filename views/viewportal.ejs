@@ -3,7 +3,7 @@
 
 <head>
   <%- include('partials/head') %>
-<!--   <script src="/js/viewportal.js"></script> -->
+<script src="/js/viewportal.js"></script>
 </head>
 
 <body class="container">
@@ -13,6 +13,7 @@
   </header>
 
   <main>
+    <button class="goBack">Return to list</button>
     <h1>Planning Application: <%= apps[0].planningID %></h1>
     <table class="table table-inverse">
       <thead>
@@ -24,8 +25,7 @@
           <th>Agent</th>
           <th>Application Address</th>
           <th>Application property owned by</th>
-          <th>Model Required?</th>
-          <th></th>
+          <% if(apps[0].modelRequired === true) { %><th>3D Model</th> <% } %>
         </tr>
       </thead>
     
@@ -43,7 +43,7 @@
           <%= apps[0].applicationAddress.county %><br>
           <%= apps[0].applicationAddress.postcode %></td>
           <td><%= apps[0].propertyOwner %></td>
-          <td><%= apps[0].modelRequired %></td>
+          <% if(apps[0].modelRequired === true) { %><td><button class="view" id="view_<%= apps[0]._id %>" > View Model</button></td> <% } %>
         </tr>
 
       </tbody>

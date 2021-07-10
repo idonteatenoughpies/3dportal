@@ -3,7 +3,7 @@
 
 <head>
   <%- include('partials/head') %>
-<!--   <script src="/js/viewportal.js"></script> -->
+  <script defer src="/js/viewapplications.js"></script>
 </head>
 
 <body class="container">
@@ -13,85 +13,32 @@
   </header>
 
   <main>
-    <h1>Planning Application: <%= apps[0].planningID %></h1>
-    <table class="table table-inverse">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Date Created</th>
-          <th>Applicant</th>
-          <th>Agent</th>
-          <th>Application Address</th>
-          <th>Application property owned by</th>
-          <th>Model Required?</th>
-          <th></th>
-        </tr>
-      </thead>
-      <!DOCTYPE html>
-      <html lang="en">
-      
-      <head>
-        <%- include('partials/head') %>
-        <script defer src="/js/viewapplications.js"></script>
-      </head>
-      
-      <body class="container">
-      
-        <header>
-          <%- include('partials/header') %>
-        </header>
-      
-        <main>
-          <h1>All Planning Applications</h1>
-      <table class="table table-inverse">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date Created</th>
-            <th></th>
-          </tr>
-        </thead>
-      
-        <tbody>
-          <% for(var i=0; i < apps.length; i++) { %>
-          <tr>
-            <td><%= apps[i].title %></td>
-            <td><%= apps[i].description %></td>
-            <td><%= apps[i].dateCreated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); %></td>
-            <td>
-              <button class="view" id="view_<%= apps[i]._id %>" > View </button>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-      
-      
-        </main>
-      
-      
-        <%- include('partials/footer') %>
-      <tbody>
-       
-        <tr>
-          <td><%= apps[0].title %></td>
-          <td><%= apps[0].description %></td>
-          <td><%= apps[0].dateCreated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); %></td>
-          <td><%= apps[0].applicant.name %></td>
-          <td><%= apps[0].agent.name %></td>
-          <td><%= apps[0].applicationAddress.street1 %><br>
-          <%= apps[0].applicationAddress.street2 %><br>
-          <%= apps[0].applicationAddress.town %><br>
-          <%= apps[0].applicationAddress.county %><br>
-          <%= apps[0].applicationAddress.postcode %></td>
-          <td><%= apps[0].propertyOwner %></td>
-          <td><%= apps[0].modelRequired %></td>
-        </tr>
+    <h1>All Planning Applications</h1>
+<table class="table table-inverse">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Date Created</th>
+      <th></th>
+    </tr>
+  </thead>
 
-      </tbody>
-    </table>
+  <tbody>
+    <% for(var i=0; i < apps.length; i++) { %>
+    <tr>
+      <td><%= apps[i].title %></td>
+      <td><%= apps[i].description %></td>
+      <td><%= apps[i].dateCreated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); %></td>
+      <td>
+        <button class="view" id="view_<%= apps[i]._id %>" > View </button>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+
   </main>
 
 
