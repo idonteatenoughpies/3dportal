@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -8,8 +9,7 @@ const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const passport = require ('passport');
-const https = require('https');
-const fs = require('fs');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+
+// enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 //  ---- DATABASE CONNECTION ----
 const MONGO_USERNAME = process.env.MONGO_USERNAME;
@@ -44,7 +50,7 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: mongoURL
   }),
-  cookie: {maxAge: 1000 * 60 ^ 60 * 24}
+  cookie: {maxAge: 1000 * 60 * 60 * 24}
 }));
 
 //  ---- PASSPORT AUTHENTICATION ---
@@ -97,7 +103,8 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500).send(err.message);
+  res.status(err.status || 500);
+  res.render('error');
 });
 */
 
