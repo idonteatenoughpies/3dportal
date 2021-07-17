@@ -80,6 +80,7 @@ router.post('/newApplication', isAuth, async (req, res) => {
           },
           modelRequired: modelRequired
         })
+        ApplicationModel.createIndex({ "$**": "text" })
       } catch (error) {
 
         return res.json({ status: 'error', error:  "model creation failed " + error })

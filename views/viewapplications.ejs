@@ -4,6 +4,7 @@
 <head>
   <%- include('partials/head') %>
   <script defer src="/js/viewapplications.js"></script>
+  <script>let searchResults;</script>
 </head>
 
 <body class="container">
@@ -13,10 +14,16 @@
   </header>
 
   <main>
-    <h1>All Planning Applications</h1>
-<table class="table table-inverse">
+    <h1>Planning Applications</h1>
+    <input type="text" name="applicationSearchBox" id="applicationSearchBox" placeholder="Search"/>
+    <button name="searchSubmit" id="searchSubmit">Search</button>
+
+
+
+<table class="table table-inverse" id="resultsTable">
   <thead>
     <tr>
+      <th>Reference</th>
       <th>Title</th>
       <th>Description</th>
       <th>Date Created</th>
@@ -24,9 +31,10 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="tbodyid">
     <% for(var i=0; i < apps.length; i++) { %>
     <tr>
+      <td><%= apps[i].planningID %></td>
       <td><%= apps[i].title %></td>
       <td><%= apps[i].description %></td>
       <td><%= apps[i].dateCreated.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); %></td>
@@ -36,6 +44,7 @@
     </tr>
     <% } %>
   </tbody>
+
 </table>
 
 
