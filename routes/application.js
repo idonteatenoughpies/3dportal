@@ -42,64 +42,65 @@ router.post('/newApplication', isAuth, async (req, res) => {
 
     let currentCount;
     let newCount;
+    let planningID;
     try {
 
-      await ApplicationModel.countDocuments({}, function (err, count) {
+      await ApplicationModel.countDocuments({}, async function (err, count) {
         if (err) return res.json({ status: 'error', error: error })
         currentCount = count;
         newCount = (currentCount + 1)
-      });
-      const planningID = yearCreated.concat("/", newCount);
 
-      try {
-        await ApplicationModel.create({
-          planningID: planningID,
-          dateCreated: dateCreated,
-          yearCreated: yearCreated,
-          status: status,
-          title: title,
-          description: description,
-          applicant: {
-            name: applicantName,
-            address: applicantAddress,
-            postcode: applicantPostcode,
-            phone: applicantPhone
-          },
-          agent: {
-            name: agentName,
-            address: agentAddress,
-            postcode: agentPostcode,
-            phone: agentPhone
-          },
-          propertyOwner: propertyOwner,
-          applicationAddress: {
-            street1: applicationStreet1,
-            street2: applicationStreet2,
-            town: applicationTown,
-            county: applicationCounty,
-            postcode: applicationPostcode,
-          },
-          modelRequired: modelRequired
-        })
-        ApplicationModel.collection.dropIndexes(function (err) {
-          if (err) {
+        planningID = yearCreated.concat("/", newCount);
 
-            return res.json({ status: 'error', error: "dropindex " + error })
-          }
-        });
+        try {
+          await ApplicationModel.create({
+            planningID: planningID,
+            dateCreated: dateCreated,
+            yearCreated: yearCreated,
+            status: status,
+            title: title,
+            description: description,
+            applicant: {
+              name: applicantName,
+              address: applicantAddress,
+              postcode: applicantPostcode,
+              phone: applicantPhone
+            },
+            agent: {
+              name: agentName,
+              address: agentAddress,
+              postcode: agentPostcode,
+              phone: agentPhone
+            },
+            propertyOwner: propertyOwner,
+            applicationAddress: {
+              street1: applicationStreet1,
+              street2: applicationStreet2,
+              town: applicationTown,
+              county: applicationCounty,
+              postcode: applicationPostcode,
+            },
+            modelRequired: modelRequired
+          })
+          ApplicationModel.collection.dropIndexes(function (err) {
+            if (err) {
 
-      } catch (error) {
+              return res.json({ status: 'error', error: "dropindex " + error })
+            }
+          });
 
-        return res.json({ status: 'error', error: "model creation failed " + error })
-      }
-      res.json({ status: 'ok', ref: planningID })
-    }
-    catch (error) {
+        } catch (error) {
+
+          return res.json({ status: 'error', error: "model creation failed " + error })
+        }
+      })
+    } catch (error) {
       return res.json({ status: 'error', error: "Count docs failed " + error })
     }
-
+    res.json({ status: 'ok', ref: planningID })
   }
 });
+
 
 router.get('/applicationupload', isAuth, (req, res) => {
   if (!req.isAuthenticated()) { res.redirect('/login') }
@@ -180,7 +181,7 @@ router.get('/applicationdetails', isAuth, (req, res) => {
     if (err) {
       res.send(err);
     }
-    res.render('../views/applicationdetails', { user: req.user, ref: ref, docs: docs})
+    res.render('../views/applicationdetails', { user: req.user, ref: ref, docs: docs })
   });
 
 })
