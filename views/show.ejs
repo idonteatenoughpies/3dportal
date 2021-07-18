@@ -1,0 +1,29 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('partials/header') %>
+  </header>
+
+  <main>
+    <button onclick="goBack()">Go Back</button>
+
+    <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
+    
+    <img src="/uploads/<%= file %>"/>
+  </main>
+
+
+  <%- include('partials/footer') %>

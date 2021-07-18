@@ -21,26 +21,22 @@
                 <div class="input-group mb-3">
                     <div class="d-flex flex-column bd-highlight mb-3">
                         <div class="p-2 bd-highlight">
-                            <div > <!-- class="custom-file" -->
-                                <label for="documentinput0" id = "documentLabel0" >Upload Application Form</label> <!-- class="custom-file-label" -->
-                                <input type="file" name="documentinput0" id = "documentinput0" />  <!-- class="custom-file-input" onchange="changeName(this.value, lab='documentLabel0')" -->                              
+                            <div > 
+                                <label for="documentinput0" id = "documentLabel0" >Upload Application Form</label> 
+                                <input type="file" name="documentinput0" id = "documentinput0"/>   
+                                <input type="hidden" name="documenttext0" id="documenttext0" value="Application Form"/>                         
                             </div>
                         </div>
-                        <div class="p-2 bd-highlight">
-                            <div > <!-- class="custom-file" -->
-                                <label for="documentinput1" id = "documentLabel1" >Additional Document 1</label> <!-- class="custom-file-label" -->
-                                <input type="file" name="documentinput1" id = "documentinput1" /> <!-- class="custom-file-input" onchange="changeName(this.value, lab='documentLabel1')" -->                            
-                                <input type="text" id="documenttext1" name="documenttext1"
-                                placeholder="Document description">
-                            </div>
                           
                             <input type="hidden" name="planningID" id="planningID" value= "<%= ref %>" />
+                            
                         </div>
                     </div>
                 </div>
                 <div id="newDocumentContainer"></div>
                 </div>
 
+                <input type="hidden" name="count" id="count" value="1"/>
                 <input type="submit" id="submitButton" value="Submit" class="btn btn-primary btn-block">
             </form>
             <button class="newDocumentButton" onclick="addFields()"> Add new document </button>

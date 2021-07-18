@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head') %>
+  <script defer src="/js/applicationdetails.js"></script>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('partials/header') %>
+  </header>
+
+  <main>
+    <h1>Submitted Documents for Application <%= ref%> </h1>
+  
+    <table class="table table-inverse" id="resultsTable">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Document Name</th>
+            <th>path</th>
+          </tr>
+        </thead>
+      
+        <tbody id="tbodyid">
+            <% for(var i=0; i < docs.length; i++) { %>
+            <tr>
+              <td><%= docs[i].description %></td>
+              <td><%= docs[i].originalName %></td>
+              <td>
+                <a href= "/show/?file=<%= docs[i].filename %>"> View </a>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+      
+      </table>
+
+  </main>
+
+
+  <%- include('partials/footer') %>

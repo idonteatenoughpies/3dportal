@@ -1,5 +1,4 @@
-var number = 2;
-let count = 0;
+var number = 1;
 
 function addFields() {
     // Container <div> where dynamic content will be placed
@@ -30,7 +29,6 @@ function addFields() {
     input.type = "file";
     input.name = "documentinput" + number;
     input.id = "documentinput" + number;
-    //input.setAttribute ("onChange", `changeName(this.value, lab='documentLabel'+ ${number})`);
     var name = "documentinput" + number;
     div2.appendChild(input);
 
@@ -41,17 +39,12 @@ function addFields() {
     text.type = "text";
     text.name = textlabel;
     text.id = textlabel;
-    text.placeholder = "Document description"; 
+    text.placeholder = "Document description";
     div2.appendChild(text);
 
     number++;
-    count++;
+    document.getElementById('count').value = number;
+
+    
 }
 
-
-function changeName(val, lab) {
-    var fileName = val;
-    shortFileName = fileName.replace(/^C:\\fakepath\\/, "")
-    //replace the "Choose a file" label
-    document.getElementById(lab).innerHTML = fileName;
-}
