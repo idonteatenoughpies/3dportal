@@ -4,7 +4,7 @@ $(document).ready(function () {
     const id = this.id;
     const splitid = id.split('_');
     const viewid = splitid[1];
-    window.location.assign(`./viewportal/_id/${viewid}`)
+    window.location.assign(`/viewapplications/viewportal/_id/${viewid}`)
   }));
 
   $('#searchSubmit').click(async function () {
@@ -54,7 +54,7 @@ $(document).ready(function () {
         k.innerHTML = "View";
         k.class = "view";
         k.id = "view_" + appID;
-        k.onclick=function () {window.location.assign(`./viewportal/_id/${appID}`)};
+        k.onclick=function () {window.location.assign(`/viewapplications/viewportal/_id/${appID}`)};
         j.appendChild(k);
         document.getElementById("tbodyid").appendChild(j);
       }
