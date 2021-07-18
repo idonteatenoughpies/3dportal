@@ -4,7 +4,8 @@ $(document).ready(function () {
     const id = this.id;
     const splitid = id.split('_');
     const viewid = splitid[1];
-    window.location.assign(`/viewapplications/viewportal/_id/${viewid}`)
+    var string = encodeURIComponent(viewid);
+    window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)
   }));
 
   $('#searchSubmit').click(async function () {
@@ -30,6 +31,7 @@ $(document).ready(function () {
       for (var i = 0; i < searchResult.length; i++) {
 
         let appID = searchResult[i]._id;
+         string = encodeURIComponent(appID);
         let row = document.createElement("TR");
         row.setAttribute("id", "myTr");
         document.getElementById("tbodyid").appendChild(row);
@@ -54,7 +56,7 @@ $(document).ready(function () {
         k.innerHTML = "View";
         k.class = "view";
         k.id = "view_" + appID;
-        k.onclick=function () {window.location.assign(`/viewapplications/viewportal/_id/${appID}`)};
+        k.onclick=function () {window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)};
         j.appendChild(k);
         document.getElementById("tbodyid").appendChild(j);
       }

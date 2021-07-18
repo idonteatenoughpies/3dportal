@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router();
 const ApplicationModel = require('../model/applicationmodel');
+const UploadedDocument = require('../model/uploadeddocument');
 
 
 // define the view all applications page route
@@ -22,29 +23,37 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     const searchTerm = req.body.search;
     console.log(`the search term was: ${searchTerm}`);
-    
-    ApplicationModel.find({ $text: { $search: searchTerm } }, function (err, result) { 
-        if (err) {
-            console.log(err);
-        } else { 
-            res.json({ status: 'ok', apps: result })
-        }
-    }
-)
-});;
 
-
-router.get('/viewportal/_id/:_id', (req, res) => {
-    _id = req.params;
-    ApplicationModel.find({ _id }, function (err, result) {
+    ApplicationModel.find({ $text: { $search: searchTerm } }, function (err, result) {
         if (err) {
             console.log(err);
         } else {
-            if (!req.isAuthenticated()) {
-                res.render('viewportal', { user: undefined, apps: result });
-            } else {
-                res.render('viewportal', { user: req.user, apps: result });
-            }
+            res.json({ status: 'ok', apps: result })
+        }
+    }
+    )
+});;
+
+
+router.get('/viewportal', (req, res) => {
+    planningID = decodeURIComponent(req.query.planningID);
+   
+    ApplicationModel.find({ planningID:planningID }, function (err, apps) {
+        if (err) {
+            console.log(err);
+        } else {
+           
+            UploadedDocument.find({ planningRef: planningID }, function (err, docs) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (!req.isAuthenticated()) {
+                        res.render('viewportal', { user: undefined, apps: apps, docs: docs });
+                    } else {
+                        res.render('viewportal', { user: req.user, apps: apps, docs: docs });
+                    }
+                }
+            });
         }
     });
 });

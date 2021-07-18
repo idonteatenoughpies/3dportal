@@ -1,32 +1,51 @@
 <%- include('partials/head') %>
   <title>Home page</title>
+
   </head>
 
   <body class="container">
 
-    <header>
+    
       <%- include('partials/header') %>
-    </header>
+
 
     <main>
       <div>
-       <h1>Welcome</h1> 
-       <% if(typeof user === 'undefined'){ %> <p>not logged in</p><% } %>
-       <% if(typeof user !== 'undefined'){ %><p>  logged in</p><% } %>
-        <p> welcome to templating with ejs</p>
-        <p><a href="/login">Click here to login</a></p>
-        <p><a href="/register">Click here to go to registration</a></p>
-        <p><a href="/Application">Click here to create a new application</a></p>
-        <p><a href="/viewapplications">Click here to view all applications</a></p>
-        <p><a href="/3dmodel">Click here to view a 3d model</a></p>
+        <div class="title">
+          <h1>Yourtown Planning Portal</h1>
+          <% if(typeof user==='undefined' ){ %>
+            <p>Not logged in</p>
+            <% } %>
+              <% if(typeof user !=='undefined' ){ %>
+                <p> logged in</p>
+                <% } %>
 
+                  <h3> To create a new application an account is required. Register your account today using the link
+                    below.</h3>
+        </div>
+        <div class="p-5"> </div>
+        <div class="menuContainer">
+          <div class="scrollingArea">
+            <div class="d-flex  justify-content-center align-content-start flex-wrap" style="height: 150px">
+
+              <div class="p-5 text-center" id="menuArea" onclick=location.replace("/viewapplications")>
+                <p>Search for an application</p>
+              </div>
+              <div class="p-5  text-center" id="menuArea" onclick=location.replace("/Application")>
+                <p>Apply for Planning Permission</p>
+              </div>
+              <div class="p-5  text-center" id="menuArea" onclick=location.replace("/register")>
+                <p>Register</p>
+              </div>
+              <div class="p-5  text-center" id="menuArea" onclick=location.replace("/3dmodel")>
+                <p>View a 3d model</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
-    <footer>
+  
       <%- include('partials/footer') %>
-    </footer>
-
-  </body>
-
-  </html>

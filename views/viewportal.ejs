@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
   <%- include('partials/head') %>
 <script src="/js/viewportal.js"></script>
+<title>Portal3d</title>
 </head>
 
 <body class="container">
 
-  <header>
     <%- include('partials/header') %>
-  </header>
 
   <main>
+    <div class="title">
     <button class="goBack">Return to list</button>
     <h1>Planning Application: <%= apps[0].planningID %></h1>
-    <table class="table table-inverse">
+  </div>
+
+  <div class = "scrollingArea">
+    <table class="table table-inverse" id="table1">
       <thead>
         <tr>
           <th>Title</th>
@@ -48,6 +47,52 @@
 
       </tbody>
     </table>
+
+    <% if(!docs) { %>
+      <table class="table table-inverse" id="table2">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>File Name</th>
+            <th></th>
+          </tr>
+        </thead>
+      
+        <tbody>
+         
+          <tr>
+            <td>No Documents to display for this application</td>
+            <td></td>
+          </tr>
+  
+        </tbody>
+      </table>
+      <% } %>
+      
+    <% if(docs) { %>
+    <table class="table table-inverse" id="table2">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>File Name</th>
+          <th></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+
+        <% docs.forEach(function(docs){ %>
+        <tr>      
+          <td><%= docs.description %></td>
+          <td><%= docs.originalName %></td>
+          <td><a href= "/show/?file=<%= docs.filename %>"> View </a></td>   
+        </tr>
+        <% }) %>
+
+      </tbody>
+    </table>
+    <% } %>
+  </div>
   </main>
 
 

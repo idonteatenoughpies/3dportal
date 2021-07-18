@@ -15,6 +15,7 @@ const applicationSchema = new mongoose.Schema({
     status: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
+    submittedBy: { type: String, required: true },
     applicant: {
         name: { type: String, required: true },
         address: { type: String, required: true },
@@ -46,7 +47,6 @@ const applicationSchema = new mongoose.Schema({
 },
     { collection: 'applications' }
 )
-
 applicationSchema.index({ "$**": "text" })
 
 const model = mongoose.model('ApplicationSchema', applicationSchema)

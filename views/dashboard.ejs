@@ -1,31 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/head') %>
+  <script defer src="/js/viewapplications.js"></script>
+  <title>Portal3d</title>
+  </head>
 
-<head>
-  <%- include('partials/head') %>
-</head>
+  <body class="container">
 
-<body class="container">
-
-  <header>
     <%- include('partials/header') %>
-  </header>
 
-  <main>
-    <h1>Hi <%= user.first%></h1>
-    <p>Welcome to your account page</p>
-    <a href="/application"> Create a new planning application </a>
-    <br>
-    <a href="/application/applicationupload"> uploads </a>
-    <br>
-    <a href="/change-password"> Change password </a>
-    <br>
-    <% if (user.admin === true) { %>
-      <a href="/admindashboard">admin dashboard </a>
-      <% }%>
+      <main>
+        <div class="title">
+          <h1>Hi <%= user.first%>
+          </h1>
+          <p>Here you can manage your account, apply for planning permission and manage your existing applications.<br>To add new document to an existing application, just select it below.</p>
+
+        </div>
+        <div class="dashboardMenu" >
+          <div class="d-flex flex-wrap">
+            <div class="p-2 bd-highlight"><a href="/application"> Apply for Planning Permission </a></div>
+            <div class="p-2 bd-highlight"> <a href="/change-password"> Change password </a></div>
+            <div class="p-2 bd-highlight"> <a href="/accountdetails"> Manage account details </a></div>
+            <% if (user.admin===true) { %>
+            <div class="p-2 bd-highlight"><a href="/admindashboard">Admin dashboard </a></div>
+            <% }%>
+          </div>
+
+          </div>
+            <div class="scrollingAreaDashboard">
+              <table class="table table-inverse" id="resultsTable">
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date Created</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <% if(apps) { %>
+                <tbody id="tbodyid">
+                  <% for(var i=0; i < apps.length; i++) { %>
+                    <tr>
+                      <td>
+                        <%= apps[i].planningID %>
+                      </td>
+                      <td>
+                        <%= apps[i].title %>
+                      </td>
+                      <td>
+                        <%= apps[i].description %>
+                      </td>
+                      <td>
+                        <%= apps[i].dateCreated.toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' ,
+                          day: 'numeric' }); %>
+                      </td>
+                      <td>
+                        <button class="view" id="view_<%= apps[i].planningID %>"> View </button>
+                      </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+                <% } %>
+                  <% if(!apps) { %>
+                    <tr>
+                      <td>
+                        No Applications to display
+                      </td>
+                    </tr>
+                    <% } %>
+              </table>
+
+        </div>
+
+      </main>
 
 
-  </main>
-
-
-  <%- include('partials/footer') %>
+      <%- include('partials/footer') %>

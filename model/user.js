@@ -2,7 +2,7 @@ const mongoose = require ('mongoose');
 
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
-    salt: {type: String, required: true},
+    salt: {type: String},
     hash: {type: String, required: true},
     first: {type: String, required: true},
     last: {type: String, required: true},

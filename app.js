@@ -78,6 +78,7 @@ const threedmodelRouter = require('./routes/3dmodel');
 const applicationRouter = require('./routes/application');
 const viewapplicationsRouter = require('./routes/viewapplications');
 const showRouter = require('./routes/show');
+const accountRouter = require('./routes/accountdetails');
 
 app.use('/', indexRouter);
 app.use('/admindashboard', adminDashboardRouter);
@@ -90,6 +91,7 @@ app.use('/3dmodel', threedmodelRouter);
 app.use('/application', applicationRouter);
 app.use('/viewapplications', viewapplicationsRouter);
 app.use('/show', showRouter);
+app.use('/accountdetails', accountRouter);
 
 
 const port = 3000;

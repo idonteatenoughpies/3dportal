@@ -11,14 +11,11 @@ const { v4: uuidv4 } = require('uuid');
 
 // define the main application route
 router.get('/', isAuth, (req, res) => {
-  if (!req.isAuthenticated()) { res.redirect('/login') }
   res.render('../views/application', { user: req.user })
 })
 
 // define the new application route
 router.post('/newApplication', isAuth, async (req, res) => {
-  if (!req.isAuthenticated()) { res.redirect('/login') }
-  else {
     const { title,
       description,
       applicantName,
@@ -49,12 +46,13 @@ router.post('/newApplication', isAuth, async (req, res) => {
         if (err) return res.json({ status: 'error', error: error })
         currentCount = count;
         newCount = (currentCount + 1)
-
+        const submittedBy = req.user.username;
         planningID = yearCreated.concat("/", newCount);
 
         try {
           await ApplicationModel.create({
             planningID: planningID,
+            submittedBy: submittedBy,
             dateCreated: dateCreated,
             yearCreated: yearCreated,
             status: status,
@@ -98,79 +96,67 @@ router.post('/newApplication', isAuth, async (req, res) => {
       return res.json({ status: 'error', error: "Count docs failed " + error })
     }
     res.json({ status: 'ok', ref: planningID })
-  }
+  
 });
 
 
 router.get('/applicationupload', isAuth, (req, res) => {
-  if (!req.isAuthenticated()) { res.redirect('/login') }
   const name = req.query.ref;
   res.render('../views/applicationupload', { user: req.user, ref: name })
 })
 
 router.post('/applicationupload', isAuth, (req, res) => {
+  try {
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded'
+      });
+    } else {
+      let length = parseInt(req.body.count);
 
-  if (!req.isAuthenticated()) {
-    res.redirect('/login')
-  } else {
-    try {
-      if (!req.files) {
-        res.send({
-          status: false,
-          message: 'No file uploaded'
-        });
-      } else {
-        let length = parseInt(req.body.count);
+      for (let i = 0; i < length; i++) {
 
-        for (let i = 0; i < length; i++) {
+        let document = req.files["documentinput" + i];
 
-          let document = req.files["documentinput" + i];
+        //create a unique id
+        const uid = uuidv4(document.name);
+        const ext = document.name.slice((Math.max(0, document.name.lastIndexOf(".")) || Infinity) + 1);
 
+        //move photo to uploads directory
+        document.mv('./uploads/' + uid + "." + ext);
 
-          //create a unique id
-          const uid = uuidv4(document.name);
-          const ext = document.name.slice((Math.max(0, document.name.lastIndexOf(".")) || Infinity) + 1);
+        data = {
+          name: document.name,
+          mimetype: document.mimetype,
+          size: document.size
+        };
 
-          //move photo to uploads directory
-          document.mv('./uploads/' + uid + "." + ext);
-
-          data = {
-            name: document.name,
-            mimetype: document.mimetype,
-            size: document.size
-          };
-
-          //save location to database
-          try {
-            const id = req.body.planningID;
-            const filepath = "/uploads/";
-            const filename = uid + "." + ext;
-            const originalName = document.name;
-            const text = req.body['documenttext' + i];
-            UploadedDocument.create({
-              planningRef: id,
-              filepath: filepath,
-              filename: filename,
-              originalName: originalName,
-              description: text
-            })
-          } catch (error) {
-
-            return res.json({ status: 'error', error: "database upload failed " + error })
-          }
-
+        //save location to database
+        try {
+          const id = req.body.planningID;
+          const filepath = "/uploads/";
+          const filename = uid + "." + ext;
+          const originalName = document.name;
+          const text = req.body['documenttext' + i];
+          UploadedDocument.create({
+            planningRef: id,
+            filepath: filepath,
+            filename: filename,
+            originalName: originalName,
+            description: text
+          })
+        } catch (error) {
+          return res.json({ status: 'error', error: "database upload failed " + error })
         }
-
-
-        //return response
-        var string = encodeURIComponent(req.body.planningID);
-        res.redirect('./applicationdetails/?ref=' + string);
-
       }
-    } catch (err) {
-      res.status(500).send(err);
+      //return response
+      var string = encodeURIComponent(req.body.planningID);
+      res.redirect('./applicationdetails/?ref=' + string);
     }
-  };
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 // define the main application route
