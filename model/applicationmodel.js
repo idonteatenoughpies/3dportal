@@ -47,6 +47,8 @@ const applicationSchema = new mongoose.Schema({
     { collection: 'applications' }
 )
 
+applicationSchema.index({ "$**": "text" })
+
 const model = mongoose.model('ApplicationSchema', applicationSchema)
 
 module.exports = model
