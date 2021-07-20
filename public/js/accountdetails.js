@@ -73,5 +73,27 @@ async function checkUser(){
     document.getElementById("passwordUpdateModalButton").disabled=false;}
     else{ document.getElementById("passwordMatch").innerHTML = "Passwords do not match.";
     document.getElementById("passwordUpdateModalButton").disabled=true;}
-
   }
+
+  async function deleteAccount(){
+    const _id= '<%= user._id %>' ;
+    const result = await fetch('/accountdetails/deleteuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id
+      })
+    }).then((res) => res.json())
+
+    if (result.status !== 'ok') {
+      //everything went ok 
+      document.getElementById("deleteError").innerHTML = "Account deletion Failed. Please contact Customer Support.";
+    }
+    if (result.status === 'ok') {
+      //everything went ok 
+      window.location = result.redirect; 
+    }
+  }
+  
