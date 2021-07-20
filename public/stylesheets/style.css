@@ -13,12 +13,16 @@ color: white;
   height: 10vh;
 }
 
-.title {
+.titleDash {
   height: 15vh;
 }
 
+.title {
+  height: 8vh;
+}
+
 .scrollingArea{
-  height: 70vh;
+
   overflow: scroll;
 }
 
@@ -55,3 +59,30 @@ color: white;
     background-color: rgba(200,254,255,100);
   color: white;
   }
+
+  @media (max-width: 700px) {
+    .card-columns.custom-columns {
+        column-count: 1;
+    }
+}
+@media (min-width: 700px) {
+    .card-columns.custom-columns {
+        column-count: 1;
+    }
+}
+
+@media (min-width: 1000px) {
+    .card-columns.custom-columns {
+        column-count: 2;
+    }
+}
+@media (min-width: 1400px) {
+    .card-columns.custom-columns {
+        column-count: 2;
+    }
+}
+#leavePage {
+  position:absolute;
+  bottom:0;
+  right:0;
+}
