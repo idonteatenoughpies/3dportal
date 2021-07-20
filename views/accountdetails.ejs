@@ -1,15 +1,135 @@
-  <%- include('partials/head') %>
-  <title></title>
-</head>
+<%- include('partials/head') %>
+  <title>portal3d - Account Management</title>
 
-<body class="container">
+  <script defer src="js/changePassword.js"></script>
+  <script defer src="js/accountdetails.js"></script>
+  </head>
 
-  
+  <body class="container">
+
+
     <%- include('partials/header') %>
 
-  <main>
-<h1>Account Management for <%= user.username%></h1>
-  </main>
+      <main>
+
+        <div class="title">
+          <h1>Account Management</h1>
+        </div>
+
+        <div class="scrollingArea">
+          <div class="card-deck">
+            <div class="card">
+              <div class="card-header">
+                User details
+              </div>
+              <div class="card-body">
+                <form id="reg-form">
+                  <div class="details-form">
+                    <p id="uniqUser"></p>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="first" style="white-space:nowrap">First Name</label>
+                      <input name="first" id="first" type="text" value="<%= user.first%>" required />
+
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="last" style="white-space:nowrap">Last Name</label>
+                      <input name="last" id="last" type="text" value="<%= user.last%>" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="username" style="white-space:nowrap">Username</label>
+                      <input name="username" id="username" type="text" value="<%= user.username%>" onkeyup="checkUser()"
+                        required />
+                      <script>var checkusername = "<%= user.username%>"</script>
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="email" style="white-space:nowrap">Email</label>
+                      <input name="email" id="email" type="text" value="<%= user.email%>" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="street1" style="white-space:nowrap">Street Address</label>
+                      <input name="street1" id="street1" type="text" value="<%= user.street1%>" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="street2" style="white-space:nowrap">Street Address 2</label>
+                      <input name="street2" id="street2" type="text" value="<%= user.street2%>" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="town" style="white-space:nowrap">Town</label>
+                      <input name="town" id="town" type="text" value="<%= user.town%>" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="county" style="white-space:nowrap">County</label>
+                      <input name="county" id="county" type="text" value="<%= user.county%>" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="postcode" style="white-space:nowrap">Postcode</label>
+                      <input name="postcode" id="postcode" type="text" value="<%= user.postcode%>" required />
+                    </span>
+                    <input type="submit" class="btn btn-primary" id="updateDetailsConfirmButton"
+                      name="updateDetailsConfirmButton"></button>
+                    <div id="success"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                Password
+              </div>
+              <div class="card-body">
+                <div class="m-2">Enter a new password</div>
+                <form id="pwd-form">
+                  <input type="password" class="m-2" placeholder="password" id="password" onkeyup="passwordLength()"
+                    onfocus="clearWarning()" required />
+                  <p id="passwordLength"></p>
+                  <div class="m-2" p>Confirm your new password</div>
+                  <input type="password" class="m-2" placeholder="confirm password" id="confirmpassword"
+                    onfocus="clearWarning()" onkeyup="passwordMatch()" required />
+                  <p id="passwordMatch"></p>
+                  <div class="m-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"
+                      id="passwordUpdateModalButton">
+                      Update
+                    </button>
+                  </div>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
+                    aria-labelledby="passwordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="passwordModalLabel">Update Password</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure you want to update your password?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id="updatePasswordConfirmButton"
+                            name="updatePasswordConfirmButton" onclick=changePwd() data-dismiss="modal">Save
+                            changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-2">
+                    <h2 id="warning"></h2>
+                  </div>
+                </form>
+              </div>
+              <button type="button" class="btn btn-primary" id="leavePage" name="leavePage"
+                onclick="location.href='/dashboard'"> Return to Dashboard</button>
+            </div>
+          </div>
+
+        </div>
+      </main>
 
 
-  <%- include('partials/footer') %>
+      <%- include('partials/footer') %>

@@ -20,21 +20,22 @@
           <li class="nav-item">
             <a class="nav-link" href="/register">Register</a>
           </li>
+          <% } %>
+          <% if(typeof user !=='undefined' ){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <% } %>
           <li class="nav-item">
             <a class="nav-link" href="/application">New Planning Application</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/viewapplications">Application Search</a>
           </li>
-          <% } %>
-            <% if(typeof user !=='undefined' ){ %>
-              <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-              </li>
-              <% } %>
+         
                 <!--<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">

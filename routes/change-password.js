@@ -9,12 +9,6 @@ const genPassword = require ('../lib/passwordUtils').genPassword;
 let user;
 
 // define the home page route
-router.get('/', isAuth, (req, res) => {
-  if (!req.isAuthenticated()) { res.redirect('/login') }
-  else {
-      res.render('../views/change-password', { user: req.user })
-    }
-  })
 
 router.post('/processChange', isAuth, async (req, res) => {
   if (!req.isAuthenticated()) { res.redirect('/login') }

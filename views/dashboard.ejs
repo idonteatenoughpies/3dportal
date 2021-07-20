@@ -8,7 +8,7 @@
     <%- include('partials/header') %>
 
       <main>
-        <div class="title">
+        <div class="titleDash">
           <h1>Hi <%= user.first%>
           </h1>
           <p>Here you can manage your account, apply for planning permission and manage your existing applications.<br>To add new document to an existing application, just select it below.</p>
@@ -17,7 +17,6 @@
         <div class="dashboardMenu" >
           <div class="d-flex flex-wrap">
             <div class="p-2 bd-highlight"><a href="/application"> Apply for Planning Permission </a></div>
-            <div class="p-2 bd-highlight"> <a href="/change-password"> Change password </a></div>
             <div class="p-2 bd-highlight"> <a href="/accountdetails"> Manage account details </a></div>
             <% if (user.admin===true) { %>
             <div class="p-2 bd-highlight"><a href="/admindashboard">Admin dashboard </a></div>

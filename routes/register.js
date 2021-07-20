@@ -27,7 +27,7 @@ router.post('/checkUser', async (req, res) => {
 
 router.post('/processregister', async (req, res) => {
 
-  const { username: username, password:password, first:first, last:last, number:number, street1:street1, street2:street2, town:town, county:county, postcode:postcode } = req.body
+  const { username: username, password:password, first:first, last:last, email:email, number:number, street1:street1, street2:street2, town:town, county:county, postcode:postcode } = req.body
   const saltHash = genPassword (password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
@@ -45,7 +45,7 @@ router.post('/processregister', async (req, res) => {
   if (password === 'password' || password === '12345678') {
     return res.json({ status: 'error', error: "Please try a more secure password." })
   }
-const newUser = new User({username, hash, salt, first, last, number, street1, street2, town, county, postcode, admin})
+const newUser = new User({username, hash, salt, first, last, number, street1, street2, town, county, postcode, admin, email})
   
 try {
   newUser.save();

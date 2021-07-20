@@ -1,12 +1,11 @@
 
-      const form = document.getElementById('pwd-form')
-      form.addEventListener('submit', changePwd)
+      const changepasswordbutton = document.getElementById('updatePasswordConfirmButton')
+      changepasswordbutton.addEventListener('updatePasswordConfirmButton', changePwd)
 
-      async function changePwd(event) {
-        event.preventDefault()
+      async function changePwd() {
 
         const password = document.getElementById('password').value
-        const confirmpassword = document.getElementById('confirmPassword').value
+        const confirmpassword = document.getElementById('confirmpassword').value
 
         if (password !== confirmpassword) {
           document.getElementById("warning").innerHTML = "passwords do not match.";
@@ -24,6 +23,7 @@
 
           if (result.status === 'ok') {
             //everything went ok 
+       
             document.getElementById("warning").innerHTML = "Success, your password has been update.";
           } else {
             document.getElementById("warning").innerHTML = "PASSWORD UPDATE FAILED: " + result.error;
@@ -32,3 +32,7 @@
           console.log(result)
         }
       }
+
+function clearWarning(){
+  document.getElementById("warning").innerHTML = "";
+};
