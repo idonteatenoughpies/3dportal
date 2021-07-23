@@ -1,3 +1,4 @@
 db.js
 views/template.ejs
 .env
+node_modules
