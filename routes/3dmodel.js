@@ -1,9 +1,18 @@
 var express = require('express')
 var router = express.Router()
+const Model = require('../model/model')
 
 // define the home page route
 router.get('/', function (req, res) {
-    res.render('../views/3dmodel')
-  })
+  const ref = decodeURIComponent(req.query.ref);
+  Model.find({planningID: ref}, function (err, model) {
+    if (err) {
+        console.log(err);
+    } else {
+      console.log(model)
+    res.render('../views/3dmodel', {model: model})
+  }
+})
+})
 
   module.exports = router
