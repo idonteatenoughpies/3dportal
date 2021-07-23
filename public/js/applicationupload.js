@@ -1,3 +1,4 @@
+// ----------- Code to add new document fields   ---------------
 var number = 1;
 
 function addFields() {
@@ -8,7 +9,6 @@ function addFields() {
     // Create an <input> element, set its type and name attributes
     let div1 = document.createElement('div');
     div1.classList.add("p-2");
-    div1.classList.add("bd-highlight");
     container.appendChild(div1);
 
     let div2 = document.createElement('div');
@@ -17,19 +17,18 @@ function addFields() {
 
 
     var label = document.createElement("label");
-    label.for = name;
+    label.for = "documentinput" + number;
     label.id = "documentLabel" + number;
     div2.appendChild(label);
-    var label = "documentLabel" + number;
+    var labelID = "documentLabel" + number;
     var labelText = "Additional Document " + number;
 
-    document.getElementById(label).innerHTML = labelText;
+    document.getElementById(labelID).innerHTML = labelText;
 
     var input = document.createElement("input");
     input.type = "file";
     input.name = "documentinput" + number;
     input.id = "documentinput" + number;
-    var name = "documentinput" + number;
     div2.appendChild(input);
 
 
@@ -44,7 +43,4 @@ function addFields() {
 
     number++;
     document.getElementById('count').value = number;
-
-    
 }
-

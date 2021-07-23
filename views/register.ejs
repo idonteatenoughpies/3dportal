@@ -3,7 +3,7 @@
 
 <head>
   <%- include('partials/head') %>
-  <script defer src="/js/register.js"></script>
+    <script defer src="/js/register.js"></script>
 </head>
 
 <body class="container">
@@ -14,28 +14,81 @@
 
   <main>
     <p>Please complete the form below to register for the Portal3d service.</p>
-    <form id="reg-form">
-      <label>Name</label>
-      <input type="text" placeholder="first name" id="first" required>
-      <input type="text" placeholder="last name" id="last" required>
-      </br><label>Login</label>
-      <input type="email" placeholder="me@example.com" id="email" required>
-      <input type="text" placeholder="username" id="username" onkeyup="checkUser()" required>
-      <p id="uniqUser"></p>
-      <input type="password" placeholder="password" id="password" onkeyup="passwordLength()" required>
-      <p id="passwordLength"></p>
-      <input type="password" placeholder="confirm password" id="confirmPassword" required>
-      </br><label>Address</label>
-      <input type="text" placeholder="number" id="number" required>
-      <input type="text" placeholder="street 1" id="street1" required>
-      <input type="text" placeholder="street 2" id="street2">
-      <input type="text" placeholder="town" id="town" required>
-      <input type="text" placeholder="county" id="county" required>
-      <input type="text" placeholder="postcode" id="postcode" required>
-      </br><input type="submit">Submit</button>
-    </form>
+    <div class="card-deck">
+      <div class="card">
+        <div class="card-header">
+          Account details
+        </div>
+        <div class="card-body">
+          <form id="reg-form">
 
-    <h2 id="success"></h2>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='first'>First Name</label>
+              <input type="text" placeholder="first name" id="first" name="first" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='last'>Last Name</label>
+              <input type="text" placeholder="last name" id="last" name="last" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='email'>Email</label>
+              <input type="email" placeholder="me@example.com" id="email" name="email" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='username'>Username</label>
+              <input type="text" placeholder="username" id="username" name="username" onkeyup="checkUser()" required>
+            </span>
+            <p id="uniqUser"></p>
+            
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='street1'>Street 1</label>
+              <input type="text" placeholder="street 1" id="street1" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='street2'>Street 2</label>
+              <input type="text" placeholder="street 2" id="street2">
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='town'>Town</label>
+              <input type="text" placeholder="town" id="town" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='county'>County</label>
+              <input type="text" placeholder="county" id="county" required>
+            </span>
+            <span class="d-flex p-2 justify-content-between flex-wrap">
+              <label for='postcode'>Postcode</label>
+              <input type="text" placeholder="postcode" id="postcode" required>
+            </span>
+
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Password
+        </div>
+        <div class="card-body">
+          <div class="card p-2 m-1" id="passwordInfo">
+<p>Passwords must be a minimum of 8 characters and cannot be "password" or "12345678" </p>
+<p>Use something more secure!</p>
+</div>
+          <span class="d-flex p-2 justify-content-between flex-wrap">
+            <label for='password'>Password</label>
+            <input type="password" placeholder="password" id="password" name="password" onkeyup="passwordLength()"
+              required>
+
+          </span>
+          <p id="passwordLength"></p>
+          <span class="d-flex p-2 justify-content-between flex-wrap">
+            <label for='confirmPassword'>Confirm Password</label>
+            <input type="password" placeholder="confirm password" id="confirmPassword" name="confirmPassword" required>
+          </span>
+          </br><input type="submit" class="btn btn-primary m-3"></button>
+          </form>
+        </div>
+      </div>
+
+      <h2 id="success"></h2>
 
   </main>
 

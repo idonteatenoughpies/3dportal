@@ -7,6 +7,7 @@ const UploadedDocument = require('../model/uploadeddocument')
 const fileUpload = require('express-fileupload');
 const _ = require('lodash');
 const { v4: uuidv4 } = require('uuid');
+const Model = require('../model/model')
 
 
 // define the main application route
@@ -102,8 +103,15 @@ router.post('/newApplication', isAuth, async (req, res) => {
 
 router.get('/applicationupload', isAuth, (req, res) => {
   const name = req.query.ref;
-  res.render('../views/applicationupload', { user: req.user, ref: name })
+  var modelsuccess = req.query.modelsuccess;
+  res.render('../views/applicationupload', { user: req.user, ref: name, modelsuccess: modelsuccess })
 })
+
+router.get('/modelupload', isAuth, (req, res) => {
+  const name = req.query.ref;
+  res.render('../views/modelupload', { user: req.user, ref: name})
+})
+
 
 router.post('/applicationupload', isAuth, (req, res) => {
   try {
@@ -152,25 +160,67 @@ router.post('/applicationupload', isAuth, (req, res) => {
       }
       //return response
       var string = encodeURIComponent(req.body.planningID);
-      res.redirect('./applicationdetails/?ref=' + string);
+      res.redirect('../viewApplications/viewportal?planningID=' + string);
     }
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-// define the main application route
-router.get('/applicationdetails', isAuth, (req, res) => {
-  if (!req.isAuthenticated()) { res.redirect('/login') }
-  var ref = decodeURIComponent(req.query.ref);
-  UploadedDocument.find({ planningRef: ref }, function (err, docs) {
-    if (err) {
-      res.send(err);
-    }
-    res.render('../views/applicationdetails', { user: req.user, ref: ref, docs: docs })
-  });
+router.post('/modelupload', isAuth, (req, res) => {
+  try {
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded'
+      });
+    } else {
+      let length = parseInt(req.body.count);
 
-})
+      for (let i = 0; i < length; i++) {
+
+        let document = req.files["modelInput" + i];
+
+        //create a unique id
+        const uid = uuidv4(document.name);
+        const ext = document.name.slice((Math.max(0, document.name.lastIndexOf(".")) || Infinity) + 1);
+
+        //move photo to uploads directory
+        document.mv('./models/' + uid + "." + ext);
+
+        data = {
+          name: document.name,
+          mimetype: document.mimetype,
+          size: document.size
+        };
+
+        //save location to database
+        try {
+          const id = req.body.planningID;
+          const filepath = "/models/";
+          const filename = uid + "." + ext;
+          const originalName = document.name;
+   
+          Model.create({
+            planningID: id,
+            filepath: filepath,
+            filename: filename,
+            originalName: originalName,
+           
+          })
+        } catch (error) {
+          return res.json({ status: 'error', error: "database upload failed " + error })
+        }
+      }
+      //return response
+      var id = encodeURIComponent(req.body.planningID);
+      var modelsuccess = true;
+      res.redirect(`/application/applicationupload?ref=${id}&modelsuccess=${modelsuccess}`);
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 
 module.exports = router

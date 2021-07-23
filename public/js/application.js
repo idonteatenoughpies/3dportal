@@ -51,7 +51,9 @@ const form = document.getElementById('app-form')
           if (result.status === 'ok') {
             ref=result.ref;
             //everything went ok 
-            document.getElementById("success").innerHTML = `A new application has been successfully created <a href='/application/applicationupload?ref=${ref}'>Click here to go to document uploads</a>`;
+            if(modelRequired=false)
+            {document.getElementById("success").innerHTML = `A new application has been successfully created <a href='/application/applicationupload?ref=${ref}'>Click here to go to document uploads</a>`;}
+            else {document.getElementById("success").innerHTML = `A new application has been successfully created <a href='/application/modelupload?ref=${ref}'>Click here to go to document uploads</a>`;}
           } else {
             document.getElementById("success").innerHTML = "New Application Failed: " + result.error;
            

@@ -1,31 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <%- include('partials/head') %>
+<%- include('partials/head') %>
   <script defer src="/js/login.js"></script>
-</head>
+  </head>
 
-<body class="container">
+  <body class="container">
 
-  <header>
     <%- include('partials/header') %>
-  </header>
-
-  <main>
-    <p>Please enter your details to login.</p>
-    <form id="login-form">
-      
-      </br><label>Login</label>
-      <input type="text" placeholder="username" id="username">
-      <input type="password" placeholder="password" id="password">
-      </br><input type="submit">Submit</button>
-    </form>
-
-    <p id="error"></p>
-    
-
-  </main>
 
 
-  <%- include('partials/footer') %>
+      <main>
+        <div id="loginContainer">
+
+          <div class="row h-100 p-3 m-3">
+            <div class="col-sm-12 my-auto">
+              <div class="card card-block w-100 p-3 m-3">
+                <p>Please enter your details to login.</p>
+
+                <form id="login-form">
+                  <input type="text" placeholder="username" id="username">
+                  <input type="password" placeholder="password" id="password">
+                  <button type="submit" class="btn btn-primary m-3">Submit</button>
+                </form>
+                <p id="error"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+
+      <%- include('partials/footer') %>

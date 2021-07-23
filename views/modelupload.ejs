@@ -1,5 +1,5 @@
 <%- include('partials/head') %>
-    <script defer src="/js/applicationupload.js"></script>
+    <script defer src="/js/modelupload.js"></script>
     </head>
 
     <body class="container">
@@ -7,19 +7,18 @@
 
         <%- include('partials/header') %>
 
-<% if(modelsuccess) { %> <h1 style="color:green;">Your model has been successfully uploaded </h1> <% } %>
-            <h1 id="applicationTitle"> Upload documents for application <%= ref%>
+
+            <h1 id="applicationTitle"> Upload a 3d model for application <%= ref%>
             </h1>
-            <form action="/application/applicationupload" ref='uploadForm' id="uploadForm" method="POST"
+            <form action="/application/modelupload" ref='uploadForm' id="uploadForm" method="POST"
                 encType="multipart/form-data">
 
                 <div class="input-group mb-3">
                     <div class="d-flex flex-column  mb-3">
                         <div class="p-2 ">
                             <div>
-                                <label for="documentinput0" id="documentLabel0">Upload Application Form</label>
-                                <input type="file" name="documentinput0" id="documentinput0" />
-                                <input type="hidden" name="documenttext0" id="documenttext0" value="Application Form" />
+                                <label for="modelInput0" id="modelLabel0">Upload 3d model</label>
+                                <input type="file" name="modelInput0" id="modelInput0" />
                             </div>
                         </div>
 
@@ -28,13 +27,12 @@
                     </div>
                 </div>
                 </div>
-                <div id="newDocumentContainer"></div>
+                <div id="MTLContainer"></div>
                 </div>
 
                 <input type="hidden" name="count" id="count" value="1" />
                 <input type="submit" id="submitButton" value="Submit" class="btn btn-primary btn-block">
             </form>
-            <button class="newDocumentButton btn btn-success" onclick="addFields()"> Add new document </button>
 
 
             <h2 id='success'></h2>
