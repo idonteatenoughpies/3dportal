@@ -1,3 +1,4 @@
 db.js
 template.ejs
 .env
+node_modules
