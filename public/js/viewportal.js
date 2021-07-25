@@ -4,8 +4,8 @@ $(document).ready(function(){
       const id = this.id;
         const splitid = id.split('_');
         const viewid = splitid[1];
-        const encoded = encodeURIComponent(viewid);
-        window.location.assign(`/3dmodel?ref=${encoded}`)
+        window.location.assign(`/3dmodel`)
+        //window.location.assign(`viewapplications/viewmodel/_id/${viewid}`)
   })
   
   $('.goBack').click(function(){
