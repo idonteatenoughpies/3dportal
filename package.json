@@ -1,6 +1,6 @@
 {
-  "name": "3dportal",
-  "version": "0.0.1",
+  "name": "myexpressapp",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
