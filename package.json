@@ -26,7 +26,10 @@
     "three": "^0.130.0",
     "three-orbit-controls": "^82.1.0"
   },
-
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idonteatenoughpies/3dportal.git"
