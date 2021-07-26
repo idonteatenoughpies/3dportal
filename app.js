@@ -30,11 +30,18 @@ app.use(fileUpload({
 }));
 
 //  ---- DATABASE CONNECTION ----
+/*
 const MONGO_USERNAME = process.env.MONGO_USERNAME;
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 const MONGO_HOSTNAME = process.env.MONGO_HOSTNAME;
 const MONGO_PORT = process.env.MONGO_PORT;
 const MONGO_DB = process.env.MONGO_DB;
+*/
+MONGO_USERNAME="astruthers";
+MONGO_PASSWORD="3dportal";
+MONGO_HOSTNAME="127.0.0.1";
+MONGO_PORT="27017";
+MONGO_DB="3dportal"
 
 mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
@@ -43,7 +50,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, us
   db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(session({
-  secret: process.env.SECRET,
+  secret= "dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y",
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
