@@ -10,7 +10,7 @@ color: white;
 
 
 .header {
-  height: 10vh;
+  height: 9vh;
 }
 
 .titleDash {
@@ -22,7 +22,17 @@ color: white;
 }
 
 .scrollingArea{
+  height: 77vh;
+  overflow: scroll;
+}
 
+.scrollingAreaViewPortal{
+  height: 71vh;
+  overflow: scroll;
+}
+
+.scrollingAreaDocuments{
+  height: 65vh;
   overflow: scroll;
 }
 
@@ -32,7 +42,12 @@ color: white;
 }
 
 .scrollingAreaDashboard{
-  height: 55vh;
+  height: 64vh;
+  overflow: scroll;
+}
+
+.scrollingAreaLarger{
+  height: 70vh;
   overflow: scroll;
 }
 
@@ -44,15 +59,13 @@ color: white;
   height: 5vh;
 }
 
-.menuContainer{
-  width:90%;
-}
-
 .dashboardMenu {
-
   height: 50px;
-  
   cursor: pointer;
+  }
+
+  .addNewDocumentButton{
+    height: 15vh;
   }
 
   .bd-highlight:hover { 
@@ -85,4 +98,25 @@ color: white;
   position:absolute;
   bottom:0;
   right:0;
+}
+
+#passwordInfo {
+ background-color:rgb(218, 218, 248)
+}
+
+#loginContainer{
+  height: 80vh;
+  margin-top: auto;
+margin-bottom: auto;
+}
+
+#canvas {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 68vh;
+  border: 1px solid black;
+
+  position: static; /* fixed or static */
+  top: 100px;
+  left: 100px;
 }
