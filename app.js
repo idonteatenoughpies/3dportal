@@ -1,8 +1,10 @@
+const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
@@ -16,12 +18,12 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
-app.use("/models", express.static(path.join(__dirname, 'models')));
 app.use(cors());
 
 // enable files upload
@@ -30,18 +32,11 @@ app.use(fileUpload({
 }));
 
 //  ---- DATABASE CONNECTION ----
-/*
 const MONGO_USERNAME = process.env.MONGO_USERNAME;
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 const MONGO_HOSTNAME = process.env.MONGO_HOSTNAME;
 const MONGO_PORT = process.env.MONGO_PORT;
 const MONGO_DB = process.env.MONGO_DB;
-*/
-MONGO_USERNAME="astruthers";
-MONGO_PASSWORD="3dportal";
-MONGO_HOSTNAME="127.0.0.1";
-MONGO_PORT="27017";
-MONGO_DB="3dportal"
 
 mongoURL = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
 
@@ -50,7 +45,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, us
   db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(session({
-  secret: "dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y", //process.env.SECRET
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({

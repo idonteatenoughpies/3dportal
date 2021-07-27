@@ -1,30 +1,28 @@
-  <%- include('partials/head') %>
+<!DOCTYPE html>
+<html lang="en">
 
-  <script type="text/javascript" src="../js/three.min-129.js"></script>
-    <script type="text/javascript" src="../js/o3dv.min-0.7.17.js"></script>
-    <script type='text/javascript'>
-      OV.Init3DViewerElements ();
-  </script>
+<head>
+  <%- include('partials/head') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js"
+      integrity="sha512-NLtnLBS9Q2w7GKK9rKxdtgL7rA7CAS85uC/0xd9im4J/yOL4F9ZVlv634NAM7run8hz3wI2GabaA6vv8vJtHiQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="/js/OrbitControls.js"></script>
+      <script src="/js/objLoader.js"></script>
+      <script src="/js/MTLLoader.js"></script>
+      <script defer src="/js/3dmodel.js"></script>
 </head>
 
 <body class="container">
 
-
+  <header>
     <%- include('partials/header') %>
-
+  </header>
 
   <main>
-    <p> Use the scroll wheel to zoom in and out of the model</p>  
+    <p> Use the scroll wheel to zoom in and out of the model</p>
     <p> Hold the left mouse button and move the cursor to rotate the camera</p>
     <p> Hold the right mouse button and move the cursor to pan the camera</p>
     
-    <div class="online_3d_viewer"
-    style="width: 100%; height: 60vh;"
-    model="models/<%= model[0].filename %>"
-    
-    defaultcolor="200,0,0"
-    backgroundcolor="0xf4efff">
-</div>
   </main>
 
 
