@@ -1,10 +1,8 @@
-const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
 const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
@@ -18,12 +16,12 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
+app.use("/models", express.static(path.join(__dirname, 'models')));
 app.use(cors());
 
 // enable files upload
