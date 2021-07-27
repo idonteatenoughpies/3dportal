@@ -50,7 +50,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, us
   db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(session({
-  secret: "dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y",
+  secret: "dsfh*&^HDIYKJ*YONSusdks*(&BS%kjhlha&^&YOHJLAS(*QWY(*Qjbfkdf98y", //process.env.SECRET
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
