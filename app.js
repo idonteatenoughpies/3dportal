@@ -74,7 +74,7 @@ const logoutRouter = require('./routes/logout');
 const registerRouter = require('./routes/register');
 const threedmodelRouter = require('./routes/3dmodel');
 const applicationRouter = require('./routes/application');
-const viewapplicationsRouter = require('./routes/viewapplications');
+const viewapplicationsRouter = require('./routes/viewApplications'); //typo in capitalisation in original code - john
 const showRouter = require('./routes/show');
 const accountRouter = require('./routes/accountdetails');
 
@@ -87,7 +87,7 @@ app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/3dmodel', threedmodelRouter);
 app.use('/application', applicationRouter);
-app.use('/viewapplications', viewapplicationsRouter);
+app.use('/viewapplications', viewapplicationsRouter); 
 app.use('/show', showRouter);
 app.use('/accountdetails', accountRouter);
 
