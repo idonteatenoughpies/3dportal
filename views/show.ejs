@@ -15,8 +15,25 @@
       window.history.back();
     }
     </script>
-
-    <object class="documentViewer" data="/uploads/<%= file %>"></object>
+    <div id="viewer"></div>
+<script>
+  var viewer = document.getElementById("viewer");
+  let filetype = "<%= file %>";
+    let ext = filetype.slice((Math.max(0, filetype.lastIndexOf(".")) || Infinity) + 1);
+    if (ext.toLowerCase() == "pdf") {
+      let viewerObject = document.createElement('object');
+      viewerObject.classList.add("documentViewer");
+      viewerObject.data="/uploads/<%= file %>";
+      viewer.appendChild(viewerObject);
+        }
+        if (ext.toLowerCase() == "tif") {
+          let viewerObject = document.createElement('img');
+      viewerObject.classList.add("documentViewer");
+      viewerObject.src="/uploads/<%= file %>";
+      viewer.appendChild(viewerObject);
+        }
+</script>
+    
   </div>
   </main>
 
