@@ -142,3 +142,5 @@ margin-bottom: auto;
 .icon_holder:hover { background-color: rgba(93,157,255,100);
   color: white;
   }
+
+  .documentViewer {height: 80vh; width: 100%;}

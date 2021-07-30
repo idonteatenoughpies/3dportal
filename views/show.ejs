@@ -1,28 +1,23 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <%- include('partials/head') %>
+<%- include('partials/head') %>
 </head>
 
 <body class="container">
 
-  <header>
+
     <%- include('partials/header') %>
-  </header>
+
 
   <main>
-    <button onclick="goBack()" class="btn btn-primary">Go Back</button>
-
+    <div class="documentPage" style="position: relative;">
+    <button onclick="goBack()" class="btn btn-primary" style="position: absolute; top:0;">Go Back</button>
     <script>
     function goBack() {
       window.history.back();
     }
     </script>
-    
-    <object data="/uploads/<%= file %>"></object>
+
+    <object class="documentViewer" data="/uploads/<%= file %>"></object>
+  </div>
   </main>
 
 
