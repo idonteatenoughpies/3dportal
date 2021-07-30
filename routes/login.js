@@ -1,5 +1,7 @@
 var express = require('express')
-var router = express.Router()
+const { check } = require('express-validator');
+var router = express.Router();
+
 const passport = require ('passport');
 const bcrypt = require('bcryptjs');
 const User = require('../model/user');
@@ -12,7 +14,9 @@ router.get('/', function (req, res) {
   })
 
 // check for username & password combination
-router.post('/', passport.authenticate('local', { failureRedirect: 'login/failed', successRedirect: '/login/success'}));
+router.post('/', [
+  check('username').isLength({min:1}).trim().escape()
+], passport.authenticate('local', { failureRedirect: 'login/failed', successRedirect: '/login/success'}));
   
   // define the success route 
 router.get('/success', function (req, res, next ) {

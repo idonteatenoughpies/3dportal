@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const session = require('express-session');
+const { check } = require('express-validator');
 const isAuth = require('./authMiddleware').isAuth;
 const ApplicationModel = require('../model/applicationmodel');
 const UploadedDocument = require('../model/uploadeddocument')
@@ -16,7 +17,24 @@ router.get('/', isAuth, (req, res) => {
 })
 
 // define the new application route
-router.post('/newApplication', isAuth, async (req, res) => {
+router.post('/newApplication', isAuth,  [
+  check('title').isLength({min:1}).trim().escape(),
+  check('description').isLength({min:1}).trim().escape(),
+  check('applicantName').isLength({min:1}).trim().escape(),
+  check('applicantAddress').isLength({min:1}).trim().escape(),
+  check('applicantPostcode').isLength({min:1}).trim().escape(),
+  check('agentName').isLength({min:1}).trim().escape(),
+  check('agentAddress').isLength({min:1}).trim().escape(),
+  check('agentPhone').isLength({min:1}).trim().escape(),
+  check('propertyOwner').isLength({min:1}).trim().escape(),
+  check('applicationStreet1').isLength({min:1}).trim().escape(),
+  check('applicationStreet2').isLength({min:1}).trim().escape(),
+  check('applicationTown').isLength({min:1}).trim().escape(),
+  check('applicationCounty').isLength({min:1}).trim().escape(),
+  check('applicationPostcode').isLength({min:1}).trim().escape(),
+  check('modelRequired').isBoolean().trim().escape(),
+
+], async (req, res) => {
     const { title,
       description,
       applicantName,

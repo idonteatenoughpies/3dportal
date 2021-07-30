@@ -1,5 +1,6 @@
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var router = express.Router();
+const { check } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../model/user');
 const genPassword = require ('../lib/passwordUtils').genPassword;
@@ -25,7 +26,18 @@ router.post('/checkUser', async (req, res) => {
   });
 });
 
-router.post('/processregister', async (req, res) => {
+router.post('/processregister', [
+  check('email').isEmail().normalizeEmail().escape(),
+  check('username').isLength({min:1}).trim().escape(),
+  check('first').isLength({min:2}).trim().escape(),
+  check('last').isLength({min:2}).trim().escape(),
+  check('street1').isLength({min:3}).trim().escape(),
+  check('street2').isLength({min:3}).trim().escape(),
+  check('town').isLength({min:3}).trim().escape(),
+  check('county').isLength({min:3}).trim().escape(),
+  check('postcode').isLength({min:6}).trim().escape(),
+
+], async (req, res) => {
 
   const { username: username, password:password, first:first, last:last, email:email, number:number, street1:street1, street2:street2, town:town, county:county, postcode:postcode } = req.body
   const saltHash = genPassword (password);
