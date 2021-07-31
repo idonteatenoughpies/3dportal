@@ -54,7 +54,7 @@ $(document).ready(function () {
         var j = document.createElement("TD");
         var k = document.createElement("BUTTON")
         k.innerHTML = "View";
-        k.class = "view";
+        k.class = "view btn btn-primary";
         k.id = "view_" + appID;
         k.onclick=function () {window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)};
         j.appendChild(k);
