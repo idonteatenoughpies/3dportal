@@ -31,10 +31,11 @@
       viewerObject.href="/uploads/<%= file %>";
       viewerObject.download='<%= file.originalName %>';
       viewer.appendChild(viewerObject);
-      viewerObject.click()
+      viewerObject.click();
+      document.getElementByID('downloaded').innerHTML="Your document has downloaded";
         }
 </script>
-    
+<div id="downloaded"></div>    
   </div>
   </main>
 
