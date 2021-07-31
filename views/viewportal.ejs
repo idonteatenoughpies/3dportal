@@ -42,7 +42,7 @@
           <%= apps[0].applicationAddress.county %><br>
           <%= apps[0].applicationAddress.postcode %></td>
           <td><%= apps[0].propertyOwner %></td>
-          <% if(apps[0].modelRequired === true) { %><td><button class="view" id="view_<%= apps[0].planningID %>" > View Model</button></td> <% } %>
+          <% if(apps[0].modelRequired === true) { %><td><button class="view btn btn-primary" id="view_<%= apps[0].planningID %>" > View Model</button></td> <% } %>
         </tr>
 
       </tbody>

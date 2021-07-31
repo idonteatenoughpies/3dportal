@@ -8,16 +8,20 @@
 
 
   <main>
+    <div class="title">
     <div class="documentPage" style="position: relative;">
-    <button onclick="goBack()" class="btn btn-primary" style="position: absolute; top:0;">Go Back</button>
+    <button onclick="goBack()" class="btn btn-primary">Go Back</button>
+  </div>
     <script>
     function goBack() {
       window.history.back();
     }
     </script>
     <div id="viewer"></div>
+    <div id="downloaded"></div>  
 <script>
   var viewer = document.getElementById("viewer");
+  var downloaded = document.getElementById("downloaded");
   let filetype = "<%= file %>";
     let ext = filetype.slice((Math.max(0, filetype.lastIndexOf(".")) || Infinity) + 1);
     if (ext.toLowerCase() == "pdf"|| ext.toLowerCase() == "png" || ext.toLowerCase() == "jpg" || ext.toLowerCase() == "jpeg") {
@@ -32,10 +36,10 @@
       viewerObject.download='<%= file.originalName %>';
       viewer.appendChild(viewerObject);
       viewerObject.click();
-      document.getElementByID('downloaded').innerHTML="Your document has downloaded";
+      downloaded.innerHTML="Your document has downloaded";
         }
 </script>
-<div id="downloaded"></div>    
+  
   </div>
   </main>
 

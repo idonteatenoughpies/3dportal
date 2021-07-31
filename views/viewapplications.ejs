@@ -14,7 +14,7 @@
         <div class="titleDash">
           <h1>Planning Applications</h1>
           <input type="text" name="applicationSearchBox" id="applicationSearchBox" placeholder="Search" />
-          <button name="searchSubmit" id="searchSubmit">Search</button>
+          <button name="searchSubmit" id="searchSubmit" class="btn btn-primary">Search</button>
         </div>
 
         <div class="scrollingAreaLarger">
@@ -46,7 +46,7 @@
                       day: 'numeric' }); %>
                   </td>
                   <td>
-                    <button class="view" id="view_<%= apps[i].planningID %>"> View </button>
+                    <button class="view btn btn-primary" id="view_<%= apps[i].planningID %>"> View </button>
                   </td>
                 </tr>
                 <% } %>
