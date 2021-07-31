@@ -14,10 +14,20 @@
 
 
   <main>
+    <div class="title">
+      <div class="documentPage" style="position: relative;">
+      <button onclick="goBack()" class="btn btn-primary">Back to application documents</button>
+    </div>
+      <script>
+      function goBack() {
+        window.history.back();
+      }
+      </script>
+      <div class="card">
     <p> Use the scroll wheel to zoom in and out of the model</p>  
     <p> Hold the left mouse button and move the cursor to rotate the camera</p>
     <p> Hold the right mouse button and move the cursor to pan the camera</p>
-    
+    </div>
     <div class="online_3d_viewer"
     style="width: 100%; height: 60vh;"
     model="/models/<%= model[0].filename %>"
