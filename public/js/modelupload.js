@@ -13,12 +13,12 @@ modelinput.onchange = () => {
 
         // Create an <input> element, set its type and name attributes
         let diva = document.createElement('div');
-        diva.classList.add("p-2");
+        diva.className= "p-2";
 
         container.appendChild(diva);
 
         let divb = document.createElement('div');
-        divb.classList.add("custom-file");
+        divb.className="custom-file";
         diva.appendChild(divb);
 
 

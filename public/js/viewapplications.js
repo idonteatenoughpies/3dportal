@@ -10,8 +10,6 @@ $(document).ready(function () {
 
   $('#searchSubmit').click(async function () {
     const search = document.getElementById('applicationSearchBox').value;
-    console.log(search);
-
     const result = await fetch('/viewApplications', {
       method: 'POST',
       headers: {
@@ -24,13 +22,12 @@ $(document).ready(function () {
 
     if (result.status === 'ok') {
       const searchResult = result.apps
-      console.log(searchResult);
       //everything went ok 
       $("#tbodyid").empty();
 
       for (var i = 0; i < searchResult.length; i++) {
 
-        let appID = searchResult[i]._id;
+        let appID = searchResult[i].planningID;
          string = encodeURIComponent(appID);
         let row = document.createElement("TR");
         row.setAttribute("id", "myTr");
@@ -54,7 +51,7 @@ $(document).ready(function () {
         var j = document.createElement("TD");
         var k = document.createElement("BUTTON")
         k.innerHTML = "View";
-        k.class = "view btn btn-primary";
+        k.className= "view btn btn-primary";
         k.id = "view_" + appID;
         k.onclick=function () {window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)};
         j.appendChild(k);
