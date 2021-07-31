@@ -10,6 +10,7 @@
 <% if(modelsuccess) { %> <h1 style="color:green;">Your model has been successfully uploaded </h1> <% } %>
             <h1 id="applicationTitle"> Upload documents for application <%= ref%>
             </h1>
+            <p>Please note, all documents uploaded must be in PDF format</p>
             <form action="/application/applicationupload" ref='uploadForm' id="uploadForm" method="POST"
                 encType="multipart/form-data">
 
@@ -17,9 +18,9 @@
                     <div class="d-flex flex-column  mb-3">
                         <div class="p-2 ">
                             <div>
-                                <label for="documentinput0" id="documentLabel0">Upload Application Form</label>
-                                <input type="file" name="documentinput0" id="documentinput0" />
-                                <input type="hidden" name="documenttext0" id="documenttext0" value="Application Form" />
+                                <label for="documentinput0" id="documentLabel0">Upload First Document</label>
+                                <input type="file" name="documentinput0" id="documentinput0" onchange="validate()";/>
+                                <input type="text" name="documenttext0" id="documenttext0" placeholder="Enter a document description" />
                             </div>
                         </div>
 
@@ -30,7 +31,7 @@
                 </div>
                 <div id="newDocumentContainer"></div>
                 </div>
-
+                <div id="fileWarning"></div>
                 <input type="hidden" name="count" id="count" value="1" />
                 <input type="submit" id="submitButton" value="Submit" class="btn btn-primary btn-block">
             </form>

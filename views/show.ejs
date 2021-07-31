@@ -20,17 +20,18 @@
   var viewer = document.getElementById("viewer");
   let filetype = "<%= file %>";
     let ext = filetype.slice((Math.max(0, filetype.lastIndexOf(".")) || Infinity) + 1);
-    if (ext.toLowerCase() == "pdf") {
+    if (ext.toLowerCase() == "pdf"|| ext.toLowerCase() == "png" || ext.toLowerCase() == "jpg" || ext.toLowerCase() == "jpeg") {
       let viewerObject = document.createElement('object');
       viewerObject.classList.add("documentViewer");
       viewerObject.data="/uploads/<%= file %>";
       viewer.appendChild(viewerObject);
         }
         if (ext.toLowerCase() == "tif") {
-          let viewerObject = document.createElement('img');
-      viewerObject.classList.add("documentViewer");
-      viewerObject.src="/uploads/<%= file %>";
+          let viewerObject = document.createElement('a');
+      viewerObject.href="/uploads/<%= file %>";
+      viewerObject.download='<%= file.originalName %>';
       viewer.appendChild(viewerObject);
+      viewerObject.click()
         }
 </script>
     

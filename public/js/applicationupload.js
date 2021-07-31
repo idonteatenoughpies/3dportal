@@ -29,8 +29,8 @@ function addFields() {
     input.type = "file";
     input.name = "documentinput" + number;
     input.id = "documentinput" + number;
+    input.onchange = validate;
     div2.appendChild(input);
-
 
 
     let text = document.createElement('input');
@@ -43,4 +43,16 @@ function addFields() {
 
     number++;
     document.getElementById('count').value = number;
+}
+
+let doc1=document.getElementById('documentinput0');
+doc1.onchange = validate;
+
+
+function validate(){
+    let filetype = this.value;
+    let ext = filetype.slice((Math.max(0, filetype.lastIndexOf(".")) || Infinity) + 1);
+    if (ext.toLowerCase() !== "pdf") {
+      document.getElementById('fileWarning').innerHTML = "<h2 style= 'color:red'>Files must be PDF documents</h2><p>Please convert your file to pdf before uploading</p" 
+    }
 }
