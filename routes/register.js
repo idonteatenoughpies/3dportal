@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const { check } = require('express-validator');
-const bcrypt = require('bcryptjs');
 const User = require('../model/user');
 const genPassword = require ('../lib/passwordUtils').genPassword;
 

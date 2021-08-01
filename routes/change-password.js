@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 const session = require('express-session');
 const User = require('../model/user');
-const bcrypt = require('bcryptjs');
 const isAuth = require('./authMiddleware').isAuth;
 const genPassword = require ('../lib/passwordUtils').genPassword;
 
