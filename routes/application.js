@@ -203,6 +203,16 @@ router.post('/modelupload', isAuth, async (req, res) => {
         const uid = uuidv4(document.name);
         const ext = document.name.slice((Math.max(0, document.name.lastIndexOf(".")) || Infinity) + 1);
 
+        if (ext.toLowerCase() !== "obj" || 
+        ext.toLowerCase() !== "mtl" ||
+        ext.toLowerCase() !=="gltf" || 
+        ext.toLowerCase() !=="3ds" || 
+        ext.toLowerCase() !=="stl" || 
+        ext.toLowerCase() !=="ply" || 
+        ext.toLowerCase() !=="glb" || 
+        ext.toLowerCase() !=="3dm" || 
+        ext.toLowerCase() !=="off"
+        ) {return res.json({ status: 'error', error: "unsupported file format "})}
         //move photo to uploads directory
         document.mv('./models/' + uid + "." + ext);
 
