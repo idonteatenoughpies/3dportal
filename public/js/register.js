@@ -31,11 +31,11 @@ async function passwordCheck() {
     document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long.";
     button.disabled = true
   } else {
-    if (password == 'password') {
+    if (password.includes ('password')) {
       document.getElementById("passwordLength").innerHTML = "Password must not be password.";
       button.disabled = true
     } else {
-      if (password == '12345678') {
+      if (password.includes ('12345678')) {
         document.getElementById("passwordLength").innerHTML = "Password must not be 12345678.";
         button.disabled = true
       } else {
