@@ -33,9 +33,8 @@ $(document).ready(function () {
         for (var i = 0; i < searchResult.length; i++) {
 
           let appID = searchResult[i].planningID;
-          string = encodeURIComponent(appID);
+          let referString = encodeURIComponent(appID);
           let row = document.createElement("TR");
-          row.setAttribute("id", "myTr");
           document.getElementById("tbodyid").appendChild(row);
           var a = document.createElement("TD");
           var b = document.createTextNode(searchResult[i].planningID);
@@ -58,7 +57,7 @@ $(document).ready(function () {
           k.innerHTML = "View";
           k.className = "view btn btn-primary";
           k.id = "view_" + appID;
-          k.onclick = function () { window.location.assign(`/viewapplications/viewportal/?planningID=${string}`) };
+          k.onclick = function () { window.location.assign(`/viewapplications/viewportal/?planningID=${referString}`) };
           j.appendChild(k);
           document.getElementById("tbodyid").appendChild(j);
         }
