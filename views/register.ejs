@@ -74,7 +74,7 @@
 </div>
           <span class="d-flex p-2 justify-content-between flex-wrap">
             <label for='password'>Password</label>
-            <input type="password" placeholder="password" id="password" name="password" onkeyup="passwordLength()"
+            <input type="password" placeholder="password" id="password" name="password" onkeyup="passwordCheck()"
               required>
 
           </span>
@@ -83,7 +83,7 @@
             <label for='confirmPassword'>Confirm Password</label>
             <input type="password" placeholder="confirm password" id="confirmPassword" name="confirmPassword" required>
           </span>
-          </br><input type="submit" class="btn btn-primary m-3"></button>
+          <button id="submitRegistrationButton" type="submit" class="btn btn-primary m-3">Submit</button>
           </form>
         </div>
       </div>
