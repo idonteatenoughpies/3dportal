@@ -22,40 +22,46 @@ $(document).ready(function () {
 
     if (result.status === 'ok') {
       const searchResult = result.apps
-      //everything went ok 
-      $("#tbodyid").empty();
 
-      for (var i = 0; i < searchResult.length; i++) {
+      if (searchResult.length === 0) {
+        $("#tbodyid").empty();
+        document.getElementById('noResult').innerHTML = "No results to display";
+      } else {
+        //everything went ok 
+        $("#tbodyid").empty();
+        document.getElementById('noResult').innerHTML = "";
+        for (var i = 0; i < searchResult.length; i++) {
 
-        let appID = searchResult[i].planningID;
-         string = encodeURIComponent(appID);
-        let row = document.createElement("TR");
-        row.setAttribute("id", "myTr");
-        document.getElementById("tbodyid").appendChild(row);
-        var a = document.createElement("TD");
-        var b = document.createTextNode(searchResult[i].planningID);
-        a.appendChild(b);
-        document.getElementById("tbodyid").appendChild(a);
-        var c = document.createElement("TD");
-        var d = document.createTextNode(searchResult[i].title);
-        c.appendChild(d);
-        document.getElementById("tbodyid").appendChild(c);
-        var e = document.createElement("TD");
-        var f = document.createTextNode(searchResult[i].description);
-        e.appendChild(f);
-        document.getElementById("tbodyid").appendChild(e);
-        var g = document.createElement("TD");
-        var h = document.createTextNode(searchResult[i].dateCreated);
-        g.appendChild(h);
-        document.getElementById("tbodyid").appendChild(g);
-        var j = document.createElement("TD");
-        var k = document.createElement("BUTTON")
-        k.innerHTML = "View";
-        k.className= "view btn btn-primary";
-        k.id = "view_" + appID;
-        k.onclick=function () {window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)};
-        j.appendChild(k);
-        document.getElementById("tbodyid").appendChild(j);
+          let appID = searchResult[i].planningID;
+          string = encodeURIComponent(appID);
+          let row = document.createElement("TR");
+          row.setAttribute("id", "myTr");
+          document.getElementById("tbodyid").appendChild(row);
+          var a = document.createElement("TD");
+          var b = document.createTextNode(searchResult[i].planningID);
+          a.appendChild(b);
+          document.getElementById("tbodyid").appendChild(a);
+          var c = document.createElement("TD");
+          var d = document.createTextNode(searchResult[i].title);
+          c.appendChild(d);
+          document.getElementById("tbodyid").appendChild(c);
+          var e = document.createElement("TD");
+          var f = document.createTextNode(searchResult[i].description);
+          e.appendChild(f);
+          document.getElementById("tbodyid").appendChild(e);
+          var g = document.createElement("TD");
+          var h = document.createTextNode(searchResult[i].dateCreated);
+          g.appendChild(h);
+          document.getElementById("tbodyid").appendChild(g);
+          var j = document.createElement("TD");
+          var k = document.createElement("BUTTON")
+          k.innerHTML = "View";
+          k.className = "view btn btn-primary";
+          k.id = "view_" + appID;
+          k.onclick = function () { window.location.assign(`/viewapplications/viewportal/?planningID=${string}`) };
+          j.appendChild(k);
+          document.getElementById("tbodyid").appendChild(j);
+        }
       }
     } else {
       console.log("whoops");
