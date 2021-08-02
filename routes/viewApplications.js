@@ -22,27 +22,34 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const searchTerm = req.body.search;
-    console.log(`the search term was: ${searchTerm}`);
-
+    if (searchTerm == "") {
+        ApplicationModel.find({}, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+            res.json({ status: 'ok', apps: result })
+        }
+    })
+    } else {
     ApplicationModel.find({ $text: { $search: searchTerm } }, function (err, result) {
         if (err) {
             console.log(err);
         } else {
             res.json({ status: 'ok', apps: result })
         }
-    }
-    )
+    })
+}
 });;
 
 
 router.get('/viewportal', (req, res) => {
     planningID = decodeURIComponent(req.query.planningID);
-   
-    ApplicationModel.find({ planningID:planningID }, function (err, apps) {
+
+    ApplicationModel.find({ planningID: planningID }, function (err, apps) {
         if (err) {
             console.log(err);
         } else {
-           
+
             UploadedDocument.find({ planningRef: planningID }, function (err, docs) {
                 if (err) {
                     console.log(err);
