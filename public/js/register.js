@@ -17,11 +17,13 @@ async function checkUser() {
   if (result.status !== 'ok') {
     //everything went ok 
     document.getElementById("uniqUser").innerHTML = "This username is not available.";
+    const button = document.getElementById('submitRegistrationButton');
     button.disabled = true
   }
   if (result.status === 'ok') {
     //everything went ok 
     document.getElementById("uniqUser").innerHTML = "";
+    const button = document.getElementById('submitRegistrationButton');
     button.disabled = false
   }
 }
