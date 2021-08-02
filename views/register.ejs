@@ -14,6 +14,7 @@
 
   <main>
     <p>Please complete the form below to register for the Portal3d service.</p>
+    <h2 id="success"></h2>
     <div class="card-deck">
       <div class="card">
         <div class="card-header">
@@ -39,7 +40,7 @@
               <input type="text" placeholder="username" id="username" name="username" onkeyup="checkUser()" required>
             </span>
             <p id="uniqUser"></p>
-            
+
             <span class="d-flex p-2 justify-content-between flex-wrap">
               <label for='street1'>Street 1</label>
               <input type="text" placeholder="street 1" id="street1" required>
@@ -69,9 +70,9 @@
         </div>
         <div class="card-body">
           <div class="card p-2 m-1" id="passwordInfo">
-<p>Passwords must be a minimum of 8 characters and cannot be "password" or "12345678" </p>
-<p>Use something more secure!</p>
-</div>
+            <p>Passwords must be a minimum of 8 characters and cannot be "password" or "12345678" </p>
+            <p>Use something more secure!</p>
+          </div>
           <span class="d-flex p-2 justify-content-between flex-wrap">
             <label for='password'>Password</label>
             <input type="password" placeholder="password" id="password" name="password" onkeyup="passwordCheck()"
@@ -87,8 +88,8 @@
           </form>
         </div>
       </div>
-
-      <h2 id="success"></h2>
+    </div>
+   
 
   </main>
 
