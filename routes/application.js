@@ -34,7 +34,7 @@ router.post('/newApplication', isAuth,  [
   check('applicationPostcode').isLength({min:1}).trim().escape(),
   check('modelRequired').isBoolean().trim().escape(),
 
-], async (req, res) => {
+],async (req, res) => {
     const { title,
       description,
       applicantName,
@@ -102,7 +102,7 @@ router.post('/newApplication', isAuth,  [
           ApplicationModel.collection.dropIndexes(function (err) {
             if (err) {
 
-              return res.json({ status: 'error', error: "dropindex " + error })
+              return res.json({ status: 'error', error: error })
             }
           });
 
@@ -185,7 +185,7 @@ router.post('/applicationupload', isAuth, (req, res) => {
   }
 });
 
-router.post('/modelupload', isAuth, (req, res) => {
+router.post('/modelupload', isAuth, async (req, res) => {
   try {
     if (!req.files) {
       res.send({
@@ -219,13 +219,17 @@ router.post('/modelupload', isAuth, (req, res) => {
           const filename = uid + "." + ext;
           const originalName = document.name;
    
-          Model.create({
+          await Model.create({
             planningID: id,
             filepath: filepath,
             filename: filename,
             originalName: originalName,
            
           })
+          const update = await ApplicationModel.findOne({planningID:id})
+          update.modelRequired = true;
+          await update.save();
+
         } catch (error) {
           return res.json({ status: 'error', error: "database upload failed " + error })
         }

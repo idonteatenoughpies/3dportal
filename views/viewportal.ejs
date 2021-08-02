@@ -50,7 +50,9 @@
     <% if(typeof user !=='undefined' ) {if(user.username===apps[0].submittedBy) {%>
     <button  class="btn btn-primary m-2" id="addDocsButton"
     name="addDocsButton" onclick="window.location.assign('/application/applicationupload?ref=<%=apps[0].planningID%>')">Upload New Documents</button>
-<% }} %>
+<% if(apps[0].modelRequired === false) { %> 
+  <button  class="btn btn-primary m-2" id="addModelButton"
+name="addModelButton" onclick="window.location.assign('/application/modelupload?ref=<%=apps[0].planningID%>')">Add a model</button> <% }}} %>
     <% if(!docs) { %>
       <table class="table table-inverse" id="table2">
         <thead>
