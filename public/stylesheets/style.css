@@ -147,3 +147,5 @@ margin-bottom: auto;
 
   #passwordLength {color: red;}
   #uniqUser {color: red;}
+
+  #error {color: red;}
