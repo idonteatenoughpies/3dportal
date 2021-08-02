@@ -54,9 +54,11 @@ modelinput.onchange = () => {
         ext.toLowerCase().trim() != "3dm" &&
         ext.toLowerCase().trim() != "off" &&
         ext.toLowerCase().trim() != "mtl"
-    ) { document.getElementById("fileWarning").innerHTML = "Unsupported file type"; }
+    ) { document.getElementById("fileWarning").innerHTML = "Unsupported file type"; 
+    document.getElementById("submitButton").disabled=true;}
     else {
         document.getElementById("fileWarning").innerHTML = "";
+        document.getElementById("submitButton").disabled=false;
     }
 
 }
