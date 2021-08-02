@@ -32,11 +32,11 @@ async function passwordCheck() {
     button.disabled = true
   } else {
     if (password.includes ('password')) {
-      document.getElementById("passwordLength").innerHTML = "Password must not be password.";
+      document.getElementById("passwordLength").innerHTML = "Password must not include password.";
       button.disabled = true
     } else {
       if (password.includes ('12345678')) {
-        document.getElementById("passwordLength").innerHTML = "Password must not be 12345678.";
+        document.getElementById("passwordLength").innerHTML = "Password must not include 12345678.";
         button.disabled = true
       } else {
         document.getElementById("passwordLength").innerHTML = "";
