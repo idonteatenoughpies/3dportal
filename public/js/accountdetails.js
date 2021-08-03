@@ -97,3 +97,6 @@ async function checkUser(){
     }
   }
   
+  function success() {
+    document.getElementById("success").innerHTML = "";
+  }

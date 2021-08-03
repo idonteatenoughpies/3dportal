@@ -24,51 +24,52 @@
                   User details
                 </div>
                 <div class="card-body">
+                  <div id="success" style="color:green"></div>
                   <form id="reg-form">
                     <div class="details-form">
                       <p id="uniqUser"></p>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="first">First Name</label>
-                        <input name="first" id="first" type="text" value="<%= user.first%>" required />
+                        <input name="first" id="first" type="text" value="<%= user.first%>" onfocus="success()" required />
 
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="last" style="white-space:nowrap">Last Name</label>
-                        <input name="last" id="last" type="text" value="<%= user.last%>" required />
+                        <input name="last" id="last" type="text" value="<%= user.last%>" onfocus="success()" required />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="username" style="white-space:nowrap">Username</label>
                         <input name="username" id="username" type="text" value="<%= user.username%>"
-                          onkeyup="checkUser()" required />
+                          onkeyup="checkUser()" onfocus="success()" required />
                         <script>var checkusername = "<%= user.username%>"</script>
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="email" style="white-space:nowrap">Email</label>
-                        <input name="email" id="email" type="text" value="<%= user.email%>" required />
+                        <input name="email" id="email" type="text" value="<%= user.email%>" onfocus="success()" required />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="street1" style="white-space:nowrap">Street Address</label>
-                        <input name="street1" id="street1" type="text" value="<%= user.street1%>" required />
+                        <input name="street1" id="street1" type="text" value="<%= user.street1%>" onfocus="success()" required />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="street2" style="white-space:nowrap">Street Address 2</label>
-                        <input name="street2" id="street2" type="text" value="<%= user.street2%>" />
+                        <input name="street2" id="street2" type="text" value="<%= user.street2%>" onfocus="success()" />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="town" style="white-space:nowrap">Town</label>
-                        <input name="town" id="town" type="text" value="<%= user.town%>" required />
+                        <input name="town" id="town" type="text" value="<%= user.town%>" onfocus="success()" required />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="county" style="white-space:nowrap">County</label>
-                        <input name="county" id="county" type="text" value="<%= user.county%>" required />
+                        <input name="county" id="county" type="text" value="<%= user.county%>" onfocus="success()" required />
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="postcode" style="white-space:nowrap">Postcode</label>
-                        <input name="postcode" id="postcode" type="text" value="<%= user.postcode%>" required />
+                        <input name="postcode" id="postcode" type="text" value="<%= user.postcode%>" onfocus="success()" required />
                       </span>
                       <input type="submit" class="btn btn-primary" id="updateDetailsConfirmButton"
-                        name="updateDetailsConfirmButton"></button>
-                      <div id="success"></div>
+                        name="updateDetailsConfirmButton" value="Update"></button>
+
                     </div>
                 </div>
                 </form>

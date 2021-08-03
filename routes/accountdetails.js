@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 const session = require('express-session');
 const { check } = require('express-validator');
 const isAuth = require('./authMiddleware').isAuth;
@@ -25,11 +25,14 @@ router.get('/', isAuth, function (req, res) {
     check('county').isLength({min:3}).trim().escape(),
     check('postcode').isLength({min:6}).trim().escape(),
   
-  ], async (req, res) => {
+  ],async (req, res) => {
 
     const { first:first, last:last, email: email, username: username, street1:street1, street2:street2, town:town, county:county, postcode:postcode } = req.body
     const _id =req.user._id;
+    const originalUsername = req.user.username;
+
   try {
+    ApplicationModel.updateOne({submittedBy:originalUsername}, { $set: { username: username} });
     await User.updateOne({_id}, { $set: { first:first, last:last, email: email, username: username, street1:street1, street2:street2, town:town, county:county, postcode:postcode } });
     
     } catch (error) {
