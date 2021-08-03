@@ -35,56 +35,74 @@ async function passwordCheck() {
     document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long.";
     button.disabled = true
   } else {
-    if (password.includes ('password')) {
+    if (password.includes('password')) {
       document.getElementById("passwordLength").innerHTML = "Password must not include password.";
       button.disabled = true
     } else {
-      if (password.includes ('12345678')) {
+      if (password.includes('12345678')) {
         document.getElementById("passwordLength").innerHTML = "Password must not include 12345678.";
         button.disabled = true
       } else {
         document.getElementById("passwordLength").innerHTML = "";
         button.disabled = false
+        passwordMatch();
       }
     }
   }
 }
 
-  async function registerUser(event) {
-    event.preventDefault()
+async function passwordMatch() {
+  const password = document.getElementById('password').value
+  let passwordconfirm = document.getElementById('confirmPassword').value
+  if (passwordconfirm === "") {
+    document.getElementById("passwordMatch").innerHTML = "";
+    document.getElementById("submitRegistrationButton").disabled = true;
+  } else 
+  if (password !== passwordconfirm) {
+    document.getElementById("passwordMatch").innerHTML = "Passwords do not match.";
+    document.getElementById("submitRegistrationButton").disabled = true;
+  } 
+  else {
+    document.getElementById("passwordMatch").innerHTML = "";
+    document.getElementById("submitRegistrationButton").disabled = false;
+  }
+}
 
-    const first = document.getElementById('first').value
-    const last = document.getElementById('last').value
-    const email = document.getElementById('email').value
-    const username = document.getElementById('username').value
-    const password = document.getElementById('password').value
-    const street1 = document.getElementById('street1').value
-    const street2 = document.getElementById('street2').value
-    const town = document.getElementById('town').value
-    const county = document.getElementById('county').value
-    const postcode = document.getElementById('postcode').value
-    const confirmpassword = document.getElementById('confirmPassword').value
+async function registerUser(event) {
+  event.preventDefault()
 
-    if (password !== confirmpassword) {
-      document.getElementById("success").innerHTML = "passwords do not match."; return;
+  const first = document.getElementById('first').value
+  const last = document.getElementById('last').value
+  const email = document.getElementById('email').value
+  const username = document.getElementById('username').value
+  const password = document.getElementById('password').value
+  const street1 = document.getElementById('street1').value
+  const street2 = document.getElementById('street2').value
+  const town = document.getElementById('town').value
+  const county = document.getElementById('county').value
+  const postcode = document.getElementById('postcode').value
+  const confirmpassword = document.getElementById('confirmPassword').value
+
+  if (password !== confirmpassword) {
+    document.getElementById("success").innerHTML = "passwords do not match."; return;
+  } else {
+
+    const result = await fetch('/register/processregister', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        first, last, email, username, password, street1, street2, town, county, postcode
+      })
+    }).then((res) => res.json())
+
+    if (result.status === 'ok') {
+      //everything went ok 
+      document.getElementById("success").innerHTML = "New Account Created. <a href='/login'>Click here to login</a>";
     } else {
+      document.getElementById("success").innerHTML = "Failed to create new account: " + result.error;
 
-      const result = await fetch('/register/processregister', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          first, last, email, username, password, street1, street2, town, county, postcode
-        })
-      }).then((res) => res.json())
-
-      if (result.status === 'ok') {
-        //everything went ok 
-        document.getElementById("success").innerHTML = "New Account Created. <a href='/login'>Click here to login</a>";
-      } else {
-        document.getElementById("success").innerHTML = "Failed to create new account: " + result.error;
-
-      }
     }
   }
+}
