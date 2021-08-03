@@ -82,8 +82,9 @@
           <p id="passwordLength"></p>
           <span class="d-flex p-2 justify-content-between flex-wrap">
             <label for='confirmPassword'>Confirm Password</label>
-            <input type="password" placeholder="confirm password" id="confirmPassword" name="confirmPassword" required>
+            <input type="password" placeholder="confirm password" id="confirmPassword" name="confirmPassword" onkeyup="passwordCheck()" required>
           </span>
+          <p id="passwordMatch"></p>
           <button id="submitRegistrationButton" type="submit" class="btn btn-primary m-3">Submit</button>
           </form>
         </div>
