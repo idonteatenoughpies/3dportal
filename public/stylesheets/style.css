@@ -151,3 +151,7 @@ margin-bottom: auto;
   #error {color: red;}
 
   .asterisks {color: red;}
+
+  #fileWarning {color: red;}
+
+  .navbar {z-index:9999;}
