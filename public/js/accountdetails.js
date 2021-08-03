@@ -61,13 +61,29 @@ async function checkUser(){
 
   async function passwordLength() {
     const password = document.getElementById('password').value
-    if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Passwords must be a minimum of 8 characters long.";}
-    else{document.getElementById("passwordLength").innerHTML ="";}
+    if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long.";}
+    else{
+      if (password.includes ('password')) {
+        document.getElementById("passwordLength").innerHTML = "Password must not include password.";
+        document.getElementById("passwordUpdateModalButton").disabled = true
+      } else {
+        if (password.includes ('12345678')) {
+          document.getElementById("passwordLength").innerHTML = "Password must not include 12345678.";
+          document.getElementById("passwordUpdateModalButton").disabled = true
+        } else {
+          document.getElementById("passwordLength").innerHTML = "";
+          document.getElementById("passwordUpdateModalButton").disabled = false
+          if(passwordconfirm = document.getElementById('confirmpassword').value != ""){
+            passwordMatch();
+          }
+        }
+  }
+}
   }
 
   async function passwordMatch() {
     const password = document.getElementById('password').value
-    const passwordconfirm = document.getElementById('confirmpassword').value
+    let passwordconfirm = document.getElementById('confirmpassword').value
     if (passwordconfirm ==="undefined" || password === passwordconfirm) 
     {document.getElementById("passwordMatch").innerHTML = "";
     document.getElementById("passwordUpdateModalButton").disabled=false;}
