@@ -4,7 +4,7 @@
 width: 250px;
 cursor: pointer;
 }
-.menuArea:hover { background-color: rgba(93,157,255,100);
+.menuArea:hover { background-color: rgb(93,157,255);
 color: white;
 }
 
@@ -85,7 +85,7 @@ height: auto;
   }
 
   .bd-highlight:hover { 
-    background-color: rgba(200,254,255,100);
+    background-color: rgb(200,254,255);
   color: white;
   }
 
@@ -139,7 +139,7 @@ margin-bottom: auto;
 
 .icon_holder { background-color: white;}
 
-.icon_holder:hover { background-color: rgba(93,157,255,100);
+.icon_holder:hover { background-color: rgb(93,157,255);
   color: white;
   }
 
@@ -155,3 +155,5 @@ margin-bottom: auto;
   #fileWarning {color: red;}
 
   .navbar {z-index:9999;}
+
+  
