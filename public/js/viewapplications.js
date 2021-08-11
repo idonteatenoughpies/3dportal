@@ -49,7 +49,15 @@ $(document).ready(function () {
           e.appendChild(f);
           document.getElementById("tbodyid").appendChild(e);
           var g = document.createElement("TD");
-          var h = document.createTextNode(searchResult[i].dateCreated);
+          date=searchResult[i].dateCreated;
+          const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+            const dateObj = new Date(date);
+            const month = monthNames[dateObj.getMonth()];
+          const day = String(dateObj.getDate());
+          const year = dateObj.getFullYear();
+          dateStr = (day + ' ' + month + ' ' + year).toString();
+          var h = document.createTextNode(dateStr);
           g.appendChild(h);
           document.getElementById("tbodyid").appendChild(g);
           var j = document.createElement("TD");
