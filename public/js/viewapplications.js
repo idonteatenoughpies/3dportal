@@ -10,7 +10,6 @@ $(document).ready(function () {
 
   $('#searchSubmit').click(async function () {
     const search = document.getElementById('applicationSearchBox').value;
-    console.log(search);
     const result = await fetch('/viewApplications', {
       method: 'POST',
       headers: {
