@@ -54,5 +54,7 @@ function validate(){
     let ext = filetype.slice((Math.max(0, filetype.lastIndexOf(".")) || Infinity) + 1);
     if (ext.toLowerCase() !== "pdf") {
       document.getElementById('fileWarning').innerHTML = "<h2 style= 'color:red'>Files must be PDF documents</h2><p>Please convert your file to pdf before uploading</p" 
-    }
+      document.getElementById('submitButton').disabled=true;
+    } else {document.getElementById('fileWarning').innerHTML = "";
+    document.getElementById('submitButton').disabled=false; }
 }

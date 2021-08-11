@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const isAuth = require('./authMiddleware').isAuth;
 const ApplicationModel = require('../model/applicationmodel');
 const UploadedDocument = require('../model/uploadeddocument')
+const PlanningID = require('../model/planningID')
 const fileUpload = require('express-fileupload');
 const _ = require('lodash');
 const { v4: uuidv4 } = require('uuid');
@@ -61,19 +62,23 @@ router.post('/newApplication', isAuth,  [
     let planningID;
     try {
 
-      await ApplicationModel.countDocuments({}, async function (err, count) {
+      await PlanningID.countDocuments({year:yearCreated}, async function (err, count) {
         if (err) return res.json({ status: 'error', error: error })
         currentCount = count;
-        newCount = (currentCount + 1)
+        newCount = (currentCount + 1).toString();
+       newCount = newCount.padStart(4,'0');
         const submittedBy = req.user.username;
-        planningID = yearCreated.concat("/", newCount);
-
+        planningID = "APP/".concat(yearCreated.concat("/", newCount));
         try {
+          await PlanningID.create({
+            year: yearCreated,
+            count: newCount
+          })
+        
           await ApplicationModel.create({
             planningID: planningID,
             submittedBy: submittedBy,
             dateCreated: dateCreated,
-            yearCreated: yearCreated,
             status: status,
             title: title,
             description: description,
@@ -114,8 +119,7 @@ router.post('/newApplication', isAuth,  [
     } catch (error) {
       return res.json({ status: 'error', error: "Count docs failed " + error })
     }
-    res.json({ status: 'ok', ref: planningID })
-  
+    res.json({ status: 'ok', ref: planningID })  
 });
 
 

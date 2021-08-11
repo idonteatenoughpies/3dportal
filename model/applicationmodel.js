@@ -3,7 +3,6 @@ const mongoose = require ('mongoose');
 const applicationSchema = new mongoose.Schema({
     planningID: { type: String, required: true, unique: true },
     dateCreated: { type: Date, required: true },
-    yearCreated: { type: Date, required: true },
     dateValidated: { type: Date },
     dateDecided: { type: Date },
     dateComments: { type: Date },
