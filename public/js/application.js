@@ -49,7 +49,7 @@ const form = document.getElementById('app-form')
           }).then((res) => res.json())
   
           if (result.status === 'ok') {
-            ref=result.ref;
+            ref=encodeURIComponent(result.ref);
             //everything went ok 
             if(modelRequired=false)
             {window.location.href=`/application/applicationupload?ref=${ref}`}
