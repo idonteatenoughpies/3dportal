@@ -8,7 +8,7 @@
         <%- include('partials/header') %>
 
 
-            <h1 id="applicationTitle"> Upload a 3d model for application <%= ref%>
+            <h1 id="applicationTitle"> Upload a 3D model for application <%= ref%>
             </h1>
             <form action="/application/modelupload" ref='uploadForm' id="uploadForm" method="POST"
                 encType="multipart/form-data">
@@ -27,6 +27,7 @@
                     </div>
                 </div>
                 </div>
+                <div id="fileWarning"></div>
                 <div id="MTLContainer"></div>
                 </div>
 

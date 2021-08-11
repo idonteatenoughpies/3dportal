@@ -12,3 +12,5 @@ module.exports.isAdmin = (req, res, next) => {
     } else {res.redirect('/dashboard')
     }
 }
+
+// code courtesy of Zach Golwitzer   https://www.youtube.com/watch?v=J1qXK66k1y4

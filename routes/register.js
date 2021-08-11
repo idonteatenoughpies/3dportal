@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require('express')
 var router = express.Router();
 const { check } = require('express-validator');
 const User = require('../model/user');
@@ -38,7 +38,17 @@ router.post('/processregister', [
 
 ], async (req, res) => {
 
-  const { username: username, password:password, first:first, last:last, email:email, number:number, street1:street1, street2:street2, town:town, county:county, postcode:postcode } = req.body
+  const { 
+    username: username, 
+    password:password, 
+    first:first, 
+    last:last, 
+    email:email, 
+    street1:street1, 
+    street2:street2, 
+    town:town, 
+    county:county, 
+    postcode:postcode } = req.body
   const saltHash = genPassword (password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
@@ -56,7 +66,7 @@ router.post('/processregister', [
   if (password === 'password' || password === '12345678') {
     return res.json({ status: 'error', error: "Please try a more secure password." })
   }
-const newUser = new User({username, hash, salt, first, last, number, street1, street2, town, county, postcode, admin, email})
+const newUser = new User({username, hash, salt, first, last, street1, street2, town, county, postcode, admin, email})
   
 try {
   newUser.save();
