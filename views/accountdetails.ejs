@@ -1,7 +1,7 @@
 <%- include('partials/head') %>
   <title>portal3d - Account Management</title>
 
-  <script defer src="js/changePassword.js"></script>
+  <script defer src="js/changepassword.js"></script>
   <script defer src="js/accountdetails.js"></script>
   </head>
 
@@ -42,6 +42,7 @@
                         <input name="username" id="username" type="text" value="<%= user.username%>"
                           onkeyup="checkUser()" onfocus="success()" required />
                         <script>var checkusername = "<%= user.username%>"</script>
+                        <script>var _id = "<%= user._id%>"</script>
                       </span>
                       <span class="d-flex p-2 justify-content-between flex-wrap">
                         <label for="email" style="white-space:nowrap">Email</label>
@@ -162,8 +163,8 @@
                           </div> <!-- remember to change this to only allow delete if no applications exist or application status is determined-->
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger" id="updatePasswordConfirmButton"
-                              name="updatePasswordConfirmButton" onclick="deleteAccount()" data-dismiss="modal">Delete Account</button>
+                            <button type="button" class="btn btn-danger" id="deleteUserConfirmButton"
+                              name="deleteUserConfirmButton" onclick="deleteAccount()" data-dismiss="modal">Delete Account</button>
                           </div>
                         </div>
                       </div>

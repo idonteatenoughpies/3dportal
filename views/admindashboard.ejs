@@ -1,16 +1,348 @@
 <%- include('partials/head') %>
-  
-</head>
+  <title>portal3d - Account Management</title>
+  <script defer src="js/admindashboard.js"></script>
+  <script defer src="js/changePasswordadmin.js"></script>
 
-<body class="container">
+  </head>
 
-  <%- include('partials/header') %>
+  <body class="container">
 
-  <main>
-    <h1>Hi <%= user.first%></h1>
-    <p>this is the admin dashboard page</p>
-    <a href="/change-password"> Change password </a>
-  </main>
 
-  <%- include('partials/footer') %>
-  
+    <%- include('partials/header') %>
+
+
+      <main>
+
+        <div class="title">
+          <h1>Admin Dashboard</h1>
+        </div>
+
+        <div class="scrollingArea">
+          <div class="card-columns custom-columns">
+
+            <div class="card">
+              <div class="card-header">
+                User details
+              </div>
+              <div class="card-body">
+                <select class="form-select" aria-label="Default select example" id="userSelect" style="width:100%"">
+                  <option value=" default" selected>Choose a user</option>
+                  <% var options=users; %>
+                    <% for(var i=0; i < users.length; i++) { %>
+                      <option value='<%= users[i]._id %>'>
+                        <%= users[i].first %>
+                          <%=users[i].last%>
+                      </option>
+                      <% } %>
+                </select>
+
+                <form id="reg-form">
+                  <div class="details-form">
+
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="first">First Name</label>
+                      <input name="first" id="first" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="last" style="white-space:nowrap">Last Name</label>
+                      <input name="last" id="last" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="username" style="white-space:nowrap">Username</label>
+                      <input name="username" id="username" type="text" onkeyup="checkUser()" onfocus="success()"
+                        required />
+                    </span>
+                    <p id="uniqUser"></p>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="email" style="white-space:nowrap">Email</label>
+                      <input name="email" id="email" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="street1" style="white-space:nowrap">Street Address</label>
+                      <input name="street1" id="street1" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="street2" style="white-space:nowrap">Street Address 2</label>
+                      <input name="street2" id="street2" type="text" onfocus="success()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="town" style="white-space:nowrap">Town</label>
+                      <input name="town" id="town" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="county" style="white-space:nowrap">County</label>
+                      <input name="county" id="county" type="text" onfocus="success()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="postcode" style="white-space:nowrap">Postcode</label>
+                      <input name="postcode" id="postcode" type="text" onfocus="success()" required />
+                    </span>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="adminRadio" id="adminRadioFalse" value="false"
+                        onfocus="success()" checked>
+                      <label class="form-check-label" for="adminRadioFalse">
+                        Standard User
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="adminRadio" id="adminRadioTrue" value="true"
+                        onfocus="success()">
+                      <label class="form-check-label" for="adminRadioTrue">
+                        Admin User
+                      </label>
+                    </div>
+                    <input type="hidden" name="idBox" id="idBox" type="text" />
+                    <input type="submit" class="btn btn-primary" id="updateDetailsConfirmButton"
+                      name="updateDetailsConfirmButton" value="Update User Details"></button>
+                    <div id="success" style="color:green"></div>
+                  </div>
+              </form>
+
+
+
+              <div class="m-2">Enter a new password</div>
+              <form id="pwd-form">
+                <input type="password" class="m-2" placeholder="password" id="password" onkeyup="passwordLength()"
+                  onfocus="clearWarning()" required />
+                <p id="passwordLength"></p>
+                <div class="m-2" p>Confirm your new password</div>
+                <input type="password" class="m-2" placeholder="confirm password" id="confirmpassword"
+                  onfocus="clearWarning()" onkeyup="passwordMatch()" required />
+                <p id="passwordMatch"></p>
+                <div class="m-2">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"
+                    id="passwordUpdateModalButton">
+                    Update User Password
+                  </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
+                  aria-labelledby="passwordModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="passwordModalLabel">Update Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to update the user's password?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updatePasswordConfirmButton"
+                          name="updatePasswordConfirmButton" onclick=changePwd() data-dismiss="modal">Save
+                          changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-2">
+                  <h2 id="warning"></h2>
+                </div>
+              </form>
+
+              <button type="button" class="btn btn-danger m-2" data-toggle="modal" data-target="#deleteModal"
+                id="deleteModalButton">
+                Delete Account
+              </button>
+              <div id="deleteError"></div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure you want to delete the user's account?</p>
+                      <p>Deleting the account will not delete any applications associated with it but the user will no
+                        longer be able to access them.
+                      </p>
+                    </div>
+                    <!-- remember to change this to only allow delete if no applications exist or application status is determined-->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" id="deleteUserConfirmButton"
+                        name="deleteUserConfirmButton" onclick="deleteAccount()" data-dismiss="modal">Delete
+                        Account</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+            <div class="card">
+              <div class="card-header">
+                Applications
+              </div>
+              <div class="card-body">
+                <select class="form-select" aria-label="Default select example" id="appSelect" style="width:100%"">
+                    <option value=" default" selected>Choose an Application</option>
+                  <% var options=users; %>
+                    <% for(var i=0; i < apps.length; i++) { %>
+                      <option value='<%= apps[i]._id %>'>
+                        <%= apps[i].planningID %>
+                      </option>
+                      <% } %>
+                </select>
+
+                <form id="apps-form">
+                  <div class="details-form">
+
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="planningID">Planning ID</label>
+                      <input name="planningID" id="planningID" type="text" readonly />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="status" style="white-space:nowrap">Status</label>
+                      <input name="status" id="status" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="title" style="white-space:nowrap">Title</label>
+                      <input name="title" id="title" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="description" style="white-space:nowrap">Description</label>
+                      <input name="description" id="description" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="submittedBy" style="white-space:nowrap">Submitted By</label>
+                      <input name="submittedBy" id="submittedBy" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicantName" style="white-space:nowrap">Applicant Name</label>
+                      <input name="applicantName" id="applicantName" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicantAddress" style="white-space:nowrap">Applicant Address</label>
+                      <input name="applicantAddress" id="applicantAddress" type="text" onfocus="successApp()"
+                        required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicantPostcode" style="white-space:nowrap">Applicant Postcode</label>
+                      <input name="applicantPostcode" id="applicantPostcode" type="text" onfocus="successApp()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicantPhone" style="white-space:nowrap">Applicant Phone</label>
+                      <input name="applicantPhone" id="applicantPhone" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="agentName" style="white-space:nowrap">Agent Name</label>
+                      <input name="agentName" id="agentName" type="text" onfocus="successApp()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="agentAddress" style="white-space:nowrap">Agent Address</label>
+                      <input name="agentAddress" id="agentAddress" type="text" onfocus="successApp()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="agentPostcode" style="white-space:nowrap">Agent Postcode</label>
+                      <input name="agentPostcode" id="agentPostcode" type="text" onfocus="successApp()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="agentPhone" style="white-space:nowrap">Agent Phone</label>
+                      <input name="agentPhone" id="agentPhone" type="text" onfocus="successApp()" />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="propertyOwner" style="white-space:nowrap">Property Owner</label>
+                      <input name="propertyOwner" id="propertyOwner" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicationStreet1" style="white-space:nowrap">Application Address Street 1</label>
+                      <input name="applicationStreet1" id="applicationStreet1" type="text" onfocus="successApp()"
+                        required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicationStreet2" style="white-space:nowrap">Application Address Street 2</label>
+                      <input name="applicationStreet2" id="applicationStreet2" type="text" onfocus="successApp()"
+                        required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicationTown" style="white-space:nowrap">Application Address Town</label>
+                      <input name="applicationTown" id="applicationTown" type="text" onfocus="successApp()" required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicationCounty" style="white-space:nowrap">Application Address Count</label>
+                      <input name="applicationCounty" id="applicationCounty" type="text" onfocus="successApp()"
+                        required />
+                    </span>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="applicationPostcode" style="white-space:nowrap">Application Address Postcode</label>
+                      <input name="applicationPostcode" id="applicationPostcode" type="text" onfocus="successApp()"
+                        required />
+                    </span>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="modelRadio" id="modelRadioFalse" value="false"
+                        onfocus="successApp()" checked>
+                      <label class="form-check-label" for="modelRadioFalse">
+                        No model required
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="modelRadio" id="modelRadioTrue" value="true"
+                        onfocus="successApp()">
+                      <label class="form-check-label" for="modelRadioTrue">
+                        Model required
+                      </label>
+                    </div>
+                    <span class="d-flex p-2 justify-content-between flex-wrap">
+                      <label for="dateCreated" style="white-space:nowrap">Date Created</label>
+                      <input name="dateCreated" id="dateCreated" type="text" readonly />
+                    </span>
+
+                    <input type="submit" class="btn btn-primary m-2" id="updateApplicationConfirmButton"
+                      name="updateApplicationConfirmButton" value="Update Application Details"></button>
+                    <div id="successApp" style="color:green"></div>
+                  </div>
+                </form>
+                <button type="button" class="btn btn-danger m-2" data-toggle="modal" data-target="#deleteApplicationModal"
+                  id="deleteApplicationModalButton">
+                  Delete Application
+                </button>
+                <div id="appDeleteError" class="m-2"></div>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="deleteApplicationModal" tabindex="-1" role="dialog"
+                aria-labelledby="deleteApplicationModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="deleteApplicationModalLabel">Delete Application</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure you want to delete the application?</p>
+                      <p>Deleting the application will delete all application data.
+                      </p>
+                    </div>
+                    <!-- remember to change this to only allow delete if no applications exist or application status is determined-->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" id="deleteApplicationConfirmButton"
+                        name="deleteApplicationConfirmButton" onclick="deleteApplication()" data-dismiss="modal">Delete
+                        Account</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+      </main>
+
+
+      <%- include('partials/footer') %>

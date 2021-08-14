@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router();
 const ApplicationModel = require('../model/applicationmodel');
 const UploadedDocument = require('../model/uploadeddocument');
+require('express-validator');
 
 
 // define the view all applications page route
@@ -21,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const searchTerm = req.body.search;
+    const searchTerm = (req.body.search);
     if (searchTerm == "") {
         ApplicationModel.find({}, function (err, result) {
             if (err) {
