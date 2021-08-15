@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-// define the home page route
+// ---- ROUTE TO LOAD IMAGES FOR USER EVALUATION ----
 router.get('/', function (req, res) {
   
     res.render('../views/imagegallery')

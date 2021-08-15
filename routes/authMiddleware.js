@@ -13,4 +13,4 @@ module.exports.isAdmin = (req, res, next) => {
     }
 }
 
-// code courtesy of Zach Golwitzer   https://www.youtube.com/watch?v=J1qXK66k1y4
+// isAuth and isAdmin code courtesy of Zach Golwitzer   https://www.youtube.com/watch?v=J1qXK66k1y4

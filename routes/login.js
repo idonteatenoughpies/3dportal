@@ -6,23 +6,22 @@ const User = require('../model/user');
 
 let user;
 
-// define the login page route
+// ---- DEFINE DEFAULT GET ROUTE ----
 router.get('/', function (req, res) {
     res.render('../views/login')
   })
 
-// check for username & password combination
 router.post('/', [
   check('username').isLength({min:1}).trim().escape()
 ], 
 passport.authenticate('local', { failureRedirect: 'login/failed', successRedirect: '/login/success'}));
   
-  // define the success route 
+  // ---- SUCCESS ROUTE ----
 router.get('/success', function (req, res, next ) {
   res.json({ status: "ok",  redirect: '/dashboard'})
 })
 
-  // define the failure  route
+  // ---- FAILURE ROUTE ----
   router.get('/failed', function (req, res, next ) {
     return res.json({ status: 'error' })
   })

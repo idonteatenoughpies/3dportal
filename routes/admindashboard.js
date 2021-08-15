@@ -8,7 +8,8 @@ const ApplicationModel = require('../model/applicationmodel');
 const { check } = require('express-validator');
 const isAuth = require('./authMiddleware').isAuth;
 
-// define the home page route
+// ---- DEFINE DEFAULT GET ROUTE ----
+
 router.get('/', isAdmin, async (req, res) => {
   const allUsers = await Users.find({});
   const allApps = await ApplicationModel.find({})
@@ -16,16 +17,20 @@ router.get('/', isAdmin, async (req, res) => {
   res.render('admindashboard', { users: allUsers, apps: allApps });
 });
 
-// ---------------- user code ------------------
+// ----------------- USER ADMIN CODE ------------------
 
+// ---- RETRIEVE SELECTED USER DETAILS ----
 router.post('/getuser', isAdmin, async (req, res) => {
   const user = req.body;
   const selectedUser = await Users.find({ _id: user });
   res.send(selectedUser);
 });
 
-let user;
+let user; // DEFINE USER FOR USE THROUGH MULTIPLE ROUTES
 
+// ---- POST ROUTE FOR UPDATING USER DETAILS ----
+/* IMPLEMENT EXPRESS VALIDATOR TO TRIM INPUT AND ESCAPE SPECIAL CHARACTERS FOR SECURITY. 
+MINIMUM LENGTH IMPLEMENTED TO ENSURE VALID INOUTS ARE INPUT */
 router.post('/', isAuth, [
   check('email').isEmail().normalizeEmail().escape(),
   check('username').isLength({ min: 1 }).trim().escape(),
@@ -40,6 +45,7 @@ router.post('/', isAuth, [
 ], async (req, res) => {
 
   const { _id: id, originalUsername: originalUsername, first: first, last: last, email: email, username: username, street1: street1, street2: street2, town: town, county: county, postcode: postcode, admin: admin } = req.body
+  // UPDATE APPLICABLE APPLICATIONS WITH NEW USERNAME BEFORE AMENDING USER RECORD TO AVOID LOSING ACCESS TO THEM
   try {
     ApplicationModel.updateOne({ submittedBy: originalUsername }, { $set: { username: username } });
     await User.updateOne({ _id: id }, { $set: { first: first, last: last, email: email, username: username, street1: street1, street2: street2, town: town, county: county, postcode: postcode, admin: admin } });
@@ -51,11 +57,13 @@ router.post('/', isAuth, [
   res.json({ status: 'ok', user: req.user })
 });
 
+// ---- DELETE USER ROUTE ----
 router.post('/deleteuser', isAuth, async (req, res) => {
   const _id = req.body._id;
   const user = req.body.username;
   const placeholder = "Deleted_User";
   let newUserList
+  // UPDATE APPLICABLE APPLICATIONS WITH 'DELETED_USER' USERNAME BEFORE DELETING USER RECORD 
   try {
     await ApplicationModel.updateMany({ submittedBy: user }, { $set: { submittedBy: placeholder } }, function (err) {
       if (err) console.log(err);
@@ -63,6 +71,7 @@ router.post('/deleteuser', isAuth, async (req, res) => {
     await User.deleteOne({ _id }, function (err) {
       if (err) console.log(err);
     });
+    //SEND BACK NEW USER LIST TO POPULATE SELECT LIST
     newUserList = await User.find({}, function (err) {
       if (err) console.log(err);
     });
@@ -72,14 +81,18 @@ router.post('/deleteuser', isAuth, async (req, res) => {
   res.json({ status: 'ok', newUserList: newUserList })
 });
 
-// ---------------application code ----------------------
+// --------------- APPLICATION CODE ----------------------
 
+// ---- RETRIEVE SELECTED SELECTED APPLICATION DETAILS  ----
 router.post('/getapp', isAdmin, async (req, res) => {
   const app = req.body;
   const selectedApp = await ApplicationModel.find({ _id: app });
   res.send(selectedApp);
 });
 
+// ---- POST ROUTE FOR UPDATING APPLICATION DETAILS ----
+/* IMPLEMENT EXPRESS VALIDATOR TO TRIM INPUT AND ESCAPE SPECIAL CHARACTERS FOR SECURITY. 
+MINIMUM LENGTH IMPLEMENTED TO ENSURE VALID INOUTS ARE INPUT */
 router.post('/updateapp', isAuth, [
   check('status').isLength({ min: 1 }).trim().escape(),
   check('title').isLength({ min: 2 }).trim().escape(),
@@ -103,24 +116,27 @@ router.post('/updateapp', isAuth, [
 
 ], async (req, res) => {
 
-  const { planningID: planningID, title: title, status: status, description: description, 
-    submittedBy: submittedBy, applicantName: applicantName, applicantAddress: applicantAddress, 
-    applicantPostcode: applicantPostcode, applicantPhone: applicantPhone, agentName: agentName, 
-    agentAddress: agentAddress, agentPostcode: agentPostcode, agentPhone: agentPhone, 
-    propertyOwner: propertyOwner, applicationStreet1: applicationStreet1, applicationStreet2: applicationStreet2, 
-    applicationTown: applicationTown, applicationCounty: applicationCounty, applicationPostcode: applicationPostcode, 
+  const { planningID: planningID, title: title, status: status, description: description,
+    submittedBy: submittedBy, applicantName: applicantName, applicantAddress: applicantAddress,
+    applicantPostcode: applicantPostcode, applicantPhone: applicantPhone, agentName: agentName,
+    agentAddress: agentAddress, agentPostcode: agentPostcode, agentPhone: agentPhone,
+    propertyOwner: propertyOwner, applicationStreet1: applicationStreet1, applicationStreet2: applicationStreet2,
+    applicationTown: applicationTown, applicationCounty: applicationCounty, applicationPostcode: applicationPostcode,
     modelRequired: modelRequired } = req.body
 
-    console.log (agentName);
+  console.log(agentName);
   try {
-    await ApplicationModel.updateOne({ planningID: planningID }, { $set: {title: title, status: status, description: description, 
-      submittedBy: submittedBy, applicant:[{name: applicantName}, {address: applicantAddress}, 
-      {postcode: applicantPostcode}, {phone: applicantPhone}], agent:[{name: agentName}, 
-      {address: agentAddress}, {postcode: agentPostcode}, {phone: agentPhone}], 
-      propertyOwner: propertyOwner, application: [{street1: applicationStreet1}, {street2: applicationStreet2}, 
-      {town: applicationTown}, {county: applicationCounty}, {postcode: applicationPostcode}], 
-      modelRequired: modelRequired } });
-
+    await ApplicationModel.updateOne({ planningID: planningID }, {
+      $set: {
+        title: title, status: status, description: description,
+        submittedBy: submittedBy, applicant: [{ name: applicantName }, { address: applicantAddress },
+        { postcode: applicantPostcode }, { phone: applicantPhone }], agent: [{ name: agentName },
+        { address: agentAddress }, { postcode: agentPostcode }, { phone: agentPhone }],
+        propertyOwner: propertyOwner, application: [{ street1: applicationStreet1 }, { street2: applicationStreet2 },
+        { town: applicationTown }, { county: applicationCounty }, { postcode: applicationPostcode }],
+        modelRequired: modelRequired
+      }
+    });
   } catch (error) {
     throw error
   }
@@ -128,11 +144,12 @@ router.post('/updateapp', isAuth, [
   res.json({ status: 'ok' })
 });
 
+// ---- DELETE APPLICATION ROUTE ---- (ENSURE NO DELETION FROM PLANNINGIDS COLLECTION)
 router.post('/deleteapp', isAuth, async (req, res) => {
   const planningID = req.body.planningID;
   let newAppList
   try {
-    await ApplicationModel.deleteOne({ planningID:planningID }, function (err) {
+    await ApplicationModel.deleteOne({ planningID: planningID }, function (err) {
       if (err) console.log(err);
     });
     newAppList = await ApplicationModel.find({}, function (err) {

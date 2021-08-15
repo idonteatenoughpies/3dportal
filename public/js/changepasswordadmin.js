@@ -12,7 +12,7 @@
           document.getElementById("warning").innerHTML = "passwords do not match.";
         } else {
 
-          const result = await fetch('/change-password/processChangeAdmin', {
+          const result = await fetch('/change-password/Admin', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

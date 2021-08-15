@@ -4,9 +4,9 @@ const session = require('express-session');
 const isAuth = require('./authMiddleware').isAuth;
 
 
-// define the main application route
+// ---- DEFINE DEFAULT GET ROUTE TO DISPLAY DOCUMENT----
 router.get('/', (req, res) => {
-    const file = req.query.file;
+  const file = req.query.file;
   res.render('../views/show', { file: file, user: req.user })
 })
 

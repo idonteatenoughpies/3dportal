@@ -1,3 +1,4 @@
+// ----- IMPORTING MODULES -----
 const express = require('express');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
@@ -9,12 +10,13 @@ const MongoStore = require('connect-mongo');
 const passport = require ('passport');
 const cors = require('cors');
 require('dotenv').config();
-
 const app = express();
 
-//  ---- VIEW ENGINE SETUP -----
+//  ---- VIEW ENGINE SETUP ----
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// ---- INSTRUCTIONS TO USE MIDDLEWARE ----
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,7 +26,7 @@ app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 app.use("/models", express.static(path.join(__dirname, 'models')));
 app.use(cors());
 
-// enable files upload
+// ---- ENABLE FILE UPLOAD ----
 app.use(fileUpload({
   createParentPath: true
 }));
@@ -42,6 +44,7 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, us
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
 
+  // ---- IMPLEMENTING SESSIONS ----
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -49,22 +52,15 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: mongoURL
   }),
-  cookie: {maxAge: 1000 * 60 * 60 * 24}
+  cookie: {maxAge: 1000 * 60 * 60 * 24} // SET SESSION COOKIE VALIDITY LIFETIME OF 24 HOURS
 }));
 
-//  ---- PASSPORT AUTHENTICATION ---
+//  ---- PASSPORT AUTHENTICATION ----
 require('./config/passport'); 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ---- SOME DEBUGGING CODE ----
-/*app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
-  next()
-});*/
-
-//  ---- ROUTERS -----
+//  ---- CREATING ROUTERS -----
 const indexRouter = require('./routes/index');
 const adminDashboardRouter = require('./routes/admindashboard');
 const changePasswordRouter = require('./routes/change-password');
@@ -79,6 +75,7 @@ const showRouter = require('./routes/show');
 const accountRouter = require('./routes/accountdetails');
 const imageGalleryRouter = require('./routes/imagegallery');
 
+// ---- IMPLEMENTING ROUTERS ----
 app.use('/', indexRouter);
 app.use('/admindashboard', adminDashboardRouter);
 app.use('/change-password', changePasswordRouter);
@@ -93,7 +90,7 @@ app.use('/show', showRouter);
 app.use('/accountdetails', accountRouter);
 app.use('/imagegallery', imageGalleryRouter);
 
-
+// ---- SET APP TO LISTEN ON PORT 3000 ----
 const port = 3000;
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)

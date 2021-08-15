@@ -11,7 +11,7 @@
           document.getElementById("warning").innerHTML = "passwords do not match.";
         } else {
 
-          const result = await fetch('/change-password/processChange', {
+          const result = await fetch('/change-password', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
