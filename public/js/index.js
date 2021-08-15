@@ -1,29 +1,24 @@
-function onHoverSearch()
-{
+// ---- FUNCTIONS TO ANIMATE MENU BUTTONS ON MOUSE OVER ----
+function onHoverSearch() {
     $("#imageBoxSearch").attr('src', '/images/search.png');
 }
 
-function offHoverSearch()
-{
+function offHoverSearch() {
     $("#imageBoxSearch").attr('src', '/images/search_selected.png');
 }
 
-function onHoverApply()
-{
+function onHoverApply() {
     $("#imageBoxApply").attr('src', '/images/apply.png');
 }
 
-function offHoverApply()
-{
+function offHoverApply() {
     $("#imageBoxApply").attr('src', '/images/apply_selected.png');
 }
 
-function onHoverAccount()
-{
+function onHoverAccount() {
     $("#imageBoxAccount").attr('src', '/images/account.png');
 }
 
-function offHoverAccount()
-{
+function offHoverAccount() {
     $("#imageBoxAccount").attr('src', '/images/account_selected.png');
 }

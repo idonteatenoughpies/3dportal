@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+  //---- EXTRACT PLANNING ID FROM TABLE AND PASS TO VIEW ROUTE ----
   $('.view').on('click', (function () {
     const id = this.id;
     const splitid = id.split('_');
@@ -8,6 +8,7 @@ $(document).ready(function () {
     window.location.assign(`/viewapplications/viewportal/?planningID=${string}`)
   }));
 
+  // ---- SEARCH CODE ----
   $('#searchSubmit').click(async function () {
     const search = document.getElementById('applicationSearchBox').value;
     const result = await fetch('/viewApplications', {
@@ -23,7 +24,7 @@ $(document).ready(function () {
     if (result.status === 'ok') {
       const searchResult = result.apps
 
-      if (searchResult.length === 0) {
+      if (searchResult.length === 0) { //APPEND SEARCH RESULTS TO TABLE OF PLANNING APPLICATIONS
         $("#tbodyid").empty();
         document.getElementById('noResult').innerHTML = "No results to display";
       } else {
@@ -49,17 +50,19 @@ $(document).ready(function () {
           e.appendChild(f);
           document.getElementById("tbodyid").appendChild(e);
           var g = document.createElement("TD");
-          date=searchResult[i].dateCreated;
+          date = searchResult[i].dateCreated;
+          // FORMAT DISPLAYED DATE
           const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"];
-            const dateObj = new Date(date);
-            const month = monthNames[dateObj.getMonth()];
+          const dateObj = new Date(date);
+          const month = monthNames[dateObj.getMonth()];
           const day = String(dateObj.getDate());
           const year = dateObj.getFullYear();
           dateStr = (day + ' ' + month + ' ' + year).toString();
           var h = document.createTextNode(dateStr);
           g.appendChild(h);
           document.getElementById("tbodyid").appendChild(g);
+          // CREATE DOCUMENT VIEW BUTTON FOR LINE ENTRY
           var j = document.createElement("TD");
           var k = document.createElement("BUTTON")
           k.innerHTML = "View";
@@ -71,7 +74,7 @@ $(document).ready(function () {
         }
       }
     } else {
-      console.log("whoops");
+      document.getElementById('noResult').innerHTML = "Somethign went wrong. Please contact support for help";
     }
   });
 })

@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../model/user');
 const validPassword = require('../lib/passwordUtils').validPassword;
 
-// code from documentation of passport
+// code from documentation of passport.js
 const verifyCallback = (username, password, done) => {
     User.findOne({ username: username })
     .then((user) => {
@@ -37,3 +37,5 @@ passport.use(strategy);
     })
     .catch(err => done(err))
   });
+
+  // strategy implementation courtesy of Zach Golwitzer   https://www.youtube.com/watch?v=J1qXK66k1y4

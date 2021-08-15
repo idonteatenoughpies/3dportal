@@ -1,39 +1,40 @@
+// ---- ADD LISTENER TO UPDATE PASSWORD BUTTON ----
+const changepasswordbutton = document.getElementById('updatePasswordConfirmButton')
+changepasswordbutton.addEventListener('updatePasswordConfirmButton', changePwd)
 
-      const changepasswordbutton = document.getElementById('updatePasswordConfirmButton')
-      changepasswordbutton.addEventListener('updatePasswordConfirmButton', changePwd)
+// ---- FUNCTION TO SEND PASSWORD UPDATE INSTRUCTION TO CHANGE-PASSWORD ROUTE----
+async function changePwd() {
+  const password = document.getElementById('password').value
+  const confirmpassword = document.getElementById('confirmpassword').value
+  const _id = document.getElementById('idBox').value; // OBTAIN USER ID FROM HIDDEN FIELD TO SEND WITH POST REQUEST
 
-      async function changePwd() {
+  if (password !== confirmpassword) { //LOGICAL TEST TO ENSURE NEW PASSWORD AND CONFIRM PASSWORD MATCH
+    document.getElementById("warning").innerHTML = "passwords do not match.";
+  } else {
 
-        const password = document.getElementById('password').value
-        const confirmpassword = document.getElementById('confirmpassword').value
-        const _id= document.getElementById('idBox').value;
+    const result = await fetch('/change-password/Admin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        password, _id
+      })
+    }).then((res) => res.json())
 
-        if (password !== confirmpassword) {
-          document.getElementById("warning").innerHTML = "passwords do not match.";
-        } else {
+    if (result.status === 'ok') {
+      //everything went ok 
 
-          const result = await fetch('/change-password/Admin', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              password, _id
-            })
-          }).then((res) => res.json())
+      document.getElementById("warning").innerHTML = "Success, your password has been update.";
+    } else {
+      document.getElementById("warning").innerHTML = "PASSWORD UPDATE FAILED: " + result.error;
 
-          if (result.status === 'ok') {
-            //everything went ok 
-       
-            document.getElementById("warning").innerHTML = "Success, your password has been update.";
-          } else {
-            document.getElementById("warning").innerHTML = "PASSWORD UPDATE FAILED: " + result.error;
+    }
+    console.log(result)
+  }
+}
 
-          }
-          console.log(result)
-        }
-      }
-
-function clearWarning(){
+// ---- FUNCTION TO CLEAR WARNING MESSAGES - CALLED ONFOCUS ----
+function clearWarning() {
   document.getElementById("warning").innerHTML = "";
 };

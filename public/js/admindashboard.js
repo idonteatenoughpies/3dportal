@@ -1,18 +1,20 @@
 $(function () {
-    //set up the change handler to populate user details when a user is selected.
+    //SETUP CHANGE HANDLER TO POPULATE USER DETAILS WHEN A USER IS SELECTED
     $('#userSelect').change(function () {
         fillBoxesUser();
     });
+    //SETUP CHANGE HANDLER TO POPULATE APPLICATION DETAILS WHEN AN APPLICAGTION IS SELECTED
     $('#appSelect').change(function () {
         fillBoxesApp();
     });
 });
 
+//DECLARE VARIABLES USED BY MUTLIPLE FUNCTIONS
 let _id;
 let originalUsername;
 let username
 
-// ----------------------- user code ------------------------------
+// ----------------------- USER DETAILS CODE ------------------------------
 
 function fillBoxesUser() {
     //setting variables
@@ -55,24 +57,24 @@ function fillBoxesUser() {
                 let postcode = result[0].postcode;              //takes variable from returned array and sets to emailbox
                 $("#postcode").val([postcode]);
                 _id = result[0]._id;
-                $("#idBox").val([_id]);
+                $("#idBox").val([_id]); // GETS ID FROM HIDDEN ID FIELD
                 originalUsername = result[0].username;
                 let admin = result[0].admin;
                 let radio;
-                if (admin == true) { radio = document.getElementById('adminRadioTrue'); radio.checked = true }
+                if (admin == true) { radio = document.getElementById('adminRadioTrue'); radio.checked = true } // SETS RADIO POSITION DEPENDING ON ADMIN STATUS
                 else { radio = document.getElementById('adminRadioFalse'); radio.checked = true }
             }
         });
     }
 }
 
+// ---- ADD EVENT LISTENER TO SUBMIT BUTTON ON USER PANE ----
 const updateform = document.getElementById('reg-form')
 updateform.addEventListener('submit', updateUser)
 
+// ---- FUNCTION TO SEND USER UPDATE INFORMATION TO ROUTE ----
 async function updateUser(event) {
     event.preventDefault()
-
-
     const first = document.getElementById('first').value
     const last = document.getElementById('last').value
     const email = document.getElementById('email').value
@@ -102,6 +104,7 @@ async function updateUser(event) {
     }
 }
 
+// ---- CLIENT-SIDE FUNCTION TO CHECK IF NEW USERNAME IS UNIQUE ----
 async function checkUser() {
     const username = document.getElementById('username').value;
     if (username !== originalUsername) {
@@ -128,6 +131,7 @@ async function checkUser() {
     }
 }
 
+// ---- CLIENT-SIDE FUNCTION TO VERIFY PASSWORD LENGTH (DISABLES SUBMIT)----
 async function passwordLength() {
     const password = document.getElementById('password').value
     if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long."; }
@@ -151,6 +155,7 @@ async function passwordLength() {
     }
 }
 
+// ---- CLIENT-SIDE FUNCTION TO VERIFY PASSWORD MATCHES CONFIRM PASSWORD (DISABLES SUBMIT BUTTON) ----
 async function passwordMatch() {
     const password = document.getElementById('password').value
     let passwordconfirm = document.getElementById('confirmpassword').value
@@ -164,6 +169,7 @@ async function passwordMatch() {
     }
 }
 
+// ---- FUNCTION TO SEND DELETE USER REQUEST TO ROUTE ----
 async function deleteAccount() {
     const username = document.getElementById('username').value;
     const result = await fetch('/admindashboard/deleteuser', {
@@ -184,6 +190,8 @@ async function deleteAccount() {
     if (result.status === 'ok') {
         //everything went ok 
         document.getElementById("deleteError").innerHTML = "Account deleted.";
+
+        // CLEAR SELECT LIST AND REPOPULATE WITH UPDATED LIST OF USERS
         $("#userSelect").empty();
         var html1 = '<option value="default" selected>Choose a user</option>'
         $("#userSelect").append(html1);
@@ -199,12 +207,14 @@ async function deleteAccount() {
     }
 }
 
+// ---- FUNCTION TO CLEAR WARNING/SUCCESS MESSAGE ON FOCUS ----
 function success() {
     document.getElementById("success").innerHTML = "";
 }
 
-// ---------------------- application code -------------------------------
+// ---------------------- APPLICATION DETAILS CODE -------------------------------
 
+// ---- FUNCTION TO POPULATE INPUT FIELDS WITH SELECTED APPLIACTION DATA ----
 function fillBoxesApp() {
     //setting variables
     var appSelected = $("#appSelect option:selected").val(); //takes value of the selected user (id)
@@ -278,6 +288,7 @@ function fillBoxesApp() {
                 let applicationPostcode = result[0].applicationAddress.postcode;              //takes variable from returned array and sets to emailbox
                 $("#applicationPostcode").val([applicationPostcode]);
                 let dateCreated = result[0].dateCreated;              //takes variable from returned array and sets to emailbox
+                // FORMAT DATE INFORMATION
                 const monthNames = ["January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December;"]
                 const dateObj = new Date(dateCreated);
@@ -296,35 +307,33 @@ function fillBoxesApp() {
     }
 }
 
-
-
+// ---- ADD EVENT LISTENER TO SUBMIT BUTTON ON APPLICATION PANE ----
 const updateAppform = document.getElementById('apps-form')
 updateAppform.addEventListener('submit', updateApp)
 
+// ---- FUNCTION TO UPDATE APPLICATION DETAILS ----
 async function updateApp(event) {
-
     event.preventDefault()
-        const planningID = document.getElementById("planningID").value;
-        const title = document.getElementById("title").value;
-        const status = document.getElementById("status").value;
-        const description = document.getElementById("description").value;
-        const submittedBy = document.getElementById("submittedBy").value;
-        const applicantName= document.getElementById("applicantName").value;
-        const applicantAddress = document.getElementById("applicantAddress").value;
-        const applicantPostcode = document.getElementById("applicantPostcode").value;
-        const applicantPhone = document.getElementById("applicantPhone").value;
-        const agentName = document.getElementById("agentName").value;
-        const agentAddress = document.getElementById("agentAddress").value;
-        const agentPostcode = document.getElementById("agentPostcode").value;
-        const agentPhone = document.getElementById("agentPhone").value;
-        const propertyOwner = document.getElementById("propertyOwner").value;
-        const applicationStreet1 = document.getElementById("applicationStreet1").value;
-        const applicationStreet2 = document.getElementById("applicationStreet2").value;
-        const applicationTown = document.getElementById("applicationTown").value;
-        const applicationCounty = document.getElementById("applicationCounty").value;
-        const applicationPostcode = document.getElementById("applicationPostcode").value;
-        const modelRequired = $('input[name="modelRadio:checked').val();
-
+    const planningID = document.getElementById("planningID").value;
+    const title = document.getElementById("title").value;
+    const status = document.getElementById("status").value;
+    const description = document.getElementById("description").value;
+    const submittedBy = document.getElementById("submittedBy").value;
+    const applicantName = document.getElementById("applicantName").value;
+    const applicantAddress = document.getElementById("applicantAddress").value;
+    const applicantPostcode = document.getElementById("applicantPostcode").value;
+    const applicantPhone = document.getElementById("applicantPhone").value;
+    const agentName = document.getElementById("agentName").value;
+    const agentAddress = document.getElementById("agentAddress").value;
+    const agentPostcode = document.getElementById("agentPostcode").value;
+    const agentPhone = document.getElementById("agentPhone").value;
+    const propertyOwner = document.getElementById("propertyOwner").value;
+    const applicationStreet1 = document.getElementById("applicationStreet1").value;
+    const applicationStreet2 = document.getElementById("applicationStreet2").value;
+    const applicationTown = document.getElementById("applicationTown").value;
+    const applicationCounty = document.getElementById("applicationCounty").value;
+    const applicationPostcode = document.getElementById("applicationPostcode").value;
+    const modelRequired = $('input[name="modelRadio:checked').val();
 
     const result = await fetch('/admindashboard/updateapp', {
         method: 'POST',
@@ -332,9 +341,9 @@ async function updateApp(event) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            planningID, title, status, description, submittedBy, applicantName, applicantAddress, 
-            applicantPostcode, applicantPhone, agentName, agentAddress, agentPostcode, agentPhone, 
-            propertyOwner, applicationStreet1, applicationStreet2, applicationTown, applicationCounty, 
+            planningID, title, status, description, submittedBy, applicantName, applicantAddress,
+            applicantPostcode, applicantPhone, agentName, agentAddress, agentPostcode, agentPhone,
+            propertyOwner, applicationStreet1, applicationStreet2, applicationTown, applicationCounty,
             applicationPostcode, modelRequired
         })
     }).then((res) => res.json())
@@ -347,6 +356,7 @@ async function updateApp(event) {
     }
 }
 
+// ---- FUNCTION TO DELETE AN APPLICATION ----
 async function deleteApplication() {
     const planningID = document.getElementById('planningID').value;
     const result = await fetch('/admindashboard/deleteapp', {
@@ -366,6 +376,8 @@ async function deleteApplication() {
     if (result.status === 'ok') {
         //everything went ok 
         document.getElementById("appDeleteError").innerHTML = "Application deleted.";
+
+        // CLEAR SELECT LIST AND REPOPULATE WITH UPDATED APPLICATION LIST
         $("#appSelect").empty();
         var html2 = '<option value="default" selected>Choose an application</option>'
         $("#appSelect").append(html2);
@@ -380,6 +392,7 @@ async function deleteApplication() {
     }
 }
 
+// ---- FUNCTION TO CLEAR WARNING/SUCCESS MESSAGES ON FOCUS ----
 function successApp() {
     document.getElementById("successApp").innerHTML = "";
 }

@@ -1,6 +1,8 @@
+// ---- ADD EVENT LISTENER TO SUBMIT BUTTON ----
 const updateform = document.getElementById('reg-form')
 updateform.addEventListener('submit', updateUser)
 
+// ---- FUNCTION TO UPDATE USER DETAILS ----
 async function updateUser(event) {
     event.preventDefault()
 
@@ -29,11 +31,10 @@ async function updateUser(event) {
       document.getElementById("success").innerHTML = "Account details Updated";
     } else {
       document.getElementById("success").innerHTML = "Failed to update account: " + result.error;
-     
     }
-  
 }
 
+// ---- FUNCTION TO CHECK IF USERNAME IS UNIQUE ----
 async function checkUser(){
     const username = document.getElementById('username').value;
     if (username !== checkusername){
@@ -59,16 +60,17 @@ async function checkUser(){
     }
   }}
 
-  async function passwordLength() {
+  // ---- CLIENT-SIDE FUNCTION TO CHECK PASSWORD COMPLIANCE ----
+  async function passwordCheck() {
     const password = document.getElementById('password').value
-    if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long.";}
+    if (password.length < 8) { document.getElementById("passwordLength").innerHTML = "Password must be a minimum of 8 characters long.";} // CLIENT-SIDE CHECK OF PASSWORD LENGTH
     else{
       if (password.includes ('password')) {
-        document.getElementById("passwordLength").innerHTML = "Password must not include password.";
+        document.getElementById("passwordLength").innerHTML = "Password must not include password."; //CLIENT-SIDE CHECK PASSWORD DOESN'T INCLUDE UNDESIRABLE STRING
         document.getElementById("passwordUpdateModalButton").disabled = true
       } else {
         if (password.includes ('12345678')) {
-          document.getElementById("passwordLength").innerHTML = "Password must not include 12345678.";
+          document.getElementById("passwordLength").innerHTML = "Password must not include 12345678."; //CLIENT-SIDE CHECK PASSWORD DOESN'T INCLUDE UNDESIRABLE STRING
           document.getElementById("passwordUpdateModalButton").disabled = true
         } else {
           document.getElementById("passwordLength").innerHTML = "";
@@ -81,6 +83,7 @@ async function checkUser(){
 }
   }
 
+  // ---- CLIENT-SIDE CHECK THAT PASSWORD MATCHES CONFIRM PASSWORD ----
   async function passwordMatch() {
     const password = document.getElementById('password').value
     let passwordconfirm = document.getElementById('confirmpassword').value
@@ -91,6 +94,7 @@ async function checkUser(){
     document.getElementById("passwordUpdateModalButton").disabled=true;}
   }
 
+  // ---- FUNCTION TO SEND DELETE ACCOUNT REQUEST TO ROUTE ----
   async function deleteAccount(){
     const _id= '<%= user._id %>' ;
     const result = await fetch('/accountdetails/deleteuser', {
@@ -113,6 +117,7 @@ async function checkUser(){
     }
   }
   
+  // ---- FUNCTION TO CLEAR SUCCESS/WARNING MESSAGE ----
   function success() {
     document.getElementById("success").innerHTML = "";
   }
